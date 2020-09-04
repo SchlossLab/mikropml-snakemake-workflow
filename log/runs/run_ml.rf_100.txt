@@ -1,0 +1,3 @@
+Error in loadNamespace(name) : there is no package called ‘mikRopML’
+Calls: :: ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+Execution halted

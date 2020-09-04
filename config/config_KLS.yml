@@ -1,0 +1,7 @@
+ncores: 2
+ml_methods:
+  - rf
+  - regLogistic
+seeds:
+  start: 100
+  stop: 101
