@@ -1,7 +1,12 @@
 # Running mikRopML with snakemake
 
+1. Clone or download this repo and go to the directory:
+    ``` sh
+    git clone https://github.com/SchlossLab/mikRopML-snakemake-workflow
+    cd mikRopML-snakemake-workflow
+    ```
 1. Create a conda environment and activate it:
-    ```sh
+    ``` sh
     conda env create -f config/environment.yml
     conda activate smk-ML
     ```
@@ -14,11 +19,7 @@
     ``` sh
     R -e 'devtools::install_github("SchlossLab/mikRopML")'
     ```
-1. Clone or download this repo and go to the example snakemake directory:
-    ``` sh
-    git clone https://github.com/SchlossLab/mikRopML
-    cd mikRopML/examples/snakemake
-    ```
+
 1. Do a dry run to make sure the snakemake workflow works:
     ``` sh
     snakemake -n
