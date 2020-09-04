@@ -48,4 +48,7 @@
         The main job will then submit other snakemake jobs.
 
 
-See the [snakemake docs](https://snakemake.readthedocs.io/en/stable) for more details and a helpful snakemake tutorial.
+## Resources
+
+- [Snakemake docs](https://snakemake.readthedocs.io/en/stable)
+- [mikRopML docs](http://www.schlosslab.org/mikRopML/)
