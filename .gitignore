@@ -4,4 +4,4 @@ config/slurm_KLS/
 config/config_KLS.yml
 data/
 log/
-benchmarks
+benchmarks/
