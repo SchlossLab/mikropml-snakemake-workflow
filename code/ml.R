@@ -1,14 +1,12 @@
 source('code/log_smk.R')
-method <- snakemake@params[['method']]
-seed <- as.numeric(snakemake@params[['seed']])
 data_processed <- readRDS(snakemake@input[['rds']])$dat_transformed
 ml_results <- mikRopML::run_ml(dataset = data_processed,
-                               method = method,
+                               method = snakemake@params[['method']],
                                outcome_colname = 'dx',
                                outcome_value = 'cancer',
                                find_feature_importance = TRUE,
                                kfold = 5,
-                               seed = seed,
+                               seed = as.numeric(snakemake@params[['seed']]),
                                ncores = as.numeric(snakemake@resources[['ncores']])
                                )
 
