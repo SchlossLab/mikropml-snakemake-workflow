@@ -11,5 +11,5 @@ ml_results <- mikRopML::run_ml(dataset = data_processed,
                                )
 
 saveRDS(ml_results$trained_model, file = snakemake@output[['model']])
-readr::write_csv(ml_results$performance, file = snakemake@output[['perf']])
-readr::write_csv(ml_results$feature_importance, file = snakemake@output[['feat']])
+readr::write_csv(ml_results$performance, snakemake@output[['perf']])
+readr::write_csv(ml_results$feature_importance, snakemake@output[['feat']])
