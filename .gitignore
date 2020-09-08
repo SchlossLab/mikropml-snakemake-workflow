@@ -1,7 +1,7 @@
 code/submit_slurm_KLS.sh
 config/cluster_KLS.json
 config/slurm_KLS/
-config/config_KLS.yml
+config/config_macOS.yml
 data/
 log/
 benchmarks/
