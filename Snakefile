@@ -6,9 +6,6 @@ seeds = range(config['seeds']['start'], config['seeds']['stop'])
 
 rule targets:
     input:
-        expand("results/runs/{method}_{seed}_model.Rds",
-                method = ml_methods,
-                seed = seeds),
         expand("results/{type}_results.csv",
                 type = ['performance', 'feature-importance'])
 
