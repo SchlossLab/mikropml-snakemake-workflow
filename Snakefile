@@ -2,7 +2,7 @@ configfile: 'config/config.yml'
 
 ncores = config['ncores']
 ml_methods = config['ml_methods']
-seeds = range(100, config['nseeds'] + 1)
+seeds = range(100, 100 + config['nseeds'] + 1)
 
 rule targets:
     input:
