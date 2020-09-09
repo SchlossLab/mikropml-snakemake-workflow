@@ -1,5 +1,7 @@
 # Running mikRopML with snakemake
 
+## Quick Start
+
 1. Clone or download this repo and go to the directory:
     ``` sh
     git clone https://github.com/SchlossLab/mikRopML-snakemake-workflow
