@@ -6,3 +6,4 @@ config/config_macOS.yml
 data/
 log/
 benchmarks/
+results/runs/
