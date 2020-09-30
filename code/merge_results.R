@@ -1,6 +1,7 @@
 source('code/log_smk.R')
 library(dplyr)
+future::plan(future::multicore, workers = snakemake@resources[['ncores']])
 snakemake@input[['csv']] %>%
-  purrr::map(readr::read_tsv) %>%
+  future.apply::future_lapply(readr::read_csv) %>%
   dplyr::bind_rows() %>%
   readr::write_tsv(snakemake@output[['csv']])

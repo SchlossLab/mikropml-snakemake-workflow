@@ -11,7 +11,15 @@
   "mail_type": "FAIL",
   "outfile": "log/hpc/jobs/{rule}.{wildcards}.out"
  },
- "subset_regions": {
+ "preprocess_data": {
+  "procs": "{resources.ncores}",
+  "pmem": "{resources.pmem_gb}GB"
+ },
+ "run_ml": {
+  "procs": "{resources.ncores}",
+  "pmem": "{resources.pmem_gb}GB"
+ },
+ "merge_results": {
   "procs": "{resources.ncores}",
   "pmem": "{resources.pmem_gb}GB"
  }

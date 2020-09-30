@@ -1,4 +1,6 @@
 source('code/log_smk.R')
+doFuture::registerDoFuture()
+future::plan(future::multicore, workers = snakemake@resources[['ncores']])
 data_processed <- readRDS(snakemake@input[['rds']])$dat_transformed
 ml_results <- mikRopML::run_ml(dataset = data_processed,
                                method = snakemake@params[['method']],

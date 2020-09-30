@@ -19,6 +19,9 @@ rule preprocess_data:
         "log/preprocess_data.txt"
     benchmark:
         "benchmarks/preprocess_data.txt"
+    resources:
+        ncores=ncores,
+        pmem_gb=1
     script:
         "code/preproc.R"
 
@@ -39,7 +42,7 @@ rule run_ml:
         seed="{seed}"
     resources:
         ncores=ncores,
-        pmem_gb=2
+        pmem_gb=4
     script:
         "code/ml.R"
 
@@ -53,8 +56,19 @@ rule merge_results:
         "log/merge_results_{type}.txt"
     benchmark:
         "benchmarks/merge_results_{type}.txt"
+    resources:
+        ncores=ncores,
+        pmem_gb=1
     script:
         "code/merge_results.R"
 
+rule plot_performance:
+    input:
+        R="code/plot_perf.R",
+        csv='results/performance_results.csv'
+    output:
+        png='figures/performance.png'
+    script:
+        "code/plot_perf.R"
 
 # TODO; plots, report, etc.

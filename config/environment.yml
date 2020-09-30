@@ -9,21 +9,20 @@ dependencies:
   - r-base
   - r-caret
   - r-devtools
-  - r-doParallel
+  - r-doFuture
   - r-dplyr
   - r-foreach
+  - r-future
   - r-future.apply
   - r-ggplot2
   - r-kernlab
   - r-liblinear
   - r-prroc
-  - r-purrr
   - r-randomForest
   - r-rcolorbrewer
   - r-readr
   - r-rlang
   - r-rmarkdown
   - r-rpart
-  - r-tibble
   - r-xgboost
   - snakemake=5
