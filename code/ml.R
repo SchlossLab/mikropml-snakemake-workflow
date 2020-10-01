@@ -8,8 +8,7 @@ ml_results <- mikropml::run_ml(dataset = data_processed,
                                outcome_value = 'cancer',
                                find_feature_importance = TRUE,
                                kfold = 5,
-                               seed = as.numeric(snakemake@params[['seed']]),
-                               ncores = as.numeric(snakemake@resources[['ncores']])
+                               seed = as.numeric(snakemake@params[['seed']])
                                )
 
 saveRDS(ml_results$trained_model, file = snakemake@output[['model']])
