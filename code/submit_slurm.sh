@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=mikRopML
+#SBATCH --job-name=mikropml
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1

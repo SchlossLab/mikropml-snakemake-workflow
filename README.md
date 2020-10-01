@@ -1,11 +1,11 @@
-# Running mikRopML with snakemake
+# Running mikropml with snakemake
 
 ## Quick Start
 
 1. Clone or download this repo and go to the directory:
     ``` sh
-    git clone https://github.com/SchlossLab/mikRopML-snakemake-workflow
-    cd mikRopML-snakemake-workflow
+    git clone https://github.com/SchlossLab/mikropml-snakemake-workflow
+    cd mikropml-snakemake-workflow
     ```
 1. Create a conda environment and activate it:
     ``` sh
@@ -15,11 +15,11 @@
     (Recommend [miniconda](https://docs.conda.io/en/latest/miniconda.html) if you don't already have conda installed.)
 
     Alternatively, you can [install snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html) and the other dependencies listed in [`config/environment.yml`](config/environment.yml) however you like.
-1. Install the mikRopML R package: [mikRopML install instructions](https://github.com/SchlossLab/mikRopML#installation)
+1. Install the mikropml R package: [mikropml install instructions](https://github.com/SchlossLab/mikropml#installation)
 
     e.g.
     ``` sh
-    R -e 'devtools::install_github("SchlossLab/mikRopML")'
+    R -e 'devtools::install_github("SchlossLab/mikropml")'
     ```
 
 1. Do a dry run to make sure the snakemake workflow works:
@@ -53,4 +53,4 @@
 ## Resources
 
 - [Snakemake docs](https://snakemake.readthedocs.io/en/stable)
-- [mikRopML docs](http://www.schlosslab.org/mikRopML/)
+- [mikropml docs](http://www.schlosslab.org/mikropml/)
