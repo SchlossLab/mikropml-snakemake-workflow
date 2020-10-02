@@ -68,7 +68,19 @@ rule plot_performance:
         csv='results/performance_results.csv'
     output:
         png='figures/performance.png'
+    log:
+        "log/plot_performance.txt"
     script:
         "code/plot_perf.R"
 
-# TODO; plots, report, etc.
+rule render_report:
+    input:
+        Rmd='docs/report.Rmd',
+        R='code/render.R',
+        plot=rules.plot_performance.output.png
+    output:
+        doc='docs/report.md'
+    log:
+        "log/render_report.txt"
+    script:
+        'code/render.R'
