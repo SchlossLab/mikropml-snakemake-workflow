@@ -13,9 +13,9 @@ library(here)
 library(knitr)
 ```
 
-Models were trained using `r snakemake@params[['ml_methods']]` 
-with `r snakemake@params[['nseeds']]` different random partitions of the data 
-into training and testing sets.
+Machine learning algorithms used include: `r snakemake@params[['ml_methods']]`.
+Models were trained with `r snakemake@params[['nseeds']]` 
+different random partitions of the data into training and testing sets.
 
 ## Model Performance
 
