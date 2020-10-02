@@ -6,6 +6,7 @@ seeds = range(100, 100 + config['nseeds'] + 1)
 
 rule targets:
     input:
+        'docs/report.md',
         expand("results/{type}_results.csv",
                 type = ['performance', 'feature-importance'])
 
@@ -31,8 +32,8 @@ rule run_ml:
         rds=rules.preprocess_data.output.rds
     output:
         model="results/runs/{method}_{seed}_model.Rds",
-        perf="results/runs/{method}_{seed}_performance.csv",
-        feat="results/runs/{method}_{seed}_feature-importance.csv"
+        perf=temp("results/runs/{method}_{seed}_performance.csv"),
+        feat=temp("results/runs/{method}_{seed}_feature-importance.csv")
     log:
         "log/runs/run_ml.{method}_{seed}.txt"
     benchmark:
@@ -46,21 +47,21 @@ rule run_ml:
     script:
         "code/ml.R"
 
-rule merge_results:
+rule bind_results:
     input:
-        R="code/merge_results.R",
+        R="code/bind_results.R",
         csv=expand("results/runs/{method}_{seed}_{{type}}.csv", method = ml_methods, seed = seeds)
     output:
         csv='results/{type}_results.csv'
     log:
-        "log/merge_results_{type}.txt"
+        "log/bind_results_{type}.txt"
     benchmark:
-        "benchmarks/merge_results_{type}.txt"
+        "benchmarks/bind_results_{type}.txt"
     resources:
         ncores=ncores,
         pmem_gb=1
     script:
-        "code/merge_results.R"
+        "code/bind_results.R"
 
 rule plot_performance:
     input:
@@ -82,5 +83,8 @@ rule render_report:
         doc='docs/report.md'
     log:
         "log/render_report.txt"
+    params:
+        nseeds=config['nseeds'],
+        ml_methods=ml_methods
     script:
         'code/render.R'
