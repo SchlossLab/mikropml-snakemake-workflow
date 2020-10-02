@@ -6,7 +6,7 @@ channels:
   - r
 dependencies:
   - python=3
-  - r-base
+  - r-base=4
   - r-caret
   - r-devtools
   - r-doFuture
