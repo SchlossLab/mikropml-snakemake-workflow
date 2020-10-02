@@ -5,11 +5,11 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,
+                      eval = TRUE)
 ```
 
 ```{r load}
-library(here)
 library(knitr)
 ```
 
@@ -20,6 +20,6 @@ different random partitions of the data into training and testing sets.
 ## Model Performance
 
 ```{r plot}
-include_graphics(here(snakemake@input[['plot']]))
+include_graphics(snakemake@input[['plot']])
 ```
 
