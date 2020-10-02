@@ -6,7 +6,7 @@ seeds = range(100, 100 + config['nseeds'] + 1)
 
 rule targets:
     input:
-        'docs/report.md',
+        'report.md',
         expand("results/{type}_results.csv",
                 type = ['performance', 'feature-importance'])
 
@@ -76,11 +76,11 @@ rule plot_performance:
 
 rule render_report:
     input:
-        Rmd='docs/report.Rmd',
+        Rmd='report.Rmd',
         R='code/render.R',
         plot=rules.plot_performance.output.png
     output:
-        doc='docs/report.md'
+        doc='report.md'
     log:
         "log/render_report.txt"
     params:
