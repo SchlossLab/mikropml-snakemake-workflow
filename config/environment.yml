@@ -15,6 +15,7 @@ dependencies:
   - r-future
   - r-future.apply
   - r-ggplot2
+  - r-here
   - r-kernlab
   - r-liblinear
   - r-prroc
