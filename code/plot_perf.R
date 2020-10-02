@@ -1,6 +1,10 @@
 source("code/log_smk.R")
 library(dplyr)
+library(ggplot2)
 perf_plot <- snakemake@input[["csv"]] %>%
   readr::read_csv() %>%
-  mikropml::plot_performance()
-ggplot2::ggsave(snakemake@output[["png"]], plot = perf_plot)
+  mikropml::plot_performance() +
+    theme_classic() +
+    scale_color_brewer(palette = "Dark2") +
+    coord_flip()
+ggsave(snakemake@output[["png"]], plot = perf_plot)
