@@ -4,4 +4,4 @@ future::plan(future::multicore, workers = snakemake@resources[['ncores']])
 snakemake@input[['csv']] %>%
   future.apply::future_lapply(readr::read_csv) %>%
   dplyr::bind_rows() %>%
-  readr::write_tsv(snakemake@output[['csv']])
+  readr::write_csv(snakemake@output[['csv']])
