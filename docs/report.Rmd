@@ -1,6 +1,6 @@
 ---
 title: "ML Results"
-date: "`r Sys.date()`"
+date: "`r Sys.Date()`"
 output: github_document
 ---
 
