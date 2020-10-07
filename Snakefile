@@ -6,9 +6,7 @@ seeds = range(100, 100 + config['nseeds'] + 1)
 
 rule targets:
     input:
-        'report.md',
-        expand("results/{type}_results.csv",
-                type = ['performance', 'feature-importance'])
+        'report.md'
 
 rule preprocess_data:
     input:
