@@ -7,4 +7,4 @@ perf_plot <- snakemake@input[["csv"]] %>%
     theme_classic() +
     scale_color_brewer(palette = "Dark2") +
     coord_flip()
-ggsave(snakemake@output[["png"]], plot = perf_plot)
+ggsave(snakemake@output[["plot"]], plot = perf_plot)

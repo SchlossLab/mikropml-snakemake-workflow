@@ -21,7 +21,13 @@ different random partitions of the data into training and testing sets.
 
 ## Model Performance
 
-```{r plot}
-include_graphics(snakemake@input[['plot']])
+```{r perf_plot}
+include_graphics(snakemake@input[['perf_plot']])
+```
+
+## Runtime
+
+```{r runtime_plot}
+include_graphics(snakemake@input[['runtime_plot']])
 ```
 

@@ -2,7 +2,8 @@ configfile: 'config/config.yml'
 
 ncores = config['ncores']
 ml_methods = config['ml_methods']
-seeds = range(100, 100 + config['nseeds'] + 1)
+start_seed = 100
+seeds = range(start_seed, start_seed + config['nseeds'] + 1)
 
 rule targets:
     input:
@@ -66,17 +67,27 @@ rule plot_performance:
         R="code/plot_perf.R",
         csv='results/performance_results.csv'
     output:
-        png='figures/performance.png'
+        plot='figures/performance.png'
     log:
         "log/plot_performance.txt"
     script:
         "code/plot_perf.R"
 
+rule plot_runtime:
+    input:
+        R='code/plot_runtime.R',
+        tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
+    output:
+        plot='figures/runtime.png'
+    script:
+        'code/plot_runtime.R'
+
 rule render_report:
     input:
         Rmd='report.Rmd',
         R='code/render.R',
-        plot=rules.plot_performance.output.png
+        perf_plot=rules.plot_performance.output.plot,
+        runtime_plot=rules.plot_runtime.output.plot
     output:
         doc='report.md'
     log:
