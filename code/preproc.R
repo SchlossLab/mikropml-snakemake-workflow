@@ -1,7 +1,8 @@
 source("code/log_smk.R")
-library(dplyr)
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@resources[["ncores"]])
-otu_data <- readr::read_csv(snakemake@input[["csv"]]) %>%
-  mikropml::preprocess_data(outcome_colname = "dx")
-saveRDS(otu_data, file = snakemake@output[["rds"]])
+
+data_raw <- readr::read_csv(snakemake@input[["csv"]])
+data_processed <- mikropml::preprocess_data(data_raw, outcome_colname = "dx")
+
+saveRDS(data_processed, file = snakemake@output[["rds"]])

@@ -1,7 +1,7 @@
 source("code/log_smk.R")
-library(dplyr)
-future::plan(future::multicore, workers = snakemake@resources[["ncores"]])
+library(tidyverse)
+
 snakemake@input[["csv"]] %>%
-  future.apply::future_lapply(readr::read_csv) %>%
-  dplyr::bind_rows() %>%
-  readr::write_csv(snakemake@output[["csv"]])
+  lapply(readr::read_csv) %>%
+  bind_rows() %>%
+  write_csv(snakemake@output[["csv"]])

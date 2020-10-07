@@ -1,8 +1,8 @@
 source("code/log_smk.R")
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
+
 perf_plot <- snakemake@input[["csv"]] %>%
-  readr::read_csv() %>%
+  read_csv() %>%
   mikropml::plot_performance() +
     theme_classic() +
     scale_color_brewer(palette = "Dark2") +
