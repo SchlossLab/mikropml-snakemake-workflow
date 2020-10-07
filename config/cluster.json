@@ -18,9 +18,5 @@
  "run_ml": {
   "procs": "{resources.ncores}",
   "pmem": "{resources.pmem_gb}GB"
- },
- "merge_results": {
-  "procs": "{resources.ncores}",
-  "pmem": "{resources.pmem_gb}GB"
  }
 }

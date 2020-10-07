@@ -21,7 +21,7 @@ rule preprocess_data:
         "benchmarks/preprocess_data.txt"
     resources:
         ncores=ncores,
-        pmem_gb=1
+        pmem_gb=2
     script:
         "code/preproc.R"
 
@@ -42,7 +42,7 @@ rule run_ml:
         seed="{seed}"
     resources:
         ncores=ncores,
-        pmem_gb=4
+        pmem_gb=2
     script:
         "code/ml.R"
 
@@ -56,9 +56,6 @@ rule bind_results:
         "log/bind_results_{type}.txt"
     benchmark:
         "benchmarks/bind_results_{type}.txt"
-    resources:
-        ncores=ncores,
-        pmem_gb=1
     script:
         "code/bind_results.R"
 
