@@ -1,5 +1,7 @@
 ml_methods:
  - rf
  - regLogistic
-ncores: 8
-nseeds: 2
+ - svmRadial
+ - xgbTree
+ncores: 12
+nseeds: 100

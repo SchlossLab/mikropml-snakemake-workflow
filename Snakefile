@@ -13,9 +13,9 @@ rule targets:
 rule preprocess_data:
     input:
         R="code/preproc.R",
-        csv="data/raw/otu_medium.csv"
+        csv="data/raw/otu_large.csv"
     output:
-        rds='data/processed/otu_medium.Rds'
+        rds='data/processed/otu_large.Rds'
     log:
         "log/preprocess_data.txt"
     benchmark:
