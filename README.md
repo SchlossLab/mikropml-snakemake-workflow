@@ -2,7 +2,10 @@
 
 ## The Workflow
 
-The [Snakemake workflow](Snakefile) preprocesses the dataset ([`data/otu_large.csv`](data/otu_large.csv)),
+The [`Snakefile`](Snakefile) contains rules which define the output files we want and how to make them.
+Snakemake automatically figures out the dependencies of each of the rules and
+what order to run them in.
+This [Snakemake workflow](Snakefile) preprocesses the dataset ([`data/otu_large.csv`](data/otu_large.csv)),
 calls `mikropml::run_ml()` for each seed and ML method set in[ `config/config.yml`](config/config.yml),
 combines the results files,
 plots performance results,
