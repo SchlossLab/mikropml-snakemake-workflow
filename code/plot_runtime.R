@@ -13,8 +13,8 @@ read_bench <- function(filename) {
 dat <- snakemake@input[["tsv"]] %>%
   lapply(read_bench) %>%
   bind_rows()
-
 head(dat)
+write_csv(dat, snakemake@output[['csv']])
 
 runtime_plot <- dat %>%
   group_by(method) %>%
