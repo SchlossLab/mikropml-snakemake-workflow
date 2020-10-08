@@ -13,10 +13,10 @@
  },
  "preprocess_data": {
   "procs": "{resources.ncores}",
-  "pmem": "{resources.pmem_gb}GB"
+  "pmem": "2GB"
  },
  "run_ml": {
   "procs": "{resources.ncores}",
-  "pmem": "{resources.pmem_gb}GB"
+  "pmem": "8GB"
  }
 }
