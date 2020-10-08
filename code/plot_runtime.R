@@ -10,9 +10,12 @@ read_bench <- function(filename) {
     )
 }
 
-dat <- snakemake@input[["csv"]] %>%
+dat <- snakemake@input[["tsv"]] %>%
   lapply(read_bench) %>%
   bind_rows()
+
+head(dat)
+
 runtime_plot <- dat %>%
   group_by(method) %>%
   ggplot(aes(method, s)) +
