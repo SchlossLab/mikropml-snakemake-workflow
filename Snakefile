@@ -74,6 +74,8 @@ rule plot_runtime:
         tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
     output:
         plot='figures/runtime.png'
+    log:
+        'log/plot_runtime.txt'
     script:
         'code/plot_runtime.R'
 
