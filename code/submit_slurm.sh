@@ -24,4 +24,4 @@
 #SBATCH --mail-user=YOUR_EMAIL_HERE
 #SBATCH --mail-type=BEGIN,END
 
-time snakemake --profile config/slurm --latency-wait 90
+time snakemake --profile config/slurm --latency-wait 90 --configfile config/config_robust.yml
