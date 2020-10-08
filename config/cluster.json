@@ -17,6 +17,6 @@
  },
  "run_ml": {
   "procs": "{resources.ncores}",
-  "pmem": "8GB"
+  "pmem": "4GB"
  }
 }
