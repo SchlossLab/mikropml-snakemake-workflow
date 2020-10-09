@@ -44,6 +44,10 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     - `ncores`: the number of cores to use for preprocessing and for each `mikropml::run_ml()` call. Do not exceed the number of cores you have available.
     - `nseeds`: the number of different random seeds to use for training models with `mikropml::run_ml()`.
 
+    The default config file is suitable
+    for initial testing, but we recommend using more seeds and cores if available.
+    A more robust configuration is provided in [`config/config_robust.yml`](config/config_robust.yml).
+
 1. Do a dry run to make sure the snakemake workflow is valid.
     ``` sh
     snakemake -n
@@ -55,6 +59,11 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     snakemake
     ```
 
+    Or specify a different config file with:
+    ``` sh
+    snakemake --configfile config/config_robust.yml
+    ```
+
     To run the workflow on an HPC with SLURM:
 
     1. Edit your email (`YOUR_EMAIL_HERE`) and SLURM account (`YOUR_ACCOUNT_HERE`) in:
@@ -64,8 +73,12 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
         ``` µsh
         sbatch code/submit_slurm.sh
         ```
-        The main job will then submit other snakemake jobs.
+        The main job will then submit all other snakemake jobs, allowing
+        independent steps of the workflow to run in parallel.
+        Slurm output files will be written to `log/hpc.`.
 1. View the results in [`report.md`](report.md).
+
+    This example report was created by running the workflow on the Great Lakes HPC at the University of Michigan with [`config/config_robust.yml`](config/config_robust.yml).
 
 ## Resources
 
