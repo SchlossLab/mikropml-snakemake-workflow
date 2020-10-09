@@ -44,7 +44,8 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
     cd mikropml-snakemake-workflow
     ```
 
-    Alternatively you can click the green `Use this template` button to create
+    Alternatively, if you're viewing this on GitHub,
+    you can click the green `Use this template` button to create
     your own version of the repo on GitHub, then clone it.
 
 1. Create a conda environment and activate it.
