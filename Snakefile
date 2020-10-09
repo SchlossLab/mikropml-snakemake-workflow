@@ -15,7 +15,7 @@ rule targets:
 rule preprocess_data:
     input:
         R="code/preproc.R",
-        csv="data/otu_large.csv"
+        csv=config['dataset']
     output:
         rds='data/dat_proc.Rds'
     log:
@@ -40,6 +40,7 @@ rule run_ml:
     benchmark:
         "benchmarks/runs/run_ml.{method}_{seed}.txt"
     params:
+        outcome_colname=config['outcome_colname'],
         method="{method}",
         seed="{seed}",
         kfold=kfold

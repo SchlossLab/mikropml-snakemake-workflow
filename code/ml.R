@@ -7,8 +7,7 @@ data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 ml_results <- mikropml::run_ml(
   dataset = data_processed,
   method = snakemake@params[["method"]],
-  outcome_colname = "dx",
-  outcome_value = "cancer",
+  outcome_colname = snakemake@params[['outcome_colname']],
   find_feature_importance = TRUE,
   kfold = as.numeric(snakemake@params[['kfold']]),
   seed = as.numeric(snakemake@params[["seed"]])

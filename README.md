@@ -1,11 +1,16 @@
 # Running mikropml with snakemake
 
+Snakemake is...
+
+We hope you find this workflow a useful template to get started with,
+then customize the code to meet the needs of your ML problem.
+
 ## The Workflow
 
 The [`Snakefile`](Snakefile) contains rules which define the output files we want and how to make them.
 Snakemake automatically figures out the dependencies of each of the rules and
 what order to run them in.
-This [Snakemake workflow](Snakefile) preprocesses the dataset ([`data/otu_large.csv`](data/otu_large.csv)),
+This workflow preprocesses the example dataset ([`data/otu_large.csv`](data/otu_large.csv)),
 calls `mikropml::run_ml()` for each seed and ML method set in[ `config/config.yml`](config/config.yml),
 combines the results files,
 plots performance results,
@@ -46,10 +51,16 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     ```
 
 1. Edit the configuration file [`config/config.yml`](config/config.yml).
+    - `dataset`: the path to the dataset as a csv file.
+    - `outcome_colname`: column name of the outcomes for the dataset.
     - `ml_methods`: list of machine learning methods to use. Must be supported by mikropml.
     - `kfold`: k number for k-fold cross validation during model training.
     - `ncores`: the number of cores to use for preprocessing and for each `mikropml::run_ml()` call. Do not exceed the number of cores you have available.
     - `nseeds`: the number of different random seeds to use for training models with `mikropml::run_ml()`.
+
+    You can leave these options as-is if you'd like to first make sure the
+    workflow runs without error on your machine before using your own dataset
+    and custom parameters.
 
     The default config file is suitable for initial testing,
     but we recommend using more cores if available and

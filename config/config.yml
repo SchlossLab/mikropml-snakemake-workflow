@@ -1,3 +1,5 @@
+dataset: data/otu_large.csv
+outcome_colname: dx
 ml_methods:
  - rf
  - regLogistic
