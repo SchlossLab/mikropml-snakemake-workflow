@@ -21,6 +21,6 @@ runtime_plot <- dat %>%
   ggplot(aes(method, s)) +
   geom_boxplot() +
   theme_classic() +
-  labs(y = "seconds", x = "", title = "Runtime") +
+  labs(y = "seconds", x = "") +
   coord_flip()
 ggsave(snakemake@output[["plot"]], plot = runtime_plot)
