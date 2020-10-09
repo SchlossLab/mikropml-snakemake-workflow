@@ -62,7 +62,7 @@ rule combine_benchmarks:
         R='code/combine_benchmarks.R',
         tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
     output:
-        csv='results/runtime_results.csv'
+        csv='results/benchmarks_results.csv'
     log:
         'log/combine_benchmarks.txt'
     script:
@@ -79,23 +79,23 @@ rule plot_performance:
     script:
         "code/plot_perf.R"
 
-rule plot_runtime:
+rule plot_benchmarks:
     input:
-        R='code/plot_runtime.R',
+        R='code/plot_benchmarks.R',
         csv=rules.combine_benchmarks.output.csv
     output:
-        plot='figures/runtime.png'
+        plot='figures/benchmarks.png'
     log:
-        'log/plot_runtime.txt'
+        'log/plot_benchmarks.txt'
     script:
-        'code/plot_runtime.R'
+        'code/plot_benchmarks.R'
 
 rule render_report:
     input:
         Rmd='report.Rmd',
         R='code/render.R',
         perf_plot=rules.plot_performance.output.plot,
-        runtime_plot=rules.plot_runtime.output.plot
+        bench_plot=rules.plot_benchmarks.output.plot
     output:
         doc='report.md'
     log:

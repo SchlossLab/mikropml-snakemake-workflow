@@ -25,9 +25,9 @@ different random partitions of the data into training and testing sets.
 include_graphics(snakemake@input[['perf_plot']])
 ```
 
-## Runtime
+## Memory Usage & Runtime
 
 ```{r runtime_plot, out.width='80%'}
-include_graphics(snakemake@input[['runtime_plot']])
+include_graphics(snakemake@input[['bench_plot']])
 ```
 
