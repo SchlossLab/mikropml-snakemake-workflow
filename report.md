@@ -11,7 +11,7 @@ Model Performance
 
 <img src="figures/performance.png" width="80%" />
 
-Runtime
--------
+Memory Usage & Runtime
+----------------------
 
-<img src="figures/runtime.png" width="80%" />
+<img src="figures/benchmarks.png" width="80%" />
