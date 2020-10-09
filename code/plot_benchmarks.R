@@ -8,11 +8,11 @@ dat <- read_csv(snakemake@input[['csv']]) %>%
   pivot_longer(-method, names_to = 'metric') %>%
   group_by(method)
 
-runtime_plot <- dat %>%
+bench_plot <- dat %>%
   ggplot(aes(method, value)) +
   geom_boxplot() +
   facet_wrap(metric ~ ., scales = 'free') +
   theme_classic() +
   labs(y = "", x = "") +
   coord_flip()
-ggsave(snakemake@output[["plot"]], plot = runtime_plot)
+ggsave(snakemake@output[["plot"]], plot = bench_plot)
