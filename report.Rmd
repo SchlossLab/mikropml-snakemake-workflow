@@ -32,6 +32,5 @@ include_graphics(snakemake@input[['perf_plot']])
 include_graphics(snakemake@input[['bench_plot']])
 ```
 
-
 Each model training run was given `r snakemake@params[['ncores']]` cores
 for parallelization.
