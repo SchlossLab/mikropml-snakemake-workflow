@@ -10,7 +10,7 @@ ml_results <- mikropml::run_ml(
   outcome_colname = "dx",
   outcome_value = "cancer",
   find_feature_importance = TRUE,
-  kfold = 5,
+  kfold = as.numeric(snakemake@params[['kfold']]),
   seed = as.numeric(snakemake@params[["seed"]])
 )
 

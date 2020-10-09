@@ -1,7 +1,7 @@
 ---
 title: "ML Results"
 date: "`r Sys.Date()`"
-output: 
+output:
   github_document:
     html_preview: false
 ---
@@ -16,8 +16,9 @@ library(knitr)
 ```
 
 Machine learning algorithms used include: `r snakemake@params[['ml_methods']]`.
-Models were trained with `r snakemake@params[['nseeds']]` 
-different random partitions of the data into training and testing sets.
+Models were trained with `r snakemake@params[['nseeds']]`
+different random partitions of the data into training and testing sets using
+`r snakemake@params[['kfold']]`-fold cross validation.
 
 ## Model Performance
 
@@ -31,3 +32,6 @@ include_graphics(snakemake@input[['perf_plot']])
 include_graphics(snakemake@input[['bench_plot']])
 ```
 
+
+Each model training run was given `r snakemake@params[['ncores']]` cores
+for parallelization.

@@ -2,8 +2,11 @@ configfile: 'config/config.yml'
 
 ncores = config['ncores']
 ml_methods = config['ml_methods']
+kfold = config['kfold']
+
+nseeds = config['nseeds']
 start_seed = 100
-seeds = range(start_seed, start_seed + config['nseeds'])
+seeds = range(start_seed, start_seed + nseeds)
 
 rule targets:
     input:
@@ -38,7 +41,8 @@ rule run_ml:
         "benchmarks/runs/run_ml.{method}_{seed}.txt"
     params:
         method="{method}",
-        seed="{seed}"
+        seed="{seed}",
+        kfold=kfold
     resources:
         ncores=ncores
     script:
@@ -101,7 +105,9 @@ rule render_report:
     log:
         "log/render_report.txt"
     params:
-        nseeds=config['nseeds'],
-        ml_methods=ml_methods
+        nseeds=nseeds,
+        ml_methods=ml_methods,
+        ncores=ncores,
+        kfold=kfold
     script:
         'code/render.R'

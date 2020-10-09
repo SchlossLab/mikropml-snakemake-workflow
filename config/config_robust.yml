@@ -3,5 +3,6 @@ ml_methods:
  - regLogistic
  - svmRadial
  - xgbTree
+kfold: 5
 ncores: 36
 nseeds: 100
