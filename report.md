@@ -4,7 +4,7 @@ ML Results
 
 Machine learning algorithms used include: rf, regLogistic, svmRadial,
 xgbTree. Models were trained with 100 different random partitions of the
-data into training and testing sets.
+data into training and testing sets using 5-fold cross validation.
 
 Model Performance
 -----------------
@@ -15,3 +15,5 @@ Memory Usage & Runtime
 ----------------------
 
 <img src="figures/benchmarks.png" width="80%" />
+
+Each model training run was given 36 cores for parallelization.
