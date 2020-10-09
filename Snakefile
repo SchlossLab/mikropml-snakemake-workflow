@@ -44,18 +44,29 @@ rule run_ml:
     script:
         "code/ml.R"
 
-rule bind_results:
+rule combine_results:
     input:
-        R="code/bind_results.R",
+        R="code/combine_results.R",
         csv=expand("results/runs/{method}_{seed}_{{type}}.csv", method = ml_methods, seed = seeds)
     output:
         csv='results/{type}_results.csv'
     log:
-        "log/bind_results_{type}.txt"
+        "log/combine_results_{type}.txt"
     benchmark:
-        "benchmarks/bind_results_{type}.txt"
+        "benchmarks/combine_results_{type}.txt"
     script:
-        "code/bind_results.R"
+        "code/combine_results.R"
+
+rule combine_benchmarks:
+    input:,
+        R='code/combine_benchmarks.R',
+        tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
+    output:
+        csv='results/runtime_results.csv'
+    log:
+        'log/combine_benchmarks.txt'
+    script:
+        'code/combine_benchmarks.R'
 
 rule plot_performance:
     input:
@@ -71,10 +82,9 @@ rule plot_performance:
 rule plot_runtime:
     input:
         R='code/plot_runtime.R',
-        tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
+        csv=rules.combine_benchmarks.output.csv
     output:
-        plot='figures/runtime.png',
-        csv='results/runtime_results.csv'
+        plot='figures/runtime.png'
     log:
         'log/plot_runtime.txt'
     script:

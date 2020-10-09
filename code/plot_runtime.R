@@ -1,22 +1,7 @@
 source("code/log_smk.R")
 library(tidyverse)
 
-read_bench <- function(filename) {
-  filename %>%
-    read_tsv() %>%
-    mutate(
-      method = str_replace(filename, "^benchmarks/runs/run_ml.(.*)_(.*).txt", "\\1"),
-      seed = str_replace(filename, "^benchmarks/runs/run_ml.(.*)_(.*).txt", "\\2")
-    )
-}
-
-dat <- snakemake@input[["tsv"]] %>%
-  lapply(read_bench) %>%
-  bind_rows()
-head(dat)
-write_csv(dat, snakemake@output[['csv']])
-
-runtime_plot <- dat %>%
+runtime_plot <- read_csv(snakemake@input[['csv']]) %>%
   group_by(method) %>%
   ggplot(aes(method, s)) +
   geom_boxplot() +
