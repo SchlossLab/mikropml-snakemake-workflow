@@ -58,7 +58,7 @@ rule combine_results:
         "code/combine_results.R"
 
 rule combine_benchmarks:
-    input:,
+    input:
         R='code/combine_benchmarks.R',
         tsv=expand(rules.run_ml.benchmark, method = ml_methods, seed = seeds)
     output:
