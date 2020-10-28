@@ -1,8 +1,8 @@
 dataset: data/otu_large.csv
 outcome_colname: dx
 ml_methods:
+ - glmnet
  - rf
- - regLogistic
  - svmRadial
 kfold: 5
 ncores: 4

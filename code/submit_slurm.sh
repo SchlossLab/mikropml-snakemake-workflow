@@ -10,16 +10,8 @@
 
 #SBATCH --output=log/hpc/slurm-%j_%x.out
 
-####  Slurm account and partition specification here
-####    These will change if you work on multiple projects, or need
-####    special hardware, like large memory nodes or GPUs.
-
 #SBATCH --account=YOUR_ACCOUNT_HERE
 #SBATCH --partition=standard
-
-#### #### ####  These are the least frequently changing options
-
-####  Your e-mail address and when you want e-mail
 
 #SBATCH --mail-user=YOUR_EMAIL_HERE
 #SBATCH --mail-type=BEGIN,END

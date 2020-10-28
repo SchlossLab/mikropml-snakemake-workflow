@@ -1,22 +1,39 @@
 # Running mikropml with snakemake
 
-Snakemake is...
+[Snakemake](https://snakemake.readthedocs.io/en/stable) is a workflow manager
+that enables massively parallel and reproducible
+analyses.
+Snakemake is a suitable tool to use when you can break a workflow down into
+discrete steps, with each step having input and output files.
 
-We hope you find this workflow a useful template to get started with,
-then customize the code to meet the needs of your ML problem.
+
+[mikropml](http://www.schlosslab.org/mikropml/) is an R package for robust machine learning pipelines.
+We provide this example workflow as a template to get started running mikropml with snakemake.
+We hope you then customize the code to meet the needs of your particular ML task.
+
+For more details on these tools, see the
+[Snakemake tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html)
+and read the [mikropml docs](http://www.schlosslab.org/mikropml/).
 
 ## The Workflow
 
 The [`Snakefile`](Snakefile) contains rules which define the output files we want and how to make them.
-Snakemake automatically figures out the dependencies of each of the rules and
-what order to run them in.
-This workflow preprocesses the example dataset ([`data/otu_large.csv`](data/otu_large.csv)),
-calls `mikropml::run_ml()` for each seed and ML method set in[ `config/config.yml`](config/config.yml),
-combines the results files,
-plots performance results,
+Snakemake automatically builds a directed acyclic graph (DAG) of jobs to figure
+out the dependencies of each of the rules and what order to run them in.
+This workflow preprocesses the example dataset, calls `mikropml::run_ml()`
+for each seed and ML method set in the config file,
+combines the results files, plots performance results,
 and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markdown file](report.md).
 
 ![rulegraph](figures/rulegraph.png)
+
+The DAG shows how calls to `run_ml` can run in parallel if
+snakemake is allowed to run more than one job at a time.
+If we use 100 seeds and 4 ML methods, snakemake would call `run_ml` 400 times.
+Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
+
+![dag](figures/dag.png)
+
 
 ## Quick Start
 
@@ -27,7 +44,8 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     cd mikropml-snakemake-workflow
     ```
 
-    Alternatively you can click the green `Use this template` button to create
+    Alternatively, if you're viewing this on GitHub,
+    you can click the green `Use this template` button to create
     your own version of the repo on GitHub, then clone it.
 
 1. Create a conda environment and activate it.
@@ -43,7 +61,7 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     and the other dependencies listed in
     [`config/environment.yml`](config/environment.yml) however you like.
 
-1. Install the mikropml R package. [mikropml install instructions](https://github.com/SchlossLab/mikropml#installation)
+1. [Install the mikropml R package](https://github.com/SchlossLab/mikropml#installation).
 
     e.g.
     ``` sh
@@ -76,7 +94,7 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
 
 1. Run the workflow.
 
-    Run it locally with:
+    Run it **locally** with:
     ``` sh
     snakemake
     ```
@@ -86,7 +104,7 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     snakemake --configfile config/config_robust.yml
     ```
 
-    To run the workflow on an HPC with Slurm:
+    To run the workflow on an **HPC with Slurm**:
 
     1. Edit your email (`YOUR_EMAIL_HERE`), Slurm account (`YOUR_ACCOUNT_HERE`), and other Slurm parameters as needed in:
 
@@ -108,7 +126,8 @@ and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored [markd
     This example report was created by running the workflow on the Great Lakes HPC
     at the University of Michigan with [`config/config_robust.yml`](config/config_robust.yml).
 
-## Resources
+## More resources
 
-- [Snakemake docs](https://snakemake.readthedocs.io/en/stable)
 - [mikropml docs](http://www.schlosslab.org/mikropml/)
+- [Snakemake tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html)
+- [conda user guide](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)
