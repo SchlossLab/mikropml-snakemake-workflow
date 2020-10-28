@@ -84,6 +84,9 @@ rule plot_performance:
     script:
         "code/plot_perf.R"
 
+# TODO: hyperparameter tuning plot(s)
+# TODO: feature importance plot(s)
+
 rule plot_benchmarks:
     input:
         R='code/plot_benchmarks.R',
@@ -112,3 +115,13 @@ rule render_report:
         kfold=kfold
     script:
         'code/render.R'
+
+rule clean:
+    input:
+        rules.render_report.output,
+        rules.plot_performance.output.plot,
+        rules.plot_benchmarks.output.plot
+    shell:
+        '''
+        rm -rf {input}
+        '''
