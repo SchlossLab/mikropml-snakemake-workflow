@@ -10,18 +10,25 @@ dependencies:
   - r-caret
   - r-devtools
   - r-doFuture
+  - r-e1071
   - r-foreach
   - r-future
   - r-future.apply
+  - r-ggplot2
+  - r-glmnet
   - r-here
   - r-kernlab
+  - r-knitr
   - r-liblinear
+  - r-mlmetrics
   - r-prroc
   - r-randomForest
   - r-rcolorbrewer
   - r-rlang
   - r-rmarkdown
   - r-rpart
+  - r-testthat
+  - r-tidyr
   - r-tidyverse=1.3
   - r-xgboost
   - snakemake=5
