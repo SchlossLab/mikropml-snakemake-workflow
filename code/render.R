@@ -1,5 +1,4 @@
 source("code/log_smk.R")
-library(here)
-rmarkdown::render(here(snakemake@input[["Rmd"]]),
-  output_file = here(snakemake@output[["doc"]])
+rmarkdown::render(snakemake@input[["Rmd"]],
+  output_file = snakemake@output[["doc"]]
 )
