@@ -6,7 +6,6 @@ analyses.
 Snakemake is a suitable tool to use when you can break a workflow down into
 discrete steps, with each step having input and output files.
 
-
 [mikropml](http://www.schlosslab.org/mikropml/) is an R package for robust machine learning pipelines.
 We provide this example workflow as a template to get started running mikropml with snakemake.
 We hope you then customize the code to meet the needs of your particular ML task.
@@ -57,16 +56,8 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
     (Recommend [miniconda](https://docs.conda.io/en/latest/miniconda.html)
     if you don't already have conda installed.)
 
-    Alternatively, you can [install snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
-    and the other dependencies listed in
+    Alternatively, you can install the dependencies listed in
     [`config/environment.yml`](config/environment.yml) however you like.
-
-1. [Install the mikropml R package](https://github.com/SchlossLab/mikropml#installation).
-
-    e.g.
-    ``` sh
-    R -e 'devtools::install_github("SchlossLab/mikropml")'
-    ```
 
 1. Edit the configuration file [`config/config.yml`](config/config.yml).
     - `dataset`: the path to the dataset as a csv file.
