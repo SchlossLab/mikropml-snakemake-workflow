@@ -6,7 +6,7 @@ analyses.
 Snakemake is a suitable tool to use when you can break a workflow down into
 discrete steps, with each step having input and output files.
 
-[mikropml](http://www.schlosslab.org/mikropml/) is an R package for robust machine learning pipelines.
+[mikropml](http://www.schlosslab.org/mikropml/) is an R package for supervised machine learning pipelines.
 We provide this example workflow as a template to get started running mikropml with snakemake.
 We hope you then customize the code to meet the needs of your particular ML task.
 
