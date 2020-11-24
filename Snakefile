@@ -84,9 +84,6 @@ rule plot_performance:
     script:
         "code/plot_perf.R"
 
-# TODO: hyperparameter tuning plot(s)
-# TODO: feature importance plot(s)
-
 rule plot_benchmarks:
     input:
         R='code/plot_benchmarks.R',
