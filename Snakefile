@@ -3,6 +3,7 @@ configfile: 'config/config.yml'
 ncores = config['ncores']
 ml_methods = config['ml_methods']
 kfold = config['kfold']
+outcome_colname = config['outcome_colname']
 
 nseeds = config['nseeds']
 start_seed = 100
@@ -22,6 +23,8 @@ rule preprocess_data:
         "log/preprocess_data.txt"
     benchmark:
         "benchmarks/preprocess_data.txt"
+    params:
+        outcome_colname=outcome_colname
     resources:
         ncores=ncores
     script:
@@ -40,7 +43,7 @@ rule run_ml:
     benchmark:
         "benchmarks/runs/run_ml.{method}_{seed}.txt"
     params:
-        outcome_colname=config['outcome_colname'],
+        outcome_colname=outcome_colname,
         method="{method}",
         seed="{seed}",
         kfold=kfold
