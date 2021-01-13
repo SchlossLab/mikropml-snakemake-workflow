@@ -18,5 +18,8 @@
  "run_ml": {
   "procs": "{resources.ncores}",
   "pmem": "4GB"
+ },
+ "combine_hp_performance": {
+  "pmem": "16GB"
  }
 }

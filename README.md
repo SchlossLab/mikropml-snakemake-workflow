@@ -21,7 +21,8 @@ Snakemake automatically builds a directed acyclic graph (DAG) of jobs to figure
 out the dependencies of each of the rules and what order to run them in.
 This workflow preprocesses the example dataset, calls `mikropml::run_ml()`
 for each seed and ML method set in the config file,
-combines the results files, plots performance results,
+combines the results files, plots performance results 
+(cross-validation and test AUROCs, hyperparameter AUROCs from cross-validation, and benchmark performance),
 and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([example](report-example.md)).
 
 ![rulegraph](figures/rulegraph.png)
@@ -116,6 +117,10 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
 
     This example report was created by running the workflow on the Great Lakes HPC
     at the University of Michigan with [`config/config_robust.yml`](config/config_robust.yml).
+
+## Out of memory or walltime
+
+If any of your jobs fail because it ran out of memory, you can increase the memory for the given rule in the [`config/cluster.json`](config/cluster.json) file. For example, if the `combine_hp_performance` rule fails, you can increase the memory from 16GB to, say, 24GB. You can also change other slurm parameters from the defaults in this file (e.g. walltime, number of cores, etc.).
 
 ## More resources
 
