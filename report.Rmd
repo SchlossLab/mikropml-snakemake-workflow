@@ -26,6 +26,12 @@ different random partitions of the data into training and testing sets using
 include_graphics(snakemake@input[['perf_plot']])
 ```
 
+## Hyperparameter Performance
+
+```{r hp_plot, out.width='80%'}
+include_graphics(snakemake@input[['hp_plot']])
+```
+
 ## Memory Usage & Runtime
 
 ```{r runtime_plot, out.width='80%'}

@@ -3,6 +3,7 @@ configfile: 'config/config.yml'
 ncores = config['ncores']
 ml_methods = config['ml_methods']
 kfold = config['kfold']
+outcome_colname = config['outcome_colname']
 
 nseeds = config['nseeds']
 start_seed = 100
@@ -22,6 +23,8 @@ rule preprocess_data:
         "log/preprocess_data.txt"
     benchmark:
         "benchmarks/preprocess_data.txt"
+    params:
+        outcome_colname=outcome_colname
     resources:
         ncores=ncores
     script:
@@ -40,7 +43,7 @@ rule run_ml:
     benchmark:
         "benchmarks/runs/run_ml.{method}_{seed}.txt"
     params:
-        outcome_colname=config['outcome_colname'],
+        outcome_colname=outcome_colname,
         method="{method}",
         seed="{seed}",
         kfold=kfold
@@ -61,6 +64,19 @@ rule combine_results:
         "benchmarks/combine_results_{type}.txt"
     script:
         "code/combine_results.R"
+
+rule combine_hp_performance:
+    input:
+        R='code/combine_hp_perf.R',
+        rds=expand('results/runs/{{method}}_{seed}_model.Rds', seed=seeds)
+    output:
+        rds='results/hp_performance_results_{method}.Rds'
+    log:
+        "log/combine_hp_perf_{method}.txt"
+    benchmark:
+        "benchmarks/combine_hp_perf_{method}.txt"
+    script:
+        "code/combine_hp_perf.R"
 
 rule combine_benchmarks:
     input:
@@ -84,6 +100,17 @@ rule plot_performance:
     script:
         "code/plot_perf.R"
 
+rule plot_hp_performance:
+    input: 
+        R='code/plot_hp_perf.R',
+        rds=rules.combine_hp_performance.output.rds,
+    output:
+        plot='figures/hp_performance_{method}.png'
+    log:
+        'log/plot_hp_perf_{method}.txt'
+    script:
+        'code/plot_hp_perf.R'
+
 rule plot_benchmarks:
     input:
         R='code/plot_benchmarks.R',
@@ -100,6 +127,7 @@ rule render_report:
         Rmd='report.Rmd',
         R='code/render.R',
         perf_plot=rules.plot_performance.output.plot,
+        hp_plot=expand(rules.plot_hp_performance.output.plot, method = ml_methods),
         bench_plot=rules.plot_benchmarks.output.plot
     output:
         doc='report.md'
