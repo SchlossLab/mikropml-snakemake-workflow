@@ -48,16 +48,26 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
     you can click the green `Use this template` button to create
     your own version of the repo on GitHub, then clone it.
 
-1. Create a conda environment and activate it.
+1. Install the dependencies.
 
-    ``` sh
-    conda env create -f config/environment.yml
-    conda activate smk-ML
-    ```
-    (Recommend [miniconda](https://docs.conda.io/en/latest/miniconda.html)
-    if you don't already have conda installed.)
-
-    Alternatively, you can install the dependencies listed in
+    1. If you don't have conda yet, we recommend installing 
+       [miniconda](https://docs.conda.io/en/latest/miniconda.html).
+       
+    1. Next, install [mamba](https://mamba.readthedocs.io/en/latest/), 
+       a fast drop-in replacement for conda:
+       
+       ``` sh
+       conda install mamba -n base -c conda-forge
+       ```
+       
+    1. Finally, create the environment and activate it:
+    
+       ``` sh
+       mamba env create -f config/environment.yml
+       conda activate smk-ML
+       ```
+       
+    - Alternatively, you can install the dependencies listed in
     [`config/environment.yml`](config/environment.yml) however you like.
 
 1. Edit the configuration file [`config/config.yml`](config/config.yml).
