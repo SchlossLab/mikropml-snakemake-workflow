@@ -1,5 +1,7 @@
 configfile: 'config/config.yml'
 
+MEM_PER_GB=1024
+
 ncores = config['ncores']
 ml_methods = config['ml_methods']
 kfold = config['kfold']
@@ -26,6 +28,8 @@ rule preprocess_data:
     params:
         outcome_colname=outcome_colname
     threads: ncores
+    resources:
+        mem_mb = MEM_PER_GB * 2
     conda: 'envs/mikropml.yml'
     script:
         "code/preproc.R"
@@ -48,6 +52,8 @@ rule run_ml:
         seed="{seed}",
         kfold=kfold
     threads: ncores
+    resources:
+        mem_mb = MEM_PER_GB * 4
     conda: 'envs/mikropml.yml'
     script:
         "code/ml.R"
@@ -76,6 +82,8 @@ rule combine_hp_performance:
         "log/combine_hp_perf_{method}.txt"
     benchmark:
         "benchmarks/combine_hp_perf_{method}.txt"
+    resources:
+        mem_mb = MEM_PER_GB * 16
     conda: 'envs/Rtidy.yml'
     script:
         "code/combine_hp_perf.R"
