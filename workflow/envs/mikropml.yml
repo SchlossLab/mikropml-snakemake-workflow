@@ -1,0 +1,13 @@
+name: mikropml
+channels:
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - r-base=4
+  - r-doFuture
+  - r-foreach
+  - r-future
+  - r-future.apply
+  - r-mikropml
+  - r-rpart

@@ -25,8 +25,8 @@ rule preprocess_data:
         "benchmarks/preprocess_data.txt"
     params:
         outcome_colname=outcome_colname
-    resources:
-        ncores=ncores
+    threads: ncores
+    conda: 'envs/mikropml.yml'
     script:
         "code/preproc.R"
 
@@ -47,8 +47,8 @@ rule run_ml:
         method="{method}",
         seed="{seed}",
         kfold=kfold
-    resources:
-        ncores=ncores
+    threads: ncores
+    conda: 'envs/mikropml.yml'
     script:
         "code/ml.R"
 
@@ -62,6 +62,7 @@ rule combine_results:
         "log/combine_results_{type}.txt"
     benchmark:
         "benchmarks/combine_results_{type}.txt"
+    conda: 'envs/Rtidy.yml'
     script:
         "code/combine_results.R"
 
@@ -75,6 +76,7 @@ rule combine_hp_performance:
         "log/combine_hp_perf_{method}.txt"
     benchmark:
         "benchmarks/combine_hp_perf_{method}.txt"
+    conda: 'envs/Rtidy.yml'
     script:
         "code/combine_hp_perf.R"
 
@@ -86,6 +88,7 @@ rule combine_benchmarks:
         csv='results/benchmarks_results.csv'
     log:
         'log/combine_benchmarks.txt'
+    conda: 'envs/Rtidy.yml'
     script:
         'code/combine_benchmarks.R'
 
@@ -97,17 +100,19 @@ rule plot_performance:
         plot='figures/performance.png'
     log:
         "log/plot_performance.txt"
+    conda: 'envs/Rtidy.yml'
     script:
         "code/plot_perf.R"
 
 rule plot_hp_performance:
-    input: 
+    input:
         R='code/plot_hp_perf.R',
         rds=rules.combine_hp_performance.output.rds,
     output:
         plot='figures/hp_performance_{method}.png'
     log:
         'log/plot_hp_perf_{method}.txt'
+    conda: 'envs/Rtidy.yml'
     script:
         'code/plot_hp_perf.R'
 
@@ -119,6 +124,7 @@ rule plot_benchmarks:
         plot='figures/benchmarks.png'
     log:
         'log/plot_benchmarks.txt'
+    conda: 'envs/Rtidy.yml'
     script:
         'code/plot_benchmarks.R'
 
@@ -138,6 +144,7 @@ rule render_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold
+    conda: 'envs/Rtidy.yml'
     script:
         'code/render.R'
 
@@ -145,7 +152,8 @@ rule clean:
     input:
         rules.render_report.output,
         rules.plot_performance.output.plot,
-        rules.plot_benchmarks.output.plot
+        rules.plot_benchmarks.output.plot,
+        rules.plot_hp_performance.output.plot
     shell:
         '''
         rm -rf {input}
