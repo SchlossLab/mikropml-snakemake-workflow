@@ -9,7 +9,7 @@ rule combine_results:
         "log/combine_results_{type}.txt"
     benchmark:
         "benchmarks/combine_results_{type}.txt"
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         "workflow/scripts/combine_results.R"
 
@@ -25,7 +25,7 @@ rule combine_hp_performance:
         "benchmarks/combine_hp_perf_{method}.txt"
     resources:
         mem_mb = MEM_PER_GB * 16
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         "workflow/scripts/combine_hp_perf.R"
 
@@ -37,6 +37,6 @@ rule combine_benchmarks:
         csv='results/benchmarks_results.csv'
     log:
         'log/combine_benchmarks.txt'
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         'workflow/scripts/combine_benchmarks.R'

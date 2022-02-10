@@ -6,7 +6,7 @@ rule plot_performance:
         plot='figures/performance.png'
     log:
         "log/plot_performance.txt"
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         "workflow/scripts/plot_perf.R"
 
@@ -18,7 +18,7 @@ rule plot_hp_performance:
         plot='figures/hp_performance_{method}.png'
     log:
         'log/plot_hp_perf_{method}.txt'
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         'workflow/scripts/plot_hp_perf.R'
 
@@ -30,6 +30,6 @@ rule plot_benchmarks:
         plot='figures/benchmarks.png'
     log:
         'log/plot_benchmarks.txt'
-    conda: 'envs/Rtidy.yml'
+    conda: '../envs/Rtidy.yml'
     script:
         'workflow/scripts/plot_benchmarks.R'

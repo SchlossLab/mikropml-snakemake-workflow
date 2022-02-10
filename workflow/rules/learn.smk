@@ -14,7 +14,7 @@ rule preprocess_data:
     threads: ncores
     resources:
         mem_mb = MEM_PER_GB * 2
-    conda: 'envs/mikropml.yml'
+    conda: '../envs/mikropml.yml'
     script:
         "workflow/scripts/preproc.R"
 
@@ -38,6 +38,6 @@ rule run_ml:
     threads: ncores
     resources:
         mem_mb = MEM_PER_GB * 4
-    conda: 'envs/mikropml.yml'
+    conda: '../envs/mikropml.yml'
     script:
         "workflow/scripts/ml.R"
