@@ -42,11 +42,13 @@ rule render_report:
 
 rule clean:
     input:
-        rules.render_report.output,
-        rules.plot_performance.output.plot,
-        rules.plot_benchmarks.output.plot,
-        rules.plot_hp_performance.output.plot
+        'report.md',
+        'figures/benchmarks.png',
+        'figures/performance.png',
+        'results/performance_results.csv',
+        'results/benchmarks_results.csv',
+        'results/hp_performance_results_glmnet.Rds'
     shell:
         '''
-        rm -rf {input}
+        rm {input}
         '''
