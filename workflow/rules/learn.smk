@@ -7,7 +7,7 @@ rule preprocess_data:
         logR='workflow/scripts/log_smk.R',
         csv=data_csv
     output:
-        rds=f'data/{dataset}_preproc.Rds'
+        rds=f'data/processed/{dataset}_preproc.Rds'
     log:
         "log/preprocess_data.txt"
     benchmark:
