@@ -42,4 +42,4 @@ rule combine_benchmarks:
         'log/combine_benchmarks.txt'
     conda: '../envs/Rtidy.yml'
     script:
-        '..scripts/combine_benchmarks.R'
+        '../scripts/combine_benchmarks.R'
