@@ -16,12 +16,12 @@ and read the [mikropml docs](http://www.schlosslab.org/mikropml/).
 
 ## The Workflow
 
-The [`Snakefile`](Snakefile) contains rules which define the output files we want and how to make them.
+The [`Snakefile`](workflow/Snakefile) contains rules which define the output files we want and how to make them.
 Snakemake automatically builds a directed acyclic graph (DAG) of jobs to figure
 out the dependencies of each of the rules and what order to run them in.
 This workflow preprocesses the example dataset, calls `mikropml::run_ml()`
 for each seed and ML method set in the config file,
-combines the results files, plots performance results 
+combines the results files, plots performance results
 (cross-validation and test AUROCs, hyperparameter AUROCs from cross-validation, and benchmark performance),
 and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([example](report-example.md)).
 
@@ -50,25 +50,25 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
 
 1. Install the dependencies.
 
-    1. If you don't have conda yet, we recommend installing 
+    1. If you don't have conda yet, we recommend installing
        [miniconda](https://docs.conda.io/en/latest/miniconda.html).
-       
-    1. Next, install [mamba](https://mamba.readthedocs.io/en/latest/), 
+
+    1. Next, install [mamba](https://mamba.readthedocs.io/en/latest/),
        a fast drop-in replacement for conda:
-       
+
        ``` sh
        conda install mamba -n base -c conda-forge
        ```
-       
+
     1. Finally, create the environment and activate it:
-    
+
        ``` sh
        mamba env create -f config/environment.yml
        conda activate smk-ML
        ```
-       
+
     - Alternatively, you can install the dependencies listed in
-    [`config/environment.yml`](config/environment.yml) however you like.
+    [`workflow/envs/environment.yml`](workflow/envs/environment.yml) however you like.
 
 1. Edit the configuration file [`config/config.yml`](config/config.yml).
     - `dataset`: the path to the dataset as a csv file.
@@ -103,20 +103,20 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
 
     Or specify a different config file with:
     ``` sh
-    snakemake --configfile config/config_robust.yml
+    snakemake --configfile config/robust.yml
     ```
 
     To run the workflow on an **HPC with Slurm**:
 
     1. Edit your email (`YOUR_EMAIL_HERE`), Slurm account (`YOUR_ACCOUNT_HERE`), and other Slurm parameters as needed in:
 
-        - [`code/submit_slurm.sh`](code/submit_slurm.sh)
-        - [`config/cluster.json`](config/cluster.json)
+        - [`workflow/scripts/submit_slurm.sh`](workflow/scripts/submit_slurm.sh)
+        - [`config/slurm/config.yaml`](config/slurm/config.yaml)
 
     1. Submit the snakemake workflow with:
 
         ``` sh
-        sbatch code/submit_slurm.sh
+        sbatch workflow/scripts/submit_slurm.sh
         ```
 
         The main job will then submit all other snakemake jobs, allowing
@@ -126,11 +126,11 @@ Here's a small example DAG if we were to use only 2 seeds and 2 ML methods:
 1. View the results in `report.md` ([see example here](report-example.md)).
 
     This example report was created by running the workflow on the Great Lakes HPC
-    at the University of Michigan with [`config/config_robust.yml`](config/config_robust.yml).
+    at the University of Michigan with [`config/robust.yml`](config/robust.yml).
 
 ## Out of memory or walltime
 
-If any of your jobs fail because it ran out of memory, you can increase the memory for the given rule in the [`config/cluster.json`](config/cluster.json) file. For example, if the `combine_hp_performance` rule fails, you can increase the memory from 16GB to, say, 24GB. You can also change other slurm parameters from the defaults in this file (e.g. walltime, number of cores, etc.).
+If any of your jobs fail because it ran out of memory, you can increase the memory for the given rule in the [`config/slurm/config.yaml`](config/slurm/config.yaml) file. For example, if the `combine_hp_performance` rule fails, you can increase the memory from 16GB to, say, 24GB. You can also change other slurm parameters from the defaults in this file (e.g. walltime, number of cores, etc.).
 
 ## More resources
 
