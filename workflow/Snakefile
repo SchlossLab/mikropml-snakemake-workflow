@@ -41,14 +41,15 @@ rule render_report:
         'scripts/render.R'
 
 rule clean:
-    input:
+    params:
         'report.md',
         'figures/benchmarks.png',
         'figures/performance.png',
+        'figures/hp_performance_glmnet.png',
         'results/performance_results.csv',
         'results/benchmarks_results.csv',
         'results/hp_performance_results_glmnet.Rds'
     shell:
         '''
-        rm {input}
+        rm -f {params}
         '''
