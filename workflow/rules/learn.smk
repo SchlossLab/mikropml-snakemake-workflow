@@ -2,7 +2,7 @@ rule preprocess_data:
     input:
         R="workflow/scripts/preproc.R",
         logR="workflow/scripts/log_smk.R",
-        csv=config['dataset_csv'],
+        csv=config["dataset_csv"],
     output:
         rds=f"data/processed/{config['dataset_name']}_preproc.Rds",
     log:
