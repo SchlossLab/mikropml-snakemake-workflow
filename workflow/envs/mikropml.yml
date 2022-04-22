@@ -10,3 +10,4 @@ dependencies:
   - r-future.apply
   - r-mikropml
   - r-rpart
+  - r-readr
