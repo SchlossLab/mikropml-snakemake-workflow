@@ -1,10 +1,13 @@
+data_csv = config['dataset']
+dataset = data_csv.split('/')[-1].split('.')[0]
 
 rule preprocess_data:
     input:
         R="workflow/scripts/preproc.R",
-        csv=config['dataset']
+        logR='workflow/scripts/log_smk.R',
+        csv=data_csv
     output:
-        rds='data/dat_proc.Rds'
+        rds=f'data/{dataset}_preproc.Rds'
     log:
         "log/preprocess_data.txt"
     benchmark:
@@ -16,11 +19,12 @@ rule preprocess_data:
         mem_mb = MEM_PER_GB * 2
     conda: '../envs/mikropml.yml'
     script:
-        "workflow/scripts/preproc.R"
+        "../scripts/preproc.R"
 
 rule run_ml:
     input:
         R="workflow/scripts/ml.R",
+        logR='workflow/scripts/log_smk.R',
         rds=rules.preprocess_data.output.rds
     output:
         model="results/runs/{method}_{seed}_model.Rds",
@@ -40,4 +44,4 @@ rule run_ml:
         mem_mb = MEM_PER_GB * 4
     conda: '../envs/mikropml.yml'
     script:
-        "workflow/scripts/ml.R"
+        "../scripts/ml.R"

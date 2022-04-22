@@ -1,4 +1,4 @@
-source("code/log_smk.R")
+source(snakemake@input[['logR']])
 library(mikropml)
 
 doFuture::registerDoFuture()
