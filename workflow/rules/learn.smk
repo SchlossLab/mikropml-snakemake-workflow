@@ -1,14 +1,10 @@
-data_csv = config["dataset"]
-dataset = data_csv.split("/")[-1].split(".")[0]
-
-
 rule preprocess_data:
     input:
         R="workflow/scripts/preproc.R",
         logR="workflow/scripts/log_smk.R",
-        csv=data_csv,
+        csv=config['dataset_csv'],
     output:
-        rds=f"data/processed/{dataset}_preproc.Rds",
+        rds=f"data/processed/{config['dataset_name']}_preproc.Rds",
     log:
         "log/preprocess_data.txt",
     benchmark:
