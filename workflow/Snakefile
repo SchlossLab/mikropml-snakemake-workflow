@@ -21,8 +21,8 @@ rule targets:
 
 rule render_report:
     input:
-        Rmd='report.Rmd',
         R='workflow/scripts/render.R',
+        Rmd='report.Rmd',
         logR='workflow/scripts/log_smk.R',
         perf_plot=rules.plot_performance.output.plot,
         hp_plot=expand(rules.plot_hp_performance.output.plot, method = ml_methods),
@@ -38,7 +38,7 @@ rule render_report:
         kfold=kfold
     conda: 'envs/Rtidy.yml'
     script:
-        'workflow/scripts/render.R'
+        'scripts/render.R'
 
 rule clean:
     input:
