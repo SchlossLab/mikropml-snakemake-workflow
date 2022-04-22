@@ -26,15 +26,15 @@
     1. Finally, create the environment and activate it:
 
        ``` sh
-       mamba env create -f config/environment.yml
+       mamba env create -f workflow/envs/environment.yml
        conda activate smk-ML
        ```
 
     - Alternatively, you can install the dependencies listed in
-    [`workflow/envs/environment.yml`](workflow/envs/environment.yml) however you like.
+    [`workflow/envs/environment.yml`](/workflow/envs/environment.yml) however you like.
 
-1. Edit the configuration file [`config/config.yml`](config/config.yml).
-    - `dataset`: the path to the dataset as a csv file.
+1. Edit the configuration file [`config/default.yml`](/config/default.yml).
+    - `dataset_csv`: the path to the dataset as a csv file.
     - `outcome_colname`: column name of the outcomes for the dataset.
     - `ml_methods`: list of machine learning methods to use. Must be supported by mikropml.
     - `kfold`: k number for k-fold cross validation during model training.
@@ -45,11 +45,11 @@
     workflow runs without error on your machine before using your own dataset
     and custom parameters.
 
-    The default config file is suitable for initial testing,
+    The default and test config files are suitable for initial testing,
     but we recommend using more cores if available and
     more seeds for model training.
     A more robust configuration is provided in
-    [`config/config_robust.yml`](config/config_robust.yml).
+    [`config/robust.yml`](/config/robust.yml).
 
 1. Do a dry run to make sure the snakemake workflow is valid.
 
@@ -73,8 +73,8 @@
 
     1. Edit your email (`YOUR_EMAIL_HERE`), Slurm account (`YOUR_ACCOUNT_HERE`), and other Slurm parameters as needed in:
 
-        - [`workflow/scripts/submit_slurm.sh`](workflow/scripts/submit_slurm.sh)
-        - [`config/slurm/config.yaml`](config/slurm/config.yaml)
+        - [`workflow/scripts/submit_slurm.sh`](/workflow/scripts/submit_slurm.sh)
+        - [`config/slurm/config.yaml`](/config/slurm/config.yaml)
 
     1. Submit the snakemake workflow with:
 
