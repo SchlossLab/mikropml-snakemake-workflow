@@ -1,55 +1,61 @@
-configfile: 'config/default.yml'
+configfile: "config/default.yml"
 
-MEM_PER_GB=1024
 
-ncores = config['ncores']
-ml_methods = config['ml_methods']
-kfold = config['kfold']
-outcome_colname = config['outcome_colname']
+MEM_PER_GB = 1024
 
-nseeds = config['nseeds']
+ncores = config["ncores"]
+ml_methods = config["ml_methods"]
+kfold = config["kfold"]
+outcome_colname = config["outcome_colname"]
+
+nseeds = config["nseeds"]
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
-include: 'rules/learn.smk'
-include: 'rules/combine.smk'
-include: 'rules/plot.smk'
+
+include: "rules/learn.smk"
+include: "rules/combine.smk"
+include: "rules/plot.smk"
+
 
 rule targets:
     input:
-        'report.md'
+        "report.md",
+
 
 rule render_report:
     input:
-        R='workflow/scripts/render.R',
-        Rmd='report.Rmd',
-        logR='workflow/scripts/log_smk.R',
+        R="workflow/scripts/render.R",
+        Rmd="report.Rmd",
+        logR="workflow/scripts/log_smk.R",
         perf_plot=rules.plot_performance.output.plot,
-        hp_plot=expand(rules.plot_hp_performance.output.plot, method = ml_methods),
-        bench_plot=rules.plot_benchmarks.output.plot
+        hp_plot=expand(rules.plot_hp_performance.output.plot, method=ml_methods),
+        bench_plot=rules.plot_benchmarks.output.plot,
     output:
-        doc='report.md'
+        doc="report.md",
     log:
-        "log/render_report.txt"
+        "log/render_report.txt",
     params:
         nseeds=nseeds,
         ml_methods=ml_methods,
         ncores=ncores,
-        kfold=kfold
-    conda: 'envs/Rtidy.yml'
+        kfold=kfold,
+    conda:
+        "envs/Rtidy.yml"
     script:
-        'scripts/render.R'
+        "scripts/render.R"
+
 
 rule clean:
     params:
-        'report.md',
-        'figures/benchmarks.png',
-        'figures/performance.png',
-        'figures/hp_performance_glmnet.png',
-        'results/performance_results.csv',
-        'results/benchmarks_results.csv',
-        'results/hp_performance_results_glmnet.Rds'
+        "report.md",
+        "figures/benchmarks.png",
+        "figures/performance.png",
+        "figures/hp_performance_glmnet.png",
+        "results/performance_results.csv",
+        "results/benchmarks_results.csv",
+        "results/hp_performance_results_glmnet.Rds",
     shell:
-        '''
+        """
         rm -f {params}
-        '''
+        """
