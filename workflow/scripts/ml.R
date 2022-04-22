@@ -1,7 +1,7 @@
 source(snakemake@input[['logR']])
 
 doFuture::registerDoFuture()
-future::plan(future::multicore, workers = snakemake@resources[["ncores"]])
+future::plan(future::multicore, workers = snakemake@threads)
 
 data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 ml_results <- mikropml::run_ml(
