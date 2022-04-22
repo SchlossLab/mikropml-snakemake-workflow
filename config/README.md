@@ -23,11 +23,11 @@
        conda install mamba -n base -c conda-forge
        ```
 
-    1. Finally, create the environment and activate it:
+    1. Create a conda environment with snakemake installed:
 
        ``` sh
-       mamba env create -f workflow/envs/environment.yml
-       conda activate smk-ML
+       mamba env create -f workflow/envs/smk.yml
+       conda activate smk
        ```
 
     - Alternatively, you can install the dependencies listed in
@@ -59,14 +59,14 @@
 
 1. Run the workflow.
 
-    Run it **locally** with:
+    Run it **locally** using 2 cores with:
     ``` sh
-    snakemake
+    snakemake --use-conda --cores 2
     ```
 
     Or specify a different config file with:
     ``` sh
-    snakemake --configfile config/test.yml
+    snakemake --use-conda --cores 2 --configfile config/test.yml
     ```
 
     To run the workflow on an **HPC with Slurm**:
