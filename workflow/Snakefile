@@ -1,4 +1,4 @@
-configfile: 'config/config.yml'
+configfile: 'config/default.yml'
 
 MEM_PER_GB=1024
 
