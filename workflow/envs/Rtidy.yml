@@ -1,7 +1,6 @@
 name: Rtidy
 channels:
   - conda-forge
-  - defaults
   - r
 dependencies:
   - r-base=4
