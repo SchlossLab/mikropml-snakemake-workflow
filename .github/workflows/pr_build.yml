@@ -1,0 +1,52 @@
+name: pr_build
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install build dependencies
+        run: |
+          Rscript -e "install.packages(c('styler','usethis'))"
+          python -m pip install --upgrade pip
+          pip install black snakefmt
+      - name: Style R code
+        run: |
+          Rscript -e 'usethis::use_tidy_style()'
+          git add .
+          git diff-index --quiet HEAD \
+          || git commit \
+          --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" \
+          -m '🎨  Style R code'
+      - name: Style Python code
+        run: |
+          black workflow/
+          snakefmt workflow/
+          git add workflow/
+          git diff-index --quiet HEAD \
+          || git commit \
+          --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" \
+          -m '🎨  Style Python & Snakemake code 🐍'
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.head_ref }}
