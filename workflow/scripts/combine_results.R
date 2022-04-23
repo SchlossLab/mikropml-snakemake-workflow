@@ -1,4 +1,4 @@
-source(snakemake@input[['logR']])
+source(snakemake@input[["logR"]])
 library(tidyverse)
 
 snakemake@input[["csv"]] %>%
