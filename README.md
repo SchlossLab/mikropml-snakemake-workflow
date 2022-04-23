@@ -1,6 +1,7 @@
 # Running mikropml with snakemake
 
 <!--[![tests](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml)-->
+[![build](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/build.yml/badge.svg)](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/build.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](/LICENSE.md)
 [![DOI](https://zenodo.org/badge/292886119.svg)](https://zenodo.org/badge/latestdoi/292886119)
 
