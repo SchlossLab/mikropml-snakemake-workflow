@@ -1,0 +1,46 @@
+configfile: "config/default.yml"
+
+
+MEM_PER_GB = 1024
+
+ncores = config["ncores"]
+ml_methods = config["ml_methods"]
+kfold = config["kfold"]
+outcome_colname = config["outcome_colname"]
+
+nseeds = config["nseeds"]
+start_seed = 100
+seeds = range(start_seed, start_seed + nseeds)
+
+
+include: "rules/learn.smk"
+include: "rules/combine.smk"
+include: "rules/plot.smk"
+
+
+rule targets:
+    input:
+        "report.md",
+
+
+rule render_report:
+    input:
+        R="workflow/scripts/render.R",
+        Rmd="report.Rmd",
+        logR="workflow/scripts/log_smk.R",
+        perf_plot=rules.plot_performance.output.plot,
+        hp_plot=expand(rules.plot_hp_performance.output.plot, method=ml_methods),
+        bench_plot=rules.plot_benchmarks.output.plot,
+    output:
+        doc="report.md",
+    log:
+        "log/render_report.txt",
+    params:
+        nseeds=nseeds,
+        ml_methods=ml_methods,
+        ncores=ncores,
+        kfold=kfold,
+    conda:
+        "envs/Rtidy.yml"
+    script:
+        "scripts/render.R"
