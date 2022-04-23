@@ -1,5 +1,9 @@
 # Running mikropml with snakemake
 
+<!--[![tests](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml)-->
+[![License](https://img.shields.io/badge/license-MIT-blue)](/LICENSE.md)
+[![DOI](https://zenodo.org/badge/292886119.svg)](https://zenodo.org/badge/latestdoi/292886119)
+
 [Snakemake](https://snakemake.readthedocs.io/en/stable) is a workflow manager
 that enables massively parallel and reproducible
 analyses.
