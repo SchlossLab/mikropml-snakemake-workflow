@@ -1,0 +1,10 @@
+name: Rtidy
+channels:
+  - conda-forge
+  - r
+dependencies:
+  - r-base=4
+  - r-cowplot
+  - r-mikropml
+  - r-rmarkdown
+  - r-tidyverse
