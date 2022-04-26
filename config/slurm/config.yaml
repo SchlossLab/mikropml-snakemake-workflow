@@ -1,6 +1,33 @@
-cluster: "sbatch --job-name {cluster.jobname} --account {cluster.account_slurm} --partition {cluster.partition} --mail-user {cluster.email} --mail-type {cluster.mail_type} --nodes {cluster.nodes} --ntasks {cluster.procs} --mem-per-cpu {cluster.pmem} --time {cluster.walltime} --output {cluster.outfile} "
-cluster-config: "config/cluster.json"
-jobs: 4999
+cluster:
+    mkdir -p log/hpc/jobs/{rule}/ &&
+    sbatch
+        --job-name={rule}-{wildcards}
+        --account={resources.account}
+        --partition={resources.partition}
+        --mail-user={resources.email}
+        --mail-type={resources.mail_on}
+        --nodes=1
+        --ntasks=1
+        --cpus-per-task={threads}
+        --mem-per-cpu={resources.mem_mb}MB
+        --time={resources.time}
+        --output=log/hpc/jobs/{rule}/{rule}.{wildcards}.out
+default-resources:
+  - account=YOUR_ACCOUNT_HERE
+  - partition=standard
+  - email=YOUR_EMAIL_HERE
+  - mail_on=FAIL
+  - mem_mb=512
+  - time="24:00:00"
+conda-frontend: "mamba"
 immediate-submit: False
-verbose: true
+jobs: 4999
+keep-going: true
+latency-wait: 120
+max-jobs-per-second: 100
+max-status-checks-per-second: 100
 notemp: true
+printshellcmds: true
+scheduler: greedy
+use-conda: true
+verbose: true
