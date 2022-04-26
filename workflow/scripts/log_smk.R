@@ -1,4 +1,4 @@
-if (exists('snakemake')) {
+if (exists("snakemake")) {
   if (length(snakemake@log) > 0) {
     log_filepath <- snakemake@log[1][[1]]
     log <- file(log_filepath, open = "wt")

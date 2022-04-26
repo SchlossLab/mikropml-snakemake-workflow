@@ -1,4 +1,4 @@
-source(snakemake@input[['logR']])
+source(snakemake@input[["logR"]])
 library(tidyverse)
 
 perf_plot <- snakemake@input[["csv"]] %>%

@@ -1,4 +1,4 @@
-source(snakemake@input[['logR']])
+source(snakemake@input[["logR"]])
 
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
@@ -7,9 +7,9 @@ data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 ml_results <- mikropml::run_ml(
   dataset = data_processed,
   method = snakemake@params[["method"]],
-  outcome_colname = snakemake@params[['outcome_colname']],
+  outcome_colname = snakemake@params[["outcome_colname"]],
   find_feature_importance = TRUE,
-  kfold = as.numeric(snakemake@params[['kfold']]),
+  kfold = as.numeric(snakemake@params[["kfold"]]),
   seed = as.numeric(snakemake@params[["seed"]])
 )
 
