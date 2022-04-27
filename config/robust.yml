@@ -6,7 +6,6 @@ ml_methods:
  - rf
  - rpart2
  - svmRadial
- - xgbTree
 kfold: 5
 ncores: 36
 nseeds: 100
