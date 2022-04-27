@@ -1,18 +1,13 @@
-name: smk-ML
+name: mikropml
 channels:
   - conda-forge
-  - bioconda
-  - defaults
   - r
 dependencies:
   - r-base=4
-  - r-cowplot
   - r-doFuture
   - r-foreach
   - r-future
   - r-future.apply
   - r-mikropml
-  - r-rmarkdown
   - r-rpart
-  - r-tidyverse=1.3
-  - snakemake=5
+  - r-readr

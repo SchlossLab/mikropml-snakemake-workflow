@@ -1,4 +1,4 @@
-source("code/log_smk.R")
+source(snakemake@input[["logR"]])
 library(tidyverse)
 
 snakemake@input[["csv"]] %>%
