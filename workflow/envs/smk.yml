@@ -1,0 +1,7 @@
+name: smk
+channels:
+  - conda-forge
+  - bioconda
+  - r
+dependencies:
+  - snakemake=7

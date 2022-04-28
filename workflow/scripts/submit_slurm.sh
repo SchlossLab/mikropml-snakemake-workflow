@@ -16,4 +16,4 @@
 #SBATCH --mail-user=YOUR_EMAIL_HERE
 #SBATCH --mail-type=BEGIN,END
 
-time snakemake --profile config/slurm --latency-wait 90 --configfile config/config.yml
+time snakemake --profile config/slurm --latency-wait 90 --use-conda --configfile config/test.yml
