@@ -7,4 +7,5 @@ dependencies:
   - r-cowplot
   - r-mikropml
   - r-rmarkdown
+  - r-schtools>=0.3.0
   - r-tidyverse
