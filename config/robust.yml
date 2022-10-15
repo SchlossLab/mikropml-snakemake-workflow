@@ -4,6 +4,7 @@ outcome_colname: dx
 ml_methods:
  - glmnet
  - parRF
+ - rf
  - rpart2
  - svmRadial
 kfold: 5
