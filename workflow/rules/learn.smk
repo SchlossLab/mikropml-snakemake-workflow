@@ -1,7 +1,6 @@
 rule preprocess_data:
     input:
         R="workflow/scripts/preproc.R",
-        logR="workflow/scripts/log_smk.R",
         csv=config["dataset_csv"],
     output:
         rds=f"data/processed/{config['dataset_name']}_preproc.Rds",
@@ -22,8 +21,7 @@ rule preprocess_data:
 
 rule run_ml:
     input:
-        R="workflow/scripts/ml.R",
-        logR="workflow/scripts/log_smk.R",
+        R="workflow/scripts/train_ml.R",
         rds=rules.preprocess_data.output.rds,
     output:
         model="results/runs/{method}_{seed}_model.Rds",
@@ -44,4 +42,4 @@ rule run_ml:
     conda:
         "../envs/mikropml.yml"
     script:
-        "../scripts/ml.R"
+        "../scripts/train_ml.R"
