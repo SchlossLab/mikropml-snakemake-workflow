@@ -8,6 +8,6 @@ dependencies:
   - r-foreach
   - r-future
   - r-future.apply
-  - r-mikropml
+  - r-mikropml>=1.4.0
   - r-rpart
   - r-readr
