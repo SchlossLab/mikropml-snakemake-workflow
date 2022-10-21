@@ -7,7 +7,7 @@ rule plot_performance:
     log:
         "log/plot_performance.txt",
     conda:
-        "../envs/Rtidy.yml"
+        "../envs/mikropml.yml"
     script:
         "../scripts/plot_perf.R"
 
@@ -21,7 +21,7 @@ rule plot_hp_performance:
     log:
         "log/plot_hp_perf_{method}.txt",
     conda:
-        "../envs/Rtidy.yml"
+        "../envs/mikropml.yml"
     script:
         "../scripts/plot_hp_perf.R"
 
@@ -35,6 +35,6 @@ rule plot_benchmarks:
     log:
         "log/plot_benchmarks.txt",
     conda:
-        "../envs/Rtidy.yml"
+        "../envs/mikropml.yml"
     script:
         "../scripts/plot_benchmarks.R"

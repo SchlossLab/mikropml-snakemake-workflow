@@ -40,6 +40,6 @@ rule render_report:
         ncores=ncores,
         kfold=kfold,
     conda:
-        "envs/Rtidy.yml"
+        "envs/mikropml.yml"
     script:
         "scripts/render.R"
