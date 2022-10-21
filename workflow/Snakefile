@@ -27,7 +27,6 @@ rule render_report:
     input:
         R="workflow/scripts/render.R",
         Rmd="report.Rmd",
-        logR="workflow/scripts/log_smk.R",
         perf_plot=rules.plot_performance.output.plot,
         hp_plot=expand(rules.plot_hp_performance.output.plot, method=ml_methods),
         bench_plot=rules.plot_benchmarks.output.plot,
@@ -41,6 +40,6 @@ rule render_report:
         ncores=ncores,
         kfold=kfold,
     conda:
-        "envs/Rtidy.yml"
+        "envs/mikropml.yml"
     script:
         "scripts/render.R"
