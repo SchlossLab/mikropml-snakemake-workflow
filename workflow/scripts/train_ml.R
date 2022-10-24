@@ -3,8 +3,8 @@ schtools::log_snakemake()
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
 
-method <- snakemake@params[['method']]
-hyperparams <- snakemake@params[['hyperparams']][[method]]
+method <- snakemake@params[["method"]]
+hyperparams <- snakemake@params[["hyperparams"]][[method]]
 data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 ml_results <- mikropml::run_ml(
   dataset = data_processed,
