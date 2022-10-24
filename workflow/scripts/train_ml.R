@@ -3,14 +3,17 @@ schtools::log_snakemake()
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
 
+method <- snakemake@params[['method']]
+hyperparams <- snakemake@params[['hyperparams']][[method]]
 data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 ml_results <- mikropml::run_ml(
   dataset = data_processed,
-  method = snakemake@params[["method"]],
+  method = method,
   outcome_colname = snakemake@params[["outcome_colname"]],
   find_feature_importance = TRUE,
   kfold = as.numeric(snakemake@params[["kfold"]]),
-  seed = as.numeric(snakemake@params[["seed"]])
+  seed = as.numeric(snakemake@params[["seed"]]),
+  hyperparams = hyperparams
 )
 
 saveRDS(ml_results$trained_model, file = snakemake@output[["model"]])

@@ -10,3 +10,9 @@ ml_methods:
 kfold: 5
 ncores: 36
 nseeds: 100
+hyperparams:
+  - parRF:
+    - mtry:
+      - 42
+      - 83
+      - 166
