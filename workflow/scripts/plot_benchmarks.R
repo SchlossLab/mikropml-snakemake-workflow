@@ -1,4 +1,4 @@
-source(snakemake@input[["logR"]])
+schtools::log_snakemake()
 library(tidyverse)
 
 dat <- read_csv(snakemake@input[["csv"]],

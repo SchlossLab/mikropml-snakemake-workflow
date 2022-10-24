@@ -1,4 +1,4 @@
-source(snakemake@input[["logR"]])
+schtools::log_snakemake()
 
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
