@@ -36,7 +36,7 @@ rule run_ml:
         method="{method}",
         seed="{seed}",
         kfold=kfold,
-        hyperparams=hyperparams
+        hyperparams=hyperparams,
     threads: ncores
     resources:
         mem_mb=MEM_PER_GB * 4,
