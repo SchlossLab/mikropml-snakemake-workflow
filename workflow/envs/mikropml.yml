@@ -5,9 +5,13 @@ channels:
 dependencies:
   - r-base=4
   - r-doFuture
+  - r-cowplot
   - r-foreach
   - r-future
   - r-future.apply
   - r-mikropml>=1.4.0
+  - r-rmarkdown
   - r-rpart
-  - r-readr
+  - r-schtools>=0.3.0
+  - r-tidyverse
+
