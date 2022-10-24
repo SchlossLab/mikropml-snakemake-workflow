@@ -45,16 +45,3 @@ rule render_report:
         "envs/mikropml.yml"
     script:
         "scripts/render.R"
-
-
-rule hyperparams:
-    params:
-        hyperparams=hyperparams,
-    script:
-        "scripts/hyperparams.R"
-
-rule clean:
-    shell:
-        """
-        rm -rf figures/benchmarks.png figures/hp_performance_glmnet.png	figures/performance.png	report.md
-        """
