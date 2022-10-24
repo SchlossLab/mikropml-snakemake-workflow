@@ -12,6 +12,7 @@ nseeds = config["nseeds"]
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
+hyperparams = config['hyperparams'] if 'hyperparams' in config else None
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
@@ -44,3 +45,9 @@ rule render_report:
         "envs/Rtidy.yml"
     script:
         "scripts/render.R"
+
+rule hyperparams:
+    params:
+        hyperparams=hyperparams
+    script:
+        "scripts/hyperparams.R"
