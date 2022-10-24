@@ -17,3 +17,8 @@ hyperparams:
       - 0.1
       - 1
       - 10
+  - parRF:
+    - mtry:
+      - 2
+      - 3
+      - 6
