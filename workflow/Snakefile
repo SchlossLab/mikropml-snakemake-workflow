@@ -53,8 +53,9 @@ rule hyperparams:
     script:
         "scripts/hyperparams.R"
 
+
 rule clean:
     shell:
         """
-        rm -rf figures/benchmarks.png figures/hp_performance_glmnet.png	figures/performance.png	report.md
+        rm -rf figures/benchmarks.png figures/hp_performance_glmnet.png    figures/performance.png    report.md
         """
