@@ -5,7 +5,7 @@ ml_methods:
  - parRF
 kfold: 5
 ncores: 8
-nseeds: 2
+nseeds: 10
 hyperparams:
   - parRF:
     - mtry:
