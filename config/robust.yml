@@ -3,9 +3,21 @@ dataset_name: otu-large
 outcome_colname: dx
 ml_methods:
  - glmnet
+ - parRF
  - rf
  - rpart2
  - svmRadial
 kfold: 5
 ncores: 36
 nseeds: 100
+hyperparams:
+  - parRF:
+    - mtry:
+      - 42
+      - 83
+      - 166
+  - rf:
+    - mtry:
+      - 42
+      - 83
+      - 166
