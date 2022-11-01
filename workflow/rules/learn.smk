@@ -39,7 +39,7 @@ rule run_ml:
         hyperparams=hyperparams,
     threads: ncores
     resources:
-        mem_mb=MEM_PER_GB * 4,
+        mem_mb=MEM_PER_GB * 8,
     conda:
         "../envs/mikropml.yml"
     script:
