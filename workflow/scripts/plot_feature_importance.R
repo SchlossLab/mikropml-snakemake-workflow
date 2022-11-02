@@ -3,7 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(schtools)
 
-feat_df <- read_csv(snakemake@input[["csv"]])
+feat_df <- readr::read_csv(snakemake@input[["csv"]])
 
 top_feats <- feat_df %>%
   group_by(method, names) %>%
