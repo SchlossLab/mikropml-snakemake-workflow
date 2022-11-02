@@ -7,15 +7,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      eval = TRUE)
+schtools::set_knitr_opts()
 ```
 
 ```{r load}
 library(knitr)
 ```
 
-Machine learning algorithms used include: `r snakemake@params[['ml_methods']]`.
+Machine learning algorithms used were `r snakemake@params[['ml_methods']]`.
 Models were trained with `r snakemake@params[['nseeds']]` different random
 partitions of the `r snakemake@params[['dataset']]` dataset into training and
 testing sets using `r snakemake@params[['kfold']]`-fold cross validation.

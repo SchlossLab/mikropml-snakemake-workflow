@@ -2,9 +2,9 @@ ML Results
 ================
 2022-11-02
 
-Machine learning algorithms used include: glmnet, rf. Models were
-trained with 10 different random partitions of the otu-large dataset
-into training and testing sets using 5-fold cross validation.
+Machine learning algorithms used were glmnet and rf. Models were trained
+with 10 different random partitions of the otu-large dataset into
+training and testing sets using 5-fold cross validation.
 
 ## Model Performance
 
