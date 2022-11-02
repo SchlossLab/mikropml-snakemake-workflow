@@ -3,7 +3,9 @@ rule combine_results:
     input:
         R="workflow/scripts/combine_results.R",
         csv=expand(
-            "results/{{dataset}}/runs/{method}_{seed}_{{type}}.csv", method=ml_methods, seed=seeds
+            "results/{{dataset}}/runs/{method}_{seed}_{{type}}.csv",
+            method=ml_methods,
+            seed=seeds,
         ),
     output:
         csv="results/{dataset}/{type}_results.csv",
@@ -38,7 +40,11 @@ rule combine_hp_performance:
 rule combine_benchmarks:
     input:
         R="workflow/scripts/combine_benchmarks.R",
-        tsv=expand("benchmarks/{{dataset}}/runs/run_ml.{method}_{seed}.txt", method=ml_methods, seed=seeds),
+        tsv=expand(
+            "benchmarks/{{dataset}}/runs/run_ml.{method}_{seed}.txt",
+            method=ml_methods,
+            seed=seeds,
+        ),
     output:
         csv="results/{dataset}/benchmarks_results.csv",
     log:

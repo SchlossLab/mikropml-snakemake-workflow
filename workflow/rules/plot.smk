@@ -11,29 +11,35 @@ rule plot_performance:
     script:
         "../scripts/plot_performance.R"
 
+
 if find_feature_importance:
+
     rule plot_feature_importance:
         input:
-            R='workflow/scripts/plot_feature_importance.R',
+            R="workflow/scripts/plot_feature_importance.R",
             csv="results/{dataset}/feature-importance_results.csv",
         output:
-            plot='figures/{dataset}/feature_importance.png'
+            plot="figures/{dataset}/feature_importance.png",
         log:
-            'log/{dataset}/plot_feature_importance.txt'
+            "log/{dataset}/plot_feature_importance.txt",
         conda:
             "../envs/mikropml.yml"
         script:
             "../scripts/plot_feature_importance.R"
+
+
 else:
+
     rule make_blank_feature_plot:
         output:
-            plot='figures/{dataset}/feature_importance.png'
+            plot="figures/{dataset}/feature_importance.png",
         log:
-            'log/{dataset}/make_blank_plot.txt'
+            "log/{dataset}/make_blank_plot.txt",
         conda:
             "../envs/mikropml.yml"
         script:
             "../scripts/make_blank_plot.R"
+
 
 rule plot_hp_performance:
     input:
