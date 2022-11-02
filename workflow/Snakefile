@@ -74,8 +74,8 @@ rule copy_example_figures:
         outdir="figures/example/",
     shell:
         """
-        for f in [ input.figs ]; do
-            cp $f params.outdir
+        for f in {input.figs}; do
+            cp $f {params.outdir}
         done
         """
 
