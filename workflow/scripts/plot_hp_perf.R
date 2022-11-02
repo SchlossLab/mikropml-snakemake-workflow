@@ -1,4 +1,4 @@
-source(snakemake@input[["logR"]])
+schtools::log_snakemake()
 
 hp_perf <- readRDS(snakemake@input[["rds"]])
 hp_plot_list <- lapply(hp_perf$params, function(param) {
