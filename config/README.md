@@ -37,12 +37,12 @@
     - `dataset_csv`: the path to the dataset as a csv file.
     - `dataset_csv`: a short name to identify the dataset.
     - `outcome_colname`: column name of the outcomes or classes for the dataset.
-    - `ml_methods`: list of machine learning methods to use. Must be supported by mikropml or caret.
+    - `ml_methods`: list of machine learning methods to use. Must be [supported by mikropml or caret](http://www.schlosslab.org/mikropml/articles/introduction.html#the-methods-we-support).
     - `kfold`: k number for k-fold cross validation during model training.
-    - `ncores`: the number of cores to use for preprocessing and for each `mikropml::run_ml()` call. Do not exceed the number of cores you have available.
-    - `nseeds`: the number of different random seeds to use for training models with `mikropml::run_ml()`.
-    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wish to use an ML method from caret that we don't officially support.
-    - `find_feature_importance`: whether to calculate feature importances with permutation tests.
+    - `ncores`: the number of cores to use for `preprocess_data()`, `run_ml()`, and `get_feature_importance()`. Do not exceed the number of cores you have available.
+    - `nseeds`: the number of different random seeds to use for training models with `run_ml()`. This will result in `nseeds` different train/test splits.
+    - `find_feature_importance`: whether to calculate feature importances with permutation tests (`true` or `false`). If `false`, the plot in the report will be blank.
+    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wqish to use an ML method from caret that we don't officially support.
 
     You can leave these options as-is if you'd like to first make sure the
     workflow runs without error on your machine before using your own dataset
