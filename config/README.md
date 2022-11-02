@@ -92,7 +92,7 @@
 1. View the results in `report.md` ([see example here](report-example.md)).
 
     This example report was created by running the workflow on the Great Lakes HPC
-    at the University of Michigan with [`config/robust.yml`](config/robust.yml).
+    at the University of Michigan.
 
 ## Out of memory or walltime
 
