@@ -11,6 +11,16 @@ ncores: 36
 nseeds: 100
 find_feature_importance: false
 hyperparams:
+  - glmnet:
+    - alpha: 
+      - 0
+    - lambda:
+      - 0.0001
+      - 0.001
+      - 0.01
+      - 0.1
+      - 1
+      - 10
   - rf:
     - mtry:
       - 42
