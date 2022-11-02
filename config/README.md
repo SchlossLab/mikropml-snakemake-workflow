@@ -35,12 +35,14 @@
 
 1. Edit the configuration file [`config/default.yml`](/config/default.yml).
     - `dataset_csv`: the path to the dataset as a csv file.
-    - `outcome_colname`: column name of the outcomes for the dataset.
-    - `ml_methods`: list of machine learning methods to use. Must be supported by mikropml.
+    - `dataset_csv`: a short name to identify the dataset.
+    - `outcome_colname`: column name of the outcomes or classes for the dataset.
+    - `ml_methods`: list of machine learning methods to use. Must be supported by mikropml or caret.
     - `kfold`: k number for k-fold cross validation during model training.
     - `ncores`: the number of cores to use for preprocessing and for each `mikropml::run_ml()` call. Do not exceed the number of cores you have available.
     - `nseeds`: the number of different random seeds to use for training models with `mikropml::run_ml()`.
-    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults.
+    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wish to use an ML method from caret that we don't officially support.
+    - `find_feature_importance`: whether to calculate feature importances with permutation tests.
 
     You can leave these options as-is if you'd like to first make sure the
     workflow runs without error on your machine before using your own dataset
