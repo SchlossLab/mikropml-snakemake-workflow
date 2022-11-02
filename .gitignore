@@ -6,3 +6,4 @@ results/
 .Rproj.user
 *KLS*
 *_test*
+.vscode/
