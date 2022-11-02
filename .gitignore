@@ -7,3 +7,6 @@ results/
 *KLS*
 *_test*
 .vscode/
+results/otu-*
+figures/otu-*
+report_otu-*
