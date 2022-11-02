@@ -9,7 +9,7 @@ ml_methods:
 kfold: 5
 ncores: 36
 nseeds: 100
-find_feature_importance: true
+find_feature_importance: false
 hyperparams:
   - rf:
     - mtry:
