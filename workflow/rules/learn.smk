@@ -26,7 +26,7 @@ rule run_ml:
     output:
         model="results/{dataset}/runs/{method}_{seed}_model.Rds",
         perf="results/{dataset}/runs/{method}_{seed}_performance.csv",
-        test="results/{dataset}/runs/{method}_{seed}_test-data.csv"
+        test="results/{dataset}/runs/{method}_{seed}_test-data.csv",
     log:
         "log/{dataset}/runs/run_ml.{method}_{seed}.txt",
     benchmark:
@@ -45,11 +45,12 @@ rule run_ml:
     script:
         "../scripts/train_ml.R"
 
-rule find_feature_importance: 
+
+rule find_feature_importance:
     input:
-        R='workflow/scripts/find_feature_importance.R',
+        R="workflow/scripts/find_feature_importance.R",
         model=rules.run_ml.output.model,
-        test=rules.run_ml.output.test
+        test=rules.run_ml.output.test,
     output:
         feat="results/{dataset}/runs/{method}_{seed}_feature-importance.csv",
     log:
