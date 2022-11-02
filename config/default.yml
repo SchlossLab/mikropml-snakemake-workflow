@@ -10,9 +10,3 @@ ncores: 8
 nseeds: 10
 find_feature_importance: false
 hyperparams:
-  - parRF:
-    - mtry:
-      - 42
-      - 83
-      - 166
-
