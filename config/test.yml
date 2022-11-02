@@ -6,3 +6,15 @@ ml_methods:
 kfold: 2
 ncores: 4
 nseeds: 2
+find_feature_importance: true
+hyperparams:
+  - glmnet:
+    - alpha: 
+      - 0
+    - lambda:
+      - 0.0001
+      - 0.001
+      - 0.01
+      - 0.1
+      - 1
+      - 10
