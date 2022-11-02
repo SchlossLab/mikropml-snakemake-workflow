@@ -1,6 +1,8 @@
 import os
 
+
 configfile: "config/default.yml"
+
 
 MEM_PER_GB = 1024
 
@@ -71,7 +73,8 @@ rule copy_example_figures:
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
         hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
-    log: "log/copy_example_figures.txt"
+    log:
+        "log/copy_example_figures.txt",
     params:
         outdir=lambda wildcards, output: os.path.split(output[0])[0],
     conda:
