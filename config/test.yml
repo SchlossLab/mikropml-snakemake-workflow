@@ -6,6 +6,7 @@ ml_methods:
 kfold: 2
 ncores: 4
 nseeds: 2
+find_feature_importance: true
 hyperparams:
   - glmnet:
     - alpha: 

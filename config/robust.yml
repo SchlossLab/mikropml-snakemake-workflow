@@ -10,6 +10,7 @@ ml_methods:
 kfold: 5
 ncores: 36
 nseeds: 100
+find_feature_importance: true
 hyperparams:
   - parRF:
     - mtry:
@@ -21,3 +22,4 @@ hyperparams:
       - 42
       - 83
       - 166
+

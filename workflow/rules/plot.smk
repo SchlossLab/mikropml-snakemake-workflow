@@ -1,25 +1,48 @@
 rule plot_performance:
     input:
-        R="workflow/scripts/plot_perf.R",
-        csv="results/performance_results.csv",
+        R="workflow/scripts/plot_performance.R",
+        csv="results/{dataset}/performance_results.csv",
     output:
-        plot="figures/performance.png",
+        plot="figures/{dataset}/performance.png",
     log:
-        "log/plot_performance.txt",
+        "log/{dataset}/plot_performance.txt",
     conda:
         "../envs/mikropml.yml"
     script:
-        "../scripts/plot_perf.R"
+        "../scripts/plot_performance.R"
 
+if find_feature_importance:
+    rule plot_feature_importance:
+        input:
+            R='workflow/scripts/plot_feature_importance.R',
+            csv="results/{dataset}/feature-importance_results.csv",
+        output:
+            plot='figures/{dataset}/feature_importance.png'
+        log:
+            'log/{dataset}/plot_feature_importance.txt'
+        conda:
+            "../envs/mikropml.yml"
+        script:
+            "../scripts/plot_feature_importance.R"
+else:
+    rule make_blank_feature_plot:
+        output:
+            plot='figures/{dataset}/feature_importance.png'
+        log:
+            'log/{dataset}/make_blank_plot.txt'
+        conda:
+            "../envs/mikropml.yml"
+        script:
+            "../scripts/make_blank_plot.R"
 
 rule plot_hp_performance:
     input:
         R="workflow/scripts/plot_hp_perf.R",
-        rds="results/hp_performance_results_{method}.Rds",
+        rds="results/{dataset}/hp_performance_results_{method}.Rds",
     output:
-        plot="figures/hp_performance_{method}.png",
+        plot="figures/{dataset}/hp_performance_{method}.png",
     log:
-        "log/plot_hp_perf_{method}.txt",
+        "log/{dataset}/plot_hp_perf_{method}.txt",
     conda:
         "../envs/mikropml.yml"
     script:
@@ -29,11 +52,11 @@ rule plot_hp_performance:
 rule plot_benchmarks:
     input:
         R="workflow/scripts/plot_benchmarks.R",
-        csv="results/benchmarks_results.csv",
+        csv="results/{dataset}/benchmarks_results.csv",
     output:
-        plot="figures/benchmarks.png",
+        plot="figures/{dataset}/benchmarks.png",
     log:
-        "log/plot_benchmarks.txt",
+        "log/{dataset}/plot_benchmarks.txt",
     conda:
         "../envs/mikropml.yml"
     script:

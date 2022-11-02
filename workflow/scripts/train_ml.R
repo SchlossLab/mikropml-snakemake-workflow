@@ -12,7 +12,7 @@ ml_results <- mikropml::run_ml(
   dataset = data_processed,
   method = method,
   outcome_colname = snakemake@params[["outcome_colname"]],
-  find_feature_importance = TRUE,
+  find_feature_importance = FALSE,
   kfold = as.numeric(snakemake@params[["kfold"]]),
   seed = as.numeric(snakemake@params[["seed"]]),
   hyperparameters = hyperparams
@@ -20,4 +20,4 @@ ml_results <- mikropml::run_ml(
 
 saveRDS(ml_results$trained_model, file = snakemake@output[["model"]])
 readr::write_csv(ml_results$performance, snakemake@output[["perf"]])
-readr::write_csv(ml_results$feature_importance, snakemake@output[["feat"]])
+readr::write_csv(ml_results$test_data, snakemake@output[['test']])

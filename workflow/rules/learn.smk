@@ -3,7 +3,7 @@ rule preprocess_data:
         R="workflow/scripts/preproc.R",
         csv=config["dataset_csv"],
     output:
-        rds=f"data/processed/{config['dataset_name']}_preproc.Rds",
+        rds=f"data/processed/{dataset}_preproc.Rds",
     log:
         "log/preprocess_data.txt",
     benchmark:
@@ -24,13 +24,13 @@ rule run_ml:
         R="workflow/scripts/train_ml.R",
         rds=rules.preprocess_data.output.rds,
     output:
-        model="results/runs/{method}_{seed}_model.Rds",
-        perf=temp("results/runs/{method}_{seed}_performance.csv"),
-        feat=temp("results/runs/{method}_{seed}_feature-importance.csv"),
+        model="results/{dataset}/runs/{method}_{seed}_model.Rds",
+        perf="results/{dataset}/runs/{method}_{seed}_performance.csv",
+        test="results/{dataset}/runs/{method}_{seed}_test-data.csv"
     log:
-        "log/runs/run_ml.{method}_{seed}.txt",
+        "log/{dataset}/runs/run_ml.{method}_{seed}.txt",
     benchmark:
-        "benchmarks/runs/run_ml.{method}_{seed}.txt"
+        "benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt"
     params:
         outcome_colname=outcome_colname,
         method="{method}",
@@ -39,8 +39,29 @@ rule run_ml:
         hyperparams=hyperparams,
     threads: ncores
     resources:
-        mem_mb=MEM_PER_GB * 8,
+        mem_mb=MEM_PER_GB * 4,
     conda:
         "../envs/mikropml.yml"
     script:
         "../scripts/train_ml.R"
+
+rule find_feature_importance: 
+    input:
+        R='workflow/scripts/find_feature_importance.R',
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test
+    output:
+        feat="results/{dataset}/runs/{method}_{seed}_feature-importance.csv",
+    log:
+        "log/{dataset}/runs/find_feature-importance.{method}_{seed}.txt",
+    params:
+        outcome_colname=outcome_colname,
+        method="{method}",
+        seed="{seed}",
+    threads: ncores
+    resources:
+        mem_mb=MEM_PER_GB * 8,
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/find_feature_importance.R"
