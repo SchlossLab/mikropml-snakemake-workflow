@@ -61,7 +61,7 @@ rule find_feature_importance:
         seed="{seed}",
     threads: ncores
     resources:
-        mem_mb=MEM_PER_GB * 8,
+        mem_mb=MEM_PER_GB * 1,
     conda:
         "../envs/mikropml.yml"
     script:
