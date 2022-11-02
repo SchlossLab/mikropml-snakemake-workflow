@@ -2,6 +2,6 @@ name: smk
 channels:
   - conda-forge
   - bioconda
-  - r
 dependencies:
+  - graphviz
   - snakemake=7

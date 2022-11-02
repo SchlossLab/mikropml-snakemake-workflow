@@ -1,8 +1,8 @@
 configfile: "config/default.yml"
 
-
 MEM_PER_GB = 1024
 
+dataset = config['dataset_name']
 ncores = config["ncores"]
 ml_methods = config["ml_methods"]
 kfold = config["kfold"]
@@ -12,6 +12,9 @@ nseeds = config["nseeds"]
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
+hyperparams = config["hyperparams"] if "hyperparams" in config else None
+find_feature_importance = config['find_feature_importance']
+
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
@@ -20,27 +23,74 @@ include: "rules/plot.smk"
 
 rule targets:
     input:
-        "report.md",
+        f"report_{dataset}.md",
 
 
 rule render_report:
     input:
         R="workflow/scripts/render.R",
         Rmd="report.Rmd",
-        logR="workflow/scripts/log_smk.R",
         perf_plot=rules.plot_performance.output.plot,
-        hp_plot=expand(rules.plot_hp_performance.output.plot, method=ml_methods),
+        feat_plot='figures/{dataset}/feature_importance.png',
+        hp_plot=expand("figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods),
         bench_plot=rules.plot_benchmarks.output.plot,
     output:
-        doc="report.md",
+        doc="report_{dataset}.md",
     log:
-        "log/render_report.txt",
+        "log/{dataset}/render_report.txt",
     params:
+        dataset=dataset,
         nseeds=nseeds,
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
     conda:
-        "envs/Rtidy.yml"
+        "envs/mikropml.yml"
+    script:
+        "scripts/render.R"
+
+rule copy_example_figures:
+    input:
+        figs=[f"figures/{dataset}/performance.png",
+              f'figures/{dataset}/feature_importance.png',
+              f"figures/{dataset}/benchmarks.png",
+              expand("figures/{dataset}/hp_performance_{method}.png",       
+                     method=ml_methods, dataset=dataset)
+              ],
+    output:
+        perf_plot="figures/example/performance.png",
+        feat_plot='figures/example/feature_importance.png',
+        bench_plot="figures/example/benchmarks.png",
+        hp_plot=expand("figures/example/hp_performance_{method}.png",       
+                     method=ml_methods)
+    params:
+        outdir='figures/example/'
+    shell:
+        """
+        for f in [ input.figs ]; do
+            cp $f params.outdir
+        done
+        """
+
+rule make_example_report:
+    input:
+        R="workflow/scripts/render.R",
+        Rmd="report.Rmd",
+        perf_plot=rules.copy_example_figures.output.perf_plot,
+        feat_plot=rules.copy_example_figures.output.feat_plot,
+        hp_plot=rules.copy_example_figures.output.hp_plot,
+        bench_plot=rules.copy_example_figures.output.bench_plot,
+    output:
+        doc="report-example.md",
+    log:
+        "log/example/render_report.txt",
+    params:
+        dataset=dataset,
+        nseeds=nseeds,
+        ml_methods=ml_methods,
+        ncores=ncores,
+        kfold=kfold,
+    conda:
+        "envs/mikropml.yml"
     script:
         "scripts/render.R"
