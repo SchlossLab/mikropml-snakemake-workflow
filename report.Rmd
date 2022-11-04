@@ -7,18 +7,17 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      eval = TRUE)
+schtools::set_knitr_opts()
 ```
 
 ```{r load}
 library(knitr)
 ```
 
-Machine learning algorithms used include: `r snakemake@params[['ml_methods']]`.
-Models were trained with `r snakemake@params[['nseeds']]`
-different random partitions of the data into training and testing sets using
-`r snakemake@params[['kfold']]`-fold cross validation.
+Machine learning algorithms used were `r snakemake@params[['ml_methods']]`.
+Models were trained with `r snakemake@params[['nseeds']]` different random
+partitions of the `r snakemake@params[['dataset']]` dataset into training and
+testing sets using `r snakemake@params[['kfold']]`-fold cross validation.
 
 ## Model Performance
 
@@ -26,10 +25,10 @@ different random partitions of the data into training and testing sets using
 include_graphics(snakemake@input[['perf_plot']])
 ```
 
-## Hyperparameter Performance
+## Feature Importance
 
-```{r hp_plot, out.width='80%'}
-include_graphics(snakemake@input[['hp_plot']])
+```{r feat_imp_plot, out.width='80%'}
+include_graphics(snakemake@input[['feat_plot']])
 ```
 
 ## Memory Usage & Runtime
@@ -40,3 +39,9 @@ include_graphics(snakemake@input[['bench_plot']])
 
 Each model training run was given `r snakemake@params[['ncores']]` cores
 for parallelization.
+
+## Hyperparameter Performance
+
+```{r hp_plot, out.width='80%'}
+include_graphics(snakemake@input[['hp_plot']])
+```
