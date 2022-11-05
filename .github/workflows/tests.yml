@@ -33,7 +33,8 @@ jobs:
         snakefile: workflow/Snakefile
         args: "--lint"
 
-  Testing:runs-on: ubuntu-latest
+  Testing:
+    runs-on: ubuntu-latest
     needs:
       - Linting
       - Formatting
