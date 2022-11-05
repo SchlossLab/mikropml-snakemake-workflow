@@ -23,13 +23,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install build dependencies
-        run: |
-          Rscript -e "install.packages(c('styler','usethis'))"
-          python -m pip install --upgrade pip
-          pip install black snakefmt
       - name: Style R code
         run: |
+          Rscript -e "install.packages(c('styler','usethis'))"
           Rscript -e 'usethis::use_tidy_style()'
           git add .
           git diff-index --quiet HEAD \
@@ -38,6 +34,8 @@ jobs:
           -m '🎨  Style R code'
       - name: Style Python code
         run: |
+          python -m pip install --upgrade pip
+          pip install black snakefmt
           black workflow/
           snakefmt workflow/
           git add workflow/
@@ -45,6 +43,18 @@ jobs:
           || git commit \
           --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" \
           -m '🎨  Style Python & Snakemake code 🐍'
+      - name: Lint workflow
+        uses: snakemake/snakemake-github-action@v1.24.0
+        with:
+          directory: .
+          snakefile: workflow/Snakefile
+          args: "--lint"
+      - name: Test workflow
+        uses: snakemake/snakemake-github-action@v1.24.0
+        with:
+          directory: .tests
+          snakefile: /workflow/Snakefile
+          args: "--use-conda --show-failed-logs --cores 4 --conda-cleanup-pkgs cache --all-temp --conda-frontend mamba --configfile .tests/config/test.yml"
       - name: Push
         uses: ad-m/github-push-action@master
         with:
