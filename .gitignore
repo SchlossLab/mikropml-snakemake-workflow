@@ -8,3 +8,4 @@ results/*/runs
 *_test*
 .vscode/
 !.tests/
+__pycache__/
