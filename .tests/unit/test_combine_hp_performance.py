@@ -34,8 +34,7 @@ def test_combine_hp_performance():
             "-j1",
             "--keep-target-files",
             "--configfile",
-            /Users/sovacool/projects/schloss-lab/mikropml-snakemake-workflow/config/test.yml
-    
+            common.config_filename, 
             "--use-conda",
             "--directory",
             workdir,
