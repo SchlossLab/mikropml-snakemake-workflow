@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: build
+  tests:
+    name: tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,5 +34,5 @@ jobs:
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
           directory: .tests
-          snakefile: /workflow/Snakefile
+          snakefile: workflow/Snakefile
           args: "--use-conda --show-failed-logs --cores 4 --conda-cleanup-pkgs cache --all-temp --conda-frontend mamba --configfile .tests/config/test.yml"
