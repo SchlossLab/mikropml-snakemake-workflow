@@ -7,3 +7,4 @@ results/*/runs
 *KLS*
 *_test*
 .vscode/
+!.tests/
