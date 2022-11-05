@@ -6,6 +6,8 @@ from pathlib import Path
 import subprocess as sp
 import os
 
+config_filename = "config/test.yml"
+
 
 class OutputChecker:
     def __init__(self, data_path, expected_path, workdir):
@@ -28,7 +30,14 @@ class OutputChecker:
         for path, subdirs, files in os.walk(self.workdir):
             for f in files:
                 f = (Path(path) / f).relative_to(self.workdir)
-                if str(f).startswith(".snakemake"):
+                if (
+                    str(f).startswith(".snakemake")
+                    or str(f).startswith("config")
+                    or str(f).startswith("log/")
+                    or ".DB" in str(f)
+                    or str(f).endswith(".html")
+                    or str(f).endswith(".json")
+                ):
                     continue
                 if f in expected_files:
                     self.compare_files(self.workdir / f, self.expected_path / f)
