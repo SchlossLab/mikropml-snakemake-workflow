@@ -33,6 +33,6 @@ jobs:
       - name: Test workflow
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
-          directory: .tests
+          directory: .
           snakefile: workflow/Snakefile
-          args: "--use-conda --show-failed-logs --cores 4 --conda-cleanup-pkgs cache --all-temp --conda-frontend mamba --configfile .tests/config/test.yml"
+          args: "--use-conda --show-failed-logs --cores 4 --conda-cleanup-pkgs cache --all-temp --conda-frontend mamba --configfile config/test.yml"
