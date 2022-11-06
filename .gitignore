@@ -2,8 +2,10 @@
 data/
 log/
 benchmarks/
-results/
+results/*/runs
 .Rproj.user
 *KLS*
 *_test*
 .vscode/
+!.tests/
+__pycache__/
