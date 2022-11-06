@@ -34,6 +34,7 @@ class OutputChecker:
                     str(f).startswith(".snakemake")
                     or str(f).startswith("config")
                     or str(f).startswith("log/")
+                    or str(f).startswith("benchmarks/")
                     or ".DB" in str(f)
                     or str(f).endswith(".html")
                     or str(f).endswith(".json")
