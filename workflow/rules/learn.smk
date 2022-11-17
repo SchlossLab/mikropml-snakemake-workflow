@@ -66,3 +66,18 @@ rule find_feature_importance:
         "../envs/mikropml.yml"
     script:
         "../scripts/find_feature_importance.R"
+
+
+rule predict:
+    input:
+        R='workflow/scripts/predict.R',
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test
+    output:
+        csv="results/{dataset}/runs/{method}_{seed}_predictions.csv"
+    log:
+        "log/{dataset}/runs/predict.{method}_{seed}.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        '../scripts/predict.R'
