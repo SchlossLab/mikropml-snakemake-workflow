@@ -1,7 +1,5 @@
 schtools::log_snakemake()
-library(tidyverse)
 
 snakemake@input[["csv"]] %>%
-  lapply(read_csv) %>%
-  bind_rows() %>%
-  write_csv(snakemake@output[["csv"]])
+  purrr::map_dfr(readr::read_csv) %>%
+  readr::write_csv(snakemake@output[["csv"]])
