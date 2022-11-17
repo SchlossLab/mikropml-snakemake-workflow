@@ -25,6 +25,10 @@ testing sets using `r snakemake@params[['kfold']]`-fold cross validation.
 include_graphics(snakemake@input[['perf_plot']])
 ```
 
+```{r roc_plot, out.width='80%'}
+include_graphics(snakemake@input[['roc_plot']])
+```
+
 ## Feature Importance
 
 ```{r feat_imp_plot, out.width='80%'}
