@@ -20,6 +20,8 @@ if find_feature_importance:
             csv="results/{dataset}/feature-importance_results.csv",
         output:
             plot="figures/{dataset}/feature_importance.png",
+        params:
+            top_n=5
         log:
             "log/{dataset}/plot_feature_importance.txt",
         conda:
@@ -67,3 +69,16 @@ rule plot_benchmarks:
         "../envs/mikropml.yml"
     script:
         "../scripts/plot_benchmarks.R"
+
+rule plot_roc_curves:
+    input:
+        R='workflow/scripts/plot_roc_curves.R',
+        csv="results/{dataset}/predictions_results.csv"
+    output:
+        plot="figures/{dataset}/roc_curves.png"
+    log:
+        "log/{dataset}/plot_roc_curves.txt"
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/plot_roc_curves.R"
