@@ -1,8 +1,10 @@
 schtools::log_snakemake()
-library(ggplot2)
+library(tidyverse)
 
-# TODO: use tidy eval to make one function for calc_mean roc/prc
+blues <- RColorBrewer::brewer.pal(name = "Blues", n = 9)
+greens <- RColorBrewer::brewer.pal(name = "Greens", n = 9)
 
+# TODO: use tidy eval to make one function each for calc_mean_[roc/prc] and plot_[auroc/auprc]
 calc_mean_roc <- function(sens_dat) {
   sens_dat %>%
     mutate(specificity = round(specificity, 2)) %>%
@@ -74,7 +76,7 @@ plot_roc <- function(roc_dat) {
 }
 
 calc_baseline_precision <- function(metadat) {
-    # TODO: generalize this function
+    # TODO: generalize this function for any outcome
     cdiff_tally <- metadat %>% group_by(pos_cdiff_d1) %>% tally()
     npos <- cdiff_tally %>% filter(pos_cdiff_d1 == 'yes') %>% pull(n)
     ntot <- cdiff_tally %>% pull(n) %>% sum()
@@ -102,8 +104,6 @@ plot_prc <- function(prc_dat, baseline_precision) {
       legend.position = "none"
     )
 }
-
-
 
 # TODO: plot roc curves
 ggsave(
