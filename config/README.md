@@ -42,7 +42,7 @@
     - `ncores`: the number of cores to use for `preprocess_data()`, `run_ml()`, and `get_feature_importance()`. Do not exceed the number of cores you have available.
     - `nseeds`: the number of different random seeds to use for training models with `run_ml()`. This will result in `nseeds` different train/test splits.
     - `find_feature_importance`: whether to calculate feature importances with permutation tests (`true` or `false`). If `false`, the plot in the report will be blank.
-    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wqish to use an ML method from caret that we don't officially support.
+    - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wish to use an ML method from caret that we don't officially support.
 
     You can leave these options as-is if you'd like to first make sure the
     workflow runs without error on your machine before using your own dataset
