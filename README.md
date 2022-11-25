@@ -1,4 +1,4 @@
-# Run mikropml with snakemake <img src='figures/mikropml-snakemake-workflow.png' align="right" height="139" />
+# Run mikropml with snakemake <img src='figures/mikropml-snakemake-workflow.png' align="right" height="120" />
 
 <!--[![tests](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/tests.yml)-->
 [![build](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/build.yml/badge.svg)](https://github.com/SchlossLab/mikropml-snakemake-workflow/actions/workflows/build.yml)
