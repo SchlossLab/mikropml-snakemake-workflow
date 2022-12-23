@@ -1,2 +1,2 @@
-Each model training run was given {{ snakemake.params['ncores'] }} cores for 
+Each model training run was given {{ snakemake.config['ncores'] }} cores for 
 parallelization.
