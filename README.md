@@ -47,24 +47,24 @@ Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 Full usage instructions recommended by snakemake are [here](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
 Snakemake recommends using `snakedeploy` to use this workflow as a module. 
 
-Alternatively, you can use download the workflow and modify the code 
+Alternatively, you can download the workflow and modify the code 
 directly to suit your needs:
 
 ### Quick Start
 
 1. Download this repo with one of these methods:
 
-  - clone:
-    ``` sh
-    git clone https://github.com/SchlossLab/mikropml-snakemake-workflow
-    cd mikropml-snakemake-workflow
-    ```
-  - use this template:
-    If you're viewing this on GitHub,
-    you can click the green `Use this template` button to create
-    your own version of the repo on GitHub, then clone it.
-    
+    - **Clone**:
+      ``` sh
+      git clone https://github.com/SchlossLab/mikropml-snakemake-workflow
+      cd mikropml-snakemake-workflow
+      ```
+    - **Use this template**:
 
+      If you're viewing this on GitHub,
+      click the green `Use this template` button to create
+      your own version of the repo in your own GitHub, then clone your repo.
+    
 1. Install the dependencies.
 
     1. If you don't have conda yet, we recommend installing
@@ -114,7 +114,7 @@ directly to suit your needs:
 
     Or submit the jobs to a slurm cluster:
     ```sh
-    snakemake --profile config/slurm --use-conda --use-singularity --cores 2
+    snakemake --profile config/slurm --use-conda --use-singularity
     ```
     See the [slurm config instructions](config/README.dm#slurm) for more details
     on slurm configuration.
