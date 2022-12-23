@@ -3,8 +3,8 @@ rule plot_performance:
         csv="results/{dataset}/performance_results.csv",
     output:
         plot=report("figures/{dataset}/performance.png",
-                    category="Results",
-                    subcategory="{dataset}"),
+                    category="Performance",
+                    subcategory="Model Performance"),
     log:
         "log/{dataset}/plot_performance.txt",
     conda:
@@ -20,8 +20,7 @@ if find_feature_importance:
             csv="results/{dataset}/feature-importance_results.csv",
         output:
             plot=report("figures/{dataset}/feature_importance.png",
-                        category="Results",
-                        subcategory="{dataset}"),
+                        category="Feature Importance"),
         log:
             "log/{dataset}/plot_feature_importance.txt",
         conda:
@@ -35,8 +34,7 @@ else:
     rule make_blank_feature_plot:
         output:
             plot=report("figures/{dataset}/feature_importance.png",
-                        category="Results",
-                        subcategory="{dataset}"),
+                        category="Feature Importance"),
         log:
             "log/{dataset}/make_blank_plot.txt",
         conda:
@@ -50,8 +48,8 @@ rule plot_hp_performance:
         rds="results/{dataset}/hp_performance_results_{method}.Rds",
     output:
         plot=report("figures/{dataset}/hp_performance_{method}.png",
-                    category="Results",
-                    subcategory="{dataset}"),
+                    category="Performance",
+                    subcategory="Hyperparameter Tuning"),
     log:
         "log/{dataset}/plot_hp_perf_{method}.txt",
     conda:
@@ -65,8 +63,8 @@ rule plot_benchmarks:
         csv="results/{dataset}/benchmarks_results.csv",
     output:
         plot=report("figures/{dataset}/benchmarks.png",
-                    category="Results",
-                    subcategory="{dataset}",
+                    category="Performance",
+                    subcategory="Runtime & Memory Usage",
                     caption="../report/benchmarks.rst"),
     log:
         "log/{dataset}/plot_benchmarks.txt",
