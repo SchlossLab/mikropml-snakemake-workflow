@@ -1,6 +1,8 @@
 import os
 
 
+containerized: "docker://kellysovacool/mikropml:latest"
+
 configfile: "config/default.yml"
 
 
