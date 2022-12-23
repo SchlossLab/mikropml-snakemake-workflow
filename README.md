@@ -44,11 +44,15 @@ Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 
 ## Usage
 
-Full usage instructions recommended by snakemake are [here](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow). This method uses `snakedeploy` to obtain this workflow.
+Full usage instructions recommended by snakemake are [here](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
+Snakemake recommends using `snakedeploy` to use this workflow as a module. 
+
+Alternatively, you can use download the workflow and modify the code 
+directly to suit your needs:
 
 ### Quick Start
 
-1. Obtain this repo with one of these methods:
+1. Download this repo with one of these methods:
 
   - clone:
     ``` sh
