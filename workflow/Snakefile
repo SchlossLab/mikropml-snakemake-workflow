@@ -1,5 +1,7 @@
 import os
+from snakemake.utils import min_version
 
+min_version("6.12.3")
 
 containerized: "docker://kellysovacool/mikropml:latest"
 
