@@ -4,5 +4,7 @@ channels:
   - bioconda
 dependencies:
   - graphviz
+  - kubernetes
+  - python-kubernetes
   - snakemake=7
   - snakedeploy
