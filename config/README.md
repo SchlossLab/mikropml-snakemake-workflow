@@ -70,3 +70,41 @@ A more robust configuration is provided in
     The main job will submit all other snakemake jobs using the default resources specified in [`config/slurm/config.yaml`](/config/slurm/config.yaml). 
     This allows independent steps of the workflow to run on different nodes in parallel.
     Slurm output files will be written to `log/hpc/`.
+
+
+### Out of memory or walltime
+
+When using slurm,
+if any of your jobs fail because it ran out of memory, you can increase the
+memory for the given rule with the
+[resources directive](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources)
+in the Snakefile. For example, if the `combine_hp_performance` rule fails, you
+can increase the memory from 16GB to say 24GB in
+[workflow/rules/combine.smk](/workflow/rules/combine.smk):
+
+```
+rule combine_hp_performance:
+    input:
+        ...
+    resources:
+        mem_mb = MEM_PER_GB * 24
+    ...
+```
+
+The new `mem_mb` value then gets passed on to the slurm configuration.
+
+To specify more cores for a rule, use the
+[threads directive](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#threads):
+
+```
+rule combine_hp_performance:
+    input:
+        ...
+    resources:
+        mem_mb = MEM_PER_GB * 24
+    threads: 8
+    ...
+```
+
+You can also change other slurm parameters that are defined in
+[config/slurm/config.yml](/config/slurm/config.yml)

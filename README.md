@@ -44,122 +44,13 @@ Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 
 ## Usage
 
-Full usage instructions recommended by snakemake are [here](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
-Snakemake recommends using `snakedeploy` to use this workflow as a module. 
+Full usage instructions recommended by snakemake are available in the 
+[snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
+Snakemake recommends using `snakedeploy` to use this workflow as a module in 
+your own project.
 
-Alternatively, you can download the workflow and modify the code 
-directly to suit your needs:
-
-### Quick Start
-
-1. Download this repo with one of these methods:
-
-    - **Clone**:
-      ``` sh
-      git clone https://github.com/SchlossLab/mikropml-snakemake-workflow
-      cd mikropml-snakemake-workflow
-      ```
-    - **Use this template**:
-
-      If you're viewing this on GitHub,
-      click the green `Use this template` button to create
-      your own version of the repo in your own GitHub, then clone your repo.
-    
-1. Install the dependencies.
-
-    1. If you don't have conda yet, we recommend installing
-       [miniconda](https://docs.conda.io/en/latest/miniconda.html).
-
-    1. Next, install [mamba](https://mamba.readthedocs.io/en/latest/),
-       a fast drop-in replacement for conda:
-
-       ``` sh
-       conda install mamba -n base -c conda-forge
-       ```
-
-    1. Create a conda environment with snakemake installed:
-
-       ``` sh
-       mamba env create -f workflow/envs/smk.yml
-       conda activate smk
-       ```
-
-    - Alternatively, you can install the dependencies listed in
-    [the conda environments](/workflow/envs/) however you like.
-
-1. Edit the configuration file [`config/default.yml`](/config/default.yml).
-
-1. Do a dry run to make sure the snakemake workflow is valid.
-
-    ``` sh
-    snakemake -n
-    ```
-
-1. Run the workflow.
-
-    Run it **locally** using 2 cores:
-    ``` sh
-    snakemake --use-conda --cores 2
-    ```
-
-    Or specify a different config file:
-    ``` sh
-    snakemake --use-conda --cores 2 --configfile config/test.yml
-    ```
-
-    You can use singularity with:
-    ``` sh
-    snakemake --use-conda --use-singularity --cores 2
-    ```
-
-    Or submit the jobs to a slurm cluster:
-    ```sh
-    snakemake --profile config/slurm --use-conda --use-singularity
-    ```
-    See the [slurm config instructions](config/README.dm#slurm) for more details
-    on slurm configuration.
-
-1. View the results in `report.md` ([see example here](report-example.md)).
-
-    This example report was created by running the workflow on the Great Lakes HPC
-    at the University of Michigan.
-
-## Out of memory or walltime
-
-When using slurm,
-if any of your jobs fail because it ran out of memory, you can increase the
-memory for the given rule with the
-[resources directive](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources)
-in the Snakefile. For example, if the `combine_hp_performance` rule fails, you
-can increase the memory from 16GB to say 24GB in
-[workflow/rules/combine.smk](/workflow/rules/combine.smk):
-
-```
-rule combine_hp_performance:
-    input:
-        ...
-    resources:
-        mem_mb = MEM_PER_GB * 24
-    ...
-```
-
-The new `mem_mb` value then gets passed on to the slurm configuration.
-
-To specify more cores for a rule, use the
-[threads directive](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#threads):
-
-```
-rule combine_hp_performance:
-    input:
-        ...
-    resources:
-        mem_mb = MEM_PER_GB * 24
-    threads: 8
-    ...
-```
-
-You can also change other slurm parameters that are defined in
-[config/slurm/config.yml](/config/slurm/config.yml)
+Alternatively, you can download this repo and modify the code 
+directly to suit your needs. See instructions [here](/quick-start.md).
 
 ## More resources
 
