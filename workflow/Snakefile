@@ -39,7 +39,6 @@ rule targets:
 
 rule render_report:
     input:
-        Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
         feat_plot="figures/{dataset}/feature_importance.png",
         hp_plot=expand(
