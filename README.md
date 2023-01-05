@@ -29,7 +29,7 @@ This workflow preprocesses the example dataset, calls `mikropml::run_ml()`
 for each seed and ML method set in the config file,
 combines the results files, plots performance results
 (cross-validation and test AUROCs, hyperparameter AUROCs from cross-validation, and benchmark performance),
-and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([example](report-example.md)).
+and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([see example here](report-example.md)).
 
 <!-- Create the rulegraph with workflow/scripts/rulegraph.sh -->
 ![rulegraph](figures/rulegraph.png)
@@ -42,10 +42,15 @@ Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 <!-- Create the dag with workflow/scripts/dag.sh -->
 ![dag](figures/dag.png)
 
+## Usage
 
-## Quick Start
+Full usage instructions recommended by snakemake are available in the 
+[snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
+Snakemake recommends using `snakedeploy` to use this workflow as a module in 
+your own project.
 
-See [config/README.md](config/README.md) for instructions on getting started with this template.
+Alternatively, you can download this repo and modify the code 
+directly to suit your needs. See instructions [here](/quick-start.md).
 
 ## More resources
 
