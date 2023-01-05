@@ -31,7 +31,9 @@ include: "rules/combine.smk"
 include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
+
 report: "report/workflow.rst"
+
 
 rule targets:
     input:
