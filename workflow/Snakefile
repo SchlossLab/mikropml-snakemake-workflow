@@ -3,10 +3,11 @@ from snakemake.utils import min_version
 
 min_version("6.12.3")
 
+
 containerized: "docker://kellysovacool/mikropml:latest"
 
-configfile: "config/config.yml"
 
+configfile: "config/config.yml"
 
 MEM_PER_GB = 1024
 
