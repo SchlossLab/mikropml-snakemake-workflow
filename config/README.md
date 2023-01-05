@@ -1,6 +1,6 @@
 # General configuration
 
-To configure this workflow, modify [`config/config.yml`](/config/config.yml) according to your needs.
+To configure this workflow, modify [`config/config.yaml`](/config/config.yaml) according to your needs.
 
 **Configuration options:**
 
@@ -14,7 +14,7 @@ To configure this workflow, modify [`config/config.yml`](/config/config.yml) acc
   - `find_feature_importance`: whether to calculate feature importances with permutation tests (`true` or `false`). If `false`, the plot in the report will be blank.
   - `hyperparams`: override the default model hyperparameters set by mikropml for each ML method (optional). Leave this blank if you'd like to use the defaults. You will have to set these if you wish to use an ML method from caret that we don't officially support.
 
-We also provide [`config/test.yml`](/config/test.yml), which uses a smaller dataset so 
+We also provide [`config/test.yaml`](/config/test.yaml), which uses a smaller dataset so 
 you can first make sure the workflow runs without error on your machine 
 before using your own dataset and custom parameters.
 
@@ -22,7 +22,7 @@ The default and test config files are suitable for initial testing,
 but we recommend using more cores (if available) and
 more seeds for model training.
 A more robust configuration is provided in
-[`config/robust.yml`](/config/robust.yml).
+[`config/robust.yaml`](/config/robust.yaml).
 
 ## SLURM
 
@@ -57,7 +57,7 @@ A more robust configuration is provided in
         --latency-wait 90 \ # wait for file system latency
         --use-conda \ # use conda environments specified by rules
         --use-singularity \ # use singularity to build the container image
-        --configfile config/test.yml # specify a different configfile from default
+        --configfile config/test.yaml # specify a different configfile from default
     ```
     Edit the slurm options as needed.
 
@@ -107,4 +107,4 @@ rule combine_hp_performance:
 ```
 
 You can also change other slurm parameters that are defined in
-[config/slurm/config.yml](/config/slurm/config.yml)
+[config/slurm/config.yaml](/config/slurm/config.yaml)

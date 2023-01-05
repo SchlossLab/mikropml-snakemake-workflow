@@ -35,7 +35,7 @@
     - Alternatively, you can install the dependencies listed in
     [the conda environments](/workflow/envs/) however you like.
 
-1. Edit the configuration file [`config/config.yml`](/config/config.yml). See [config/README.md] for a description of the configuration options.
+1. Edit the configuration file [`config/config.yaml`](/config/config.yaml). See [config/README.md] for a description of the configuration options.
 
 1. Do a dry run to make sure the snakemake workflow is valid.
 
@@ -52,7 +52,7 @@
 
     Or specify a different config file:
     ``` sh
-    snakemake --use-conda --cores 2 --configfile config/test.yml
+    snakemake --use-conda --cores 2 --configfile config/test.yaml
     ```
 
     You can use singularity with:
