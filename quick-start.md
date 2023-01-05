@@ -35,7 +35,7 @@
     - Alternatively, you can install the dependencies listed in
     [the conda environments](/workflow/envs/) however you like.
 
-1. Edit the configuration file [`config/default.yml`](/config/default.yml). See [config/README.md] for a description of the configuration options.
+1. Edit the configuration file [`config/config.yml`](/config/config.yml). See [config/README.md] for a description of the configuration options.
 
 1. Do a dry run to make sure the snakemake workflow is valid.
 

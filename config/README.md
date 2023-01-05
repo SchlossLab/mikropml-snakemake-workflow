@@ -1,6 +1,6 @@
 # General configuration
 
-To configure this workflow, modify [`config/default.yml`](/config/default.yml) according to your needs.
+To configure this workflow, modify [`config/config.yml`](/config/config.yml) according to your needs.
 
 **Configuration options:**
 
