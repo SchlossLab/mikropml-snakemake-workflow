@@ -1,7 +1,13 @@
 import os
+from snakemake.utils import min_version
+
+min_version("6.12.3")
 
 
-configfile: "config/default.yml"
+containerized: "docker://kellysovacool/mikropml:latest"
+
+
+configfile: "config/config.yaml"
 
 
 MEM_PER_GB = 1024
@@ -25,6 +31,7 @@ include: "rules/combine.smk"
 include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
+report: "report/workflow.rst"
 
 rule targets:
     input:
@@ -33,8 +40,6 @@ rule targets:
 
 rule render_report:
     input:
-        R="workflow/scripts/render.R",
-        Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
         feat_plot="figures/{dataset}/feature_importance.png",
         hp_plot=expand(
@@ -54,4 +59,4 @@ rule render_report:
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/render.R"
+        "scripts/report.Rmd"
