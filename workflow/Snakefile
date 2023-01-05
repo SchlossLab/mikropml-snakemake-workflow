@@ -1,5 +1,9 @@
 import os
+from snakemake.utils import min_version
 
+min_version("6.12.3")
+
+containerized: "docker://kellysovacool/mikropml:latest"
 
 configfile: "config/default.yml"
 
@@ -33,7 +37,6 @@ rule targets:
 
 rule render_report:
     input:
-        R="workflow/scripts/render.R",
         Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
         feat_plot="figures/{dataset}/feature_importance.png",
