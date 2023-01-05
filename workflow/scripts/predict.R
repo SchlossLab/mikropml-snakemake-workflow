@@ -8,20 +8,20 @@ probs <- predict(model,
   newdata = test_dat,
   type = "prob"
 ) %>%
-  mutate(actual = test_dat$pos_cdiff_d1)
+  mutate(actual = test_dat$dx)
 
-total <- probs %>% 
+total <- probs %>%
     count(actual) %>%
-    pivot_wider(names_from = "actual", values_from = "n") 
+    pivot_wider(names_from = "actual", values_from = "n")
 
 sensspec <- probs %>%
-    arrange(desc(yes)) %>%
-    mutate(is_pos = actual == "yes") %>%
+    arrange(desc(cancer)) %>%
+    mutate(is_pos = actual == "cancer") %>%
     mutate(
       tp = cumsum(is_pos),
       fp = cumsum(!is_pos),
-      sensitivity = tp / total$yes,
-      fpr = fp / total$no
+      sensitivity = tp / total$cancer,
+      fpr = fp / total$normal
     ) %>%
     mutate(
       specificity = 1 - fpr,
