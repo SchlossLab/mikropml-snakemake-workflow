@@ -18,14 +18,18 @@ ml_results <- mikropml::run_ml(
 )
 
 wildcard_names <- snakemake@wildcards %>%
-    names() %>%
-    Filter(function(x) {nchar(x) > 0}, .)
+  names() %>%
+  Filter(function(x) {
+    nchar(x) > 0
+  }, .)
 wildcards <- snakemake@wildcards[wildcard_names] %>%
-    as_tibble() %>%
-    mutate(seed = as.numeric(seed))
+  as_tibble() %>%
+  mutate(seed = as.numeric(seed))
 
-readr::write_csv(ml_results$performance %>%
-                     inner_join(wildcards, by = c('method', 'seed')),
-                 snakemake@output[["perf"]])
+readr::write_csv(
+  ml_results$performance %>%
+    inner_join(wildcards, by = c("method", "seed")),
+  snakemake@output[["perf"]]
+)
 readr::write_csv(ml_results$test_data, snakemake@output[["test"]])
 saveRDS(ml_results$trained_model, file = snakemake@output[["model"]])
