@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - 'main'
-      - 'containerize'
+    paths:
+      - Dockerfile
 
 jobs:
   docker:
