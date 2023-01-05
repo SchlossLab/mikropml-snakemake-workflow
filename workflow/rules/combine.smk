@@ -39,12 +39,12 @@ rule combine_hp_performance:
 
 rule mutate_benchmark:
     input:
-        R='workflow/scripts/mutate_benchmark.R',
-        tsv="benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt"
+        R="workflow/scripts/mutate_benchmark.R",
+        tsv="benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt",
     output:
-        csv="results/{dataset}/runs/{method}_{seed}_benchmarks.csv"
+        csv="results/{dataset}/runs/{method}_{seed}_benchmarks.csv",
     log:
-        "log/{dataset}/mutate_benchmark.{method}_{seed}.txt"
+        "log/{dataset}/mutate_benchmark.{method}_{seed}.txt",
     conda:
         "../envs/mikropml.yml"
     script:

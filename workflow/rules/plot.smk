@@ -27,7 +27,6 @@ if find_feature_importance:
         script:
             "../scripts/plot_feature_importance.R"
 
-
 else:
 
     rule make_blank_feature_plot:
