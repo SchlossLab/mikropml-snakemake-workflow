@@ -1,8 +1,6 @@
 schtools::log_snakemake()
-print(paste("doPar workers: ", foreach::getDoParWorkers()))
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
-print(paste("doPar workers: ", foreach::getDoParWorkers()))
 
 method <- snakemake@params[["method"]]
 hyperparams <- snakemake@params[["hyperparams"]][[method]]
