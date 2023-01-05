@@ -48,4 +48,4 @@ rule make_example_report:
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/render.R"
+        "scripts/report.Rmd"
