@@ -72,7 +72,6 @@ rule plot_benchmarks:
 
 rule plot_roc_curves:
     input:
-        R='workflow/scripts/plot_roc_curves.R',
         csv="results/{dataset}/predictions_results.csv"
     output:
         plot="figures/{dataset}/roc_curves.png"
