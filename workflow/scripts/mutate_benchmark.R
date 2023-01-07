@@ -1,8 +1,7 @@
 schtools::log_snakemake()
 library(tidyverse)
 
-snakemake@input[['tsv']]
-  read_tsv() %>%
+read_tsv(snakemake@input[['tsv']]) %>%
   mutate(
       method = snakemake@wildcards[['method']],
       seed = snakemake@wildcards[['seed']]
