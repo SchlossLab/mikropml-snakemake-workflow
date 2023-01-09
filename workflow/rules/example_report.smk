@@ -34,7 +34,6 @@ rule copy_example_figures:
 
 rule make_example_report:
     input:
-        R="workflow/scripts/render.R",
         Rmd="report.Rmd",
         perf_plot=rules.copy_example_figures.output.perf_plot,
         feat_plot=rules.copy_example_figures.output.feat_plot,
