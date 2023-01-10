@@ -82,6 +82,7 @@ rule plot_roc_curves:
 rule write_graphviz:
     output:
         dot='figures/graphviz/{cmd}.dot'
+    log: 'log/graphviz/write_graphviz_{cmd}.txt'
     conda: '../envs/smk.yml'
     shell:
         '''
@@ -93,6 +94,7 @@ rule dot_to_png:
         dot=rules.write_graphviz.output.dot
     output:
         png='figures/graphviz/{cmd}.png'
+    log: 'log/graphviz/dot_to_png_{cmd}.txt'
     conda: '../envs/smk.yml'
     shell:
         '''
@@ -101,5 +103,5 @@ rule dot_to_png:
 
 rule make_graph_figures:
     input:
-        'figures/graphviz/dag.png', 'figures/graphviz/rulegraph.png'
-
+        'figures/graphviz/dag.png', 
+        'figures/graphviz/rulegraph.png'
