@@ -71,6 +71,8 @@ rule predict:
         test=rules.run_ml.output.test
     output:
         csv="results/{dataset}/runs/{method}_{seed}_predictions.csv"
+    params:
+        outcome_colname=outcome_colname
     log:
         "log/{dataset}/runs/predict.{method}_{seed}.txt",
     conda:

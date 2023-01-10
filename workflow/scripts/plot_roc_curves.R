@@ -1,6 +1,6 @@
 schtools::log_snakemake()
 library(cowplot)
-devtools::load_all(path = '../mikropml') # TODO switch to library(mikropml)
+library(mikropml)
 library(tidyverse)
 
 dat <- read_csv(snakemake@input[['csv']])
