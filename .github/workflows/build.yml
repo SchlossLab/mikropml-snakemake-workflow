@@ -29,6 +29,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
       - name: Style R code
+        shell: bash -el {0}
         run: |
           R -e 'usethis::use_tidy_style()'
           git add .
@@ -36,6 +37,7 @@ jobs:
             || git commit \
             -m '🎨  Style R code'
       - name: Style Python code
+        shell: bash -el {0}
         run: |
           black workflow/
           snakefmt workflow/
