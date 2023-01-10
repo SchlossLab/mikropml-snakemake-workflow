@@ -6,6 +6,7 @@ dependencies:
   - r-base=4
   - r-doFuture
   - r-cowplot
+  - r-devtools
   - r-foreach
   - r-future
   - r-future.apply
