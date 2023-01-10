@@ -51,4 +51,4 @@ rule make_example_report:
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/report.Rmd"
+        "../scripts/report.Rmd"
