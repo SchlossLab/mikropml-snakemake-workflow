@@ -29,9 +29,13 @@ include_graphics(snakemake@input[['perf_plot']])
 include_graphics(snakemake@input[['roc_plot']])
 ```
 
-## Feature Importance
+```{r feat_imp_header, results='asis'}
+if (isTRUE(snakemake@params[['find_feature_importance']])) { 
+    cat("## Feature Importance") 
+}
+```
 
-```{r feat_imp_plot, out.width='80%'}
+```{r feat_imp_plot, out.width='80%', eval=snakemake@params[['find_feature_importance']]}
 include_graphics(snakemake@input[['feat_plot']])
 ```
 

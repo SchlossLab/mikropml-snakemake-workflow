@@ -48,6 +48,7 @@ rule make_example_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
+        find_feature_importance=find_feature_importance
     conda:
         "envs/mikropml.yml"
     script:
