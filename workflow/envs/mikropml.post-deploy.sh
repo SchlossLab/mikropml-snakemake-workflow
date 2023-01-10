@@ -1,2 +1,3 @@
 #!env bash
-R -e "devtools::install_github('SchlossLab/mikropml', ref = 'iss-262_roc')"
+R -e "devtools::install_git('git://github.com/SchlossLab/mikropml.git', 
+                            branch = 'iss-262_roc')"
