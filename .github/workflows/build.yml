@@ -18,27 +18,25 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: r-lib/actions/setup-r@v2
-      - uses: r-lib/actions/setup-pandoc@v2
-      - uses: actions/setup-python@v4
+      - uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.11
+          mamba-version: "*"
+          activate-environment: github-actions
+          environment-file: workflow/envs/github-actions.yml
       - name: git config
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
       - name: Style R code
         run: |
-          Rscript -e "install.packages(c('styler','usethis'))"
-          Rscript -e 'usethis::use_tidy_style()'
+          R -e 'usethis::use_tidy_style()'
           git add .
           git diff-index --quiet HEAD \
             || git commit \
             -m '🎨  Style R code'
       - name: Style Python code
         run: |
-          python -m pip install --upgrade pip
-          pip install black snakefmt
           black workflow/
           snakefmt workflow/
           git add workflow/

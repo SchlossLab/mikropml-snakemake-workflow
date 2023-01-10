@@ -1,0 +1,13 @@
+name: github-actions
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - r
+dependencies:
+  - black=22.10.0
+  - python=3.11.0
+  - r-base=4.2.2
+  - r-styler=1.8.1
+  - r-usethis=2.1.6
+  - snakefmt=0.8.0
