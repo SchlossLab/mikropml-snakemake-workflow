@@ -23,7 +23,7 @@ find_feature_importance = config["find_feature_importance"]
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
-include: "rules/example_report.smk"
+include: "rules/example-report.smk"
 
 
 rule targets:

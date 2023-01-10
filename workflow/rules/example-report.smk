@@ -5,12 +5,12 @@ rule copy_example_figures:
             f"figures/{dataset}/performance.png",
             f"figures/{dataset}/feature_importance.png",
             f"figures/{dataset}/benchmarks.png",
+            f"figures/{dataset}/roc_curves.png",
             expand(
                 "figures/{dataset}/hp_performance_{method}.png",
                 method=ml_methods,
                 dataset=dataset,
             ),
-            f"figures/{dataset}/roc_curves.png"
         ],
     output:
         perf_plot="figures/example/performance.png",
@@ -23,14 +23,13 @@ rule copy_example_figures:
     params:
         outdir=lambda wildcards, output: os.path.split(output[0])[0],
     conda:
-        "../envs/mikropml.yml"
+        "envs/smk.yml"
     shell:
         """
         for f in {input.figs}; do
             cp $f {params.outdir}
         done
         """
-
 
 rule make_example_report:
     input:
@@ -50,6 +49,6 @@ rule make_example_report:
         ncores=ncores,
         kfold=kfold,
     conda:
-        "../envs/mikropml.yml"
+        "envs/mikropml.yml"
     script:
-        "../scripts/report.Rmd"
+        "scripts/report.Rmd"
