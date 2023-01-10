@@ -81,25 +81,25 @@ rule plot_roc_curves:
 
 rule write_graphviz:
     output:
-        txt='figures/graphviz_{cmd}.dot'
+        dot='figures/graphviz/{cmd}.dot'
     conda: '../envs/smk.yml'
     shell:
         '''
-        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.txt}
+        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.dot}
         '''    
 
 rule dot_to_png:
     input:
-        txt='figures/graphviz_{cmd}.dot'
+        dot=rules.write_graphviz.output.dot
     output:
-        png='figures/graphviz_{cmd}.png'
+        png='figures/graphviz/{cmd}.png'
     conda: '../envs/smk.yml'
     shell:
         '''
-        cat {input.txt} | dot -T png > {output.png}
+        cat {input.dot} | dot -T png > {output.png}
         '''
 
 rule make_graph_figures:
     input:
-        'figures/graphviz_dag.png', 'figures/graphviz_rulegraph.png'
+        'figures/graphviz/dag.png', 'figures/graphviz/rulegraph.png'
 
