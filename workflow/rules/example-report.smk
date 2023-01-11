@@ -5,6 +5,7 @@ rule copy_example_figures:
             f"figures/{dataset}/performance.png",
             f"figures/{dataset}/feature_importance.png",
             f"figures/{dataset}/benchmarks.png",
+            f"figures/{dataset}/roc_curves.png",
             expand(
                 "figures/{dataset}/hp_performance_{method}.png",
                 method=ml_methods,
@@ -16,12 +17,13 @@ rule copy_example_figures:
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
         hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
+        roc_plot="figures/example/roc_curves.png"
     log:
         "log/copy_example_figures.txt",
     params:
         outdir=lambda wildcards, output: os.path.split(output[0])[0],
     conda:
-        "envs/mikropml.yml"
+        "envs/smk.yml"
     shell:
         """
         for f in {input.figs}; do
@@ -29,15 +31,13 @@ rule copy_example_figures:
         done
         """
 
-
 rule make_example_report:
     input:
-        R="workflow/scripts/render.R",
-        Rmd="report.Rmd",
         perf_plot=rules.copy_example_figures.output.perf_plot,
         feat_plot=rules.copy_example_figures.output.feat_plot,
         hp_plot=rules.copy_example_figures.output.hp_plot,
         bench_plot=rules.copy_example_figures.output.bench_plot,
+        roc_plot=rules.copy_example_figures.output.roc_plot
     output:
         doc="report-example.md",
     log:
@@ -48,7 +48,8 @@ rule make_example_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
+        find_feature_importance=find_feature_importance
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/render.R"
+        "../scripts/report.Rmd"

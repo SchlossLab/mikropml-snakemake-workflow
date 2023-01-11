@@ -33,14 +33,13 @@ rule targets:
 
 rule render_report:
     input:
-        R="workflow/scripts/render.R",
-        Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
         feat_plot="figures/{dataset}/feature_importance.png",
         hp_plot=expand(
             "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
+        roc_plot=rules.plot_roc_curves.output.plot,
     output:
         doc="report_{dataset}.md",
     log:
@@ -51,7 +50,8 @@ rule render_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
+        find_feature_importance=find_feature_importance
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/render.R"
+        "scripts/report.Rmd"

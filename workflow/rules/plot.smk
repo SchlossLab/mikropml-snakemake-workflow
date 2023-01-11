@@ -1,6 +1,5 @@
 rule plot_performance:
     input:
-        R="workflow/scripts/plot_performance.R",
         csv="results/{dataset}/performance_results.csv",
     output:
         plot="figures/{dataset}/performance.png",
@@ -16,10 +15,11 @@ if find_feature_importance:
 
     rule plot_feature_importance:
         input:
-            R="workflow/scripts/plot_feature_importance.R",
             csv="results/{dataset}/feature-importance_results.csv",
         output:
             plot="figures/{dataset}/feature_importance.png",
+        params:
+            top_n=5
         log:
             "log/{dataset}/plot_feature_importance.txt",
         conda:
@@ -43,7 +43,6 @@ else:
 
 rule plot_hp_performance:
     input:
-        R="workflow/scripts/plot_hp_perf.R",
         rds="results/{dataset}/hp_performance_results_{method}.Rds",
     output:
         plot="figures/{dataset}/hp_performance_{method}.png",
@@ -57,7 +56,6 @@ rule plot_hp_performance:
 
 rule plot_benchmarks:
     input:
-        R="workflow/scripts/plot_benchmarks.R",
         csv="results/{dataset}/benchmarks_results.csv",
     output:
         plot="figures/{dataset}/benchmarks.png",
@@ -68,27 +66,42 @@ rule plot_benchmarks:
     script:
         "../scripts/plot_benchmarks.R"
 
+
+rule plot_roc_curves:
+    input:
+        csv="results/{dataset}/predictions_results.csv"
+    output:
+        plot="figures/{dataset}/roc_curves.png"
+    log:
+        "log/{dataset}/plot_roc_curves.txt"
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/plot_roc_curves.R"
+
 rule write_graphviz:
     output:
-        txt='figures/graphviz_{cmd}.dot'
+        dot='figures/graphviz/{cmd}.dot'
+    log: 'log/graphviz/write_graphviz_{cmd}.txt'
     conda: '../envs/smk.yml'
     shell:
         '''
-        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.txt}
+        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.dot}
         '''    
 
 rule dot_to_png:
     input:
-        txt='figures/graphviz_{cmd}.dot'
+        dot=rules.write_graphviz.output.dot
     output:
-        png='figures/graphviz_{cmd}.png'
+        png='figures/graphviz/{cmd}.png'
+    log: 'log/graphviz/dot_to_png_{cmd}.txt'
     conda: '../envs/smk.yml'
     shell:
         '''
-        cat {input.txt} | dot -T png > {output.png}
+        cat {input.dot} | dot -T png > {output.png}
         '''
 
 rule make_graph_figures:
     input:
-        'figures/graphviz_dag.png', 'figures/graphviz_rulegraph.png'
-
+        'figures/graphviz/dag.png', 
+        'figures/graphviz/rulegraph.png'

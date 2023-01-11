@@ -1,7 +1,6 @@
 
 rule combine_results:
     input:
-        R="workflow/scripts/combine_results.R",
         csv=expand(
             "results/{{dataset}}/runs/{method}_{seed}_{{type}}.csv",
             method=ml_methods,
@@ -21,7 +20,6 @@ rule combine_results:
 
 rule combine_hp_performance:
     input:
-        R="workflow/scripts/combine_hp_perf.R",
         rds=expand("results/{{dataset}}/runs/{{method}}_{seed}_model.Rds", seed=seeds),
     output:
         rds="results/{dataset}/hp_performance_results_{method}.Rds",
@@ -37,19 +35,14 @@ rule combine_hp_performance:
         "../scripts/combine_hp_perf.R"
 
 
-rule combine_benchmarks:
+rule mutate_benchmark:
     input:
-        R="workflow/scripts/combine_benchmarks.R",
-        tsv=expand(
-            "benchmarks/{{dataset}}/runs/run_ml.{method}_{seed}.txt",
-            method=ml_methods,
-            seed=seeds,
-        ),
+        tsv="benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt"
     output:
-        csv="results/{dataset}/benchmarks_results.csv",
+        csv="results/{dataset}/runs/{method}_{seed}_benchmarks.csv"
     log:
-        "log/{dataset}/combine_benchmarks.txt",
+        "log/{dataset}/mutate_benchmark.{method}_{seed}.txt"
     conda:
         "../envs/mikropml.yml"
     script:
-        "../scripts/combine_benchmarks.R"
+        "../scripts/mutate_benchmark.R"

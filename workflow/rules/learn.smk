@@ -1,6 +1,5 @@
 rule preprocess_data:
     input:
-        R="workflow/scripts/preproc.R",
         csv=config["dataset_csv"],
     output:
         rds=f"data/processed/{dataset}_preproc.Rds",
@@ -21,7 +20,6 @@ rule preprocess_data:
 
 rule run_ml:
     input:
-        R="workflow/scripts/train_ml.R",
         rds=rules.preprocess_data.output.rds,
     output:
         model="results/{dataset}/runs/{method}_{seed}_model.Rds",
@@ -48,7 +46,6 @@ rule run_ml:
 
 rule find_feature_importance:
     input:
-        R="workflow/scripts/find_feature_importance.R",
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test,
     output:
@@ -66,3 +63,19 @@ rule find_feature_importance:
         "../envs/mikropml.yml"
     script:
         "../scripts/find_feature_importance.R"
+
+
+rule predict:
+    input:
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test
+    output:
+        csv="results/{dataset}/runs/{method}_{seed}_predictions.csv"
+    params:
+        outcome_colname=outcome_colname
+    log:
+        "log/{dataset}/runs/predict.{method}_{seed}.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        '../scripts/predict.R'
