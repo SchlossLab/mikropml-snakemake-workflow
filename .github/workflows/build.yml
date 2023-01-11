@@ -54,6 +54,7 @@ jobs:
       - name: Update container file
         uses: snakemake/snakemake-github-action@v1
         with:
+          directory: .
           snakefile: 'workflow/Snakefile'
           task: 'containerize'
       - name: Commit
