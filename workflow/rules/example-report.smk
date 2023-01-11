@@ -17,7 +17,7 @@ rule copy_example_figures:
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
         hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
-        roc_plot="figures/example/roc_curves.png"
+        roc_plot="figures/example/roc_curves.png",
     log:
         "log/copy_example_figures.txt",
     params:
@@ -31,13 +31,14 @@ rule copy_example_figures:
         done
         """
 
+
 rule make_example_report:
     input:
         perf_plot=rules.copy_example_figures.output.perf_plot,
         feat_plot=rules.copy_example_figures.output.feat_plot,
         hp_plot=rules.copy_example_figures.output.hp_plot,
         bench_plot=rules.copy_example_figures.output.bench_plot,
-        roc_plot=rules.copy_example_figures.output.roc_plot
+        roc_plot=rules.copy_example_figures.output.roc_plot,
     output:
         doc="report-example.md",
     log:
@@ -48,7 +49,7 @@ rule make_example_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
-        find_feature_importance=find_feature_importance
+        find_feature_importance=find_feature_importance,
     conda:
         "envs/mikropml.yml"
     script:

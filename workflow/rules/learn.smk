@@ -68,14 +68,14 @@ rule find_feature_importance:
 rule predict:
     input:
         model=rules.run_ml.output.model,
-        test=rules.run_ml.output.test
+        test=rules.run_ml.output.test,
     output:
-        csv="results/{dataset}/runs/{method}_{seed}_predictions.csv"
+        csv="results/{dataset}/runs/{method}_{seed}_predictions.csv",
     params:
-        outcome_colname=outcome_colname
+        outcome_colname=outcome_colname,
     log:
         "log/{dataset}/runs/predict.{method}_{seed}.txt",
     conda:
         "../envs/mikropml.yml"
     script:
-        '../scripts/predict.R'
+        "../scripts/predict.R"

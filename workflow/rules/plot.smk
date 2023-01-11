@@ -19,14 +19,13 @@ if find_feature_importance:
         output:
             plot="figures/{dataset}/feature_importance.png",
         params:
-            top_n=5
+            top_n=5,
         log:
             "log/{dataset}/plot_feature_importance.txt",
         conda:
             "../envs/mikropml.yml"
         script:
             "../scripts/plot_feature_importance.R"
-
 
 else:
 
@@ -69,39 +68,46 @@ rule plot_benchmarks:
 
 rule plot_roc_curves:
     input:
-        csv="results/{dataset}/predictions_results.csv"
+        csv="results/{dataset}/predictions_results.csv",
     output:
-        plot="figures/{dataset}/roc_curves.png"
+        plot="figures/{dataset}/roc_curves.png",
     log:
-        "log/{dataset}/plot_roc_curves.txt"
+        "log/{dataset}/plot_roc_curves.txt",
     conda:
         "../envs/mikropml.yml"
     script:
         "../scripts/plot_roc_curves.R"
 
+
 rule write_graphviz:
     output:
-        dot='figures/graphviz/{cmd}.dot'
-    log: 'log/graphviz/write_graphviz_{cmd}.txt'
-    conda: '../envs/smk.yml'
+        dot="figures/graphviz/{cmd}.dot",
+    log:
+        "log/graphviz/write_graphviz_{cmd}.txt",
+    conda:
+        "../envs/smk.yml"
     shell:
-        '''
+        """
         snakemake --{wildcards.cmd} --configfile config/test.yml > {output.dot}
-        '''    
+        """
+
 
 rule dot_to_png:
     input:
-        dot=rules.write_graphviz.output.dot
+        dot=rules.write_graphviz.output.dot,
     output:
-        png='figures/graphviz/{cmd}.png'
-    log: 'log/graphviz/dot_to_png_{cmd}.txt'
-    conda: '../envs/smk.yml'
+        png="figures/graphviz/{cmd}.png",
+    log:
+        "log/graphviz/dot_to_png_{cmd}.txt",
+    conda:
+        "../envs/smk.yml"
     shell:
-        '''
+        """
         cat {input.dot} | dot -T png > {output.png}
-        '''
+        """
+
 
 rule make_graph_figures:
     input:
-        'figures/graphviz/dag.png', 
-        'figures/graphviz/rulegraph.png'
+        "figures/graphviz/dag.png",
+        "figures/graphviz/rulegraph.png",
