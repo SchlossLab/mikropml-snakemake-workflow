@@ -3,10 +3,10 @@ library(cowplot)
 library(mikropml)
 library(tidyverse)
 
-dat <- read_csv(snakemake@input[['csv']])
+dat <- read_csv(snakemake@input[["csv"]])
 p <- plot_grid(
-    dat %>% calc_mean_roc() %>% plot_mean_roc(),
-    dat %>% calc_mean_prc() %>% plot_mean_prc()
+  dat %>% calc_mean_roc() %>% plot_mean_roc(),
+  dat %>% calc_mean_prc() %>% plot_mean_prc()
 )
 
 ggsave(
