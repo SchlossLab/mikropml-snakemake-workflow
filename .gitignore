@@ -10,3 +10,6 @@ results/*/runs
 !.tests/
 __pycache__/
 .DS_Store
+figures/otu*
+results/otu*
+report_otu*
