@@ -4,7 +4,7 @@ library(ggplot2)
 library(schtools)
 
 feat_df <- readr::read_csv(snakemake@input[["csv"]])
-top_n <- as.numeric(snakemake@params[['top_n']])
+top_n <- as.numeric(snakemake@params[["top_n"]])
 
 top_feats <- feat_df %>%
   group_by(method, names) %>%
