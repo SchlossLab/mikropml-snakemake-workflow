@@ -69,7 +69,7 @@ rule plot_benchmarks:
 
 rule plot_roc_curves:
     input:
-        csv="results/{dataset}/predictions_results.csv"
+        csv="results/{dataset}/sensspec_results.csv"
     output:
         plot="figures/{dataset}/roc_curves.png"
     log:

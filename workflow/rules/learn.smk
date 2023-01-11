@@ -65,17 +65,17 @@ rule find_feature_importance:
         "../scripts/find_feature_importance.R"
 
 
-rule predict:
+rule calc_model_sensspec:
     input:
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test
     output:
-        csv="results/{dataset}/runs/{method}_{seed}_predictions.csv"
+        csv="results/{dataset}/runs/{method}_{seed}_sensspec.csv"
     params:
         outcome_colname=outcome_colname
     log:
-        "log/{dataset}/runs/predict.{method}_{seed}.txt",
+        "log/{dataset}/runs/calc_model_sensspec.{method}_{seed}.txt",
     conda:
         "../envs/mikropml.yml"
     script:
-        '../scripts/predict.R'
+        '../scripts/calc_model_sensspec.R'
