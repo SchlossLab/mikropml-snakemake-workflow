@@ -100,7 +100,7 @@ rule dot_to_png:
     log:
         "log/graphviz/dot_to_png_{cmd}.txt",
     conda:
-        "../envs/smk.yml"
+        "../envs/graphviz.yml"
     shell:
         """
         cat {input.dot} | dot -T png > {output.png}
