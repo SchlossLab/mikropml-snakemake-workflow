@@ -22,6 +22,7 @@ jobs:
         with:
           python-version: 3.11
           mamba-version: "*"
+          channel-priority: true
           activate-environment: github-actions
           environment-file: workflow/envs/github-actions.yml
       - name: git config
