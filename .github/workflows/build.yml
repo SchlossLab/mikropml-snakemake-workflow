@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: build
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.11"]
