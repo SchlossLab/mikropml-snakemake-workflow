@@ -37,14 +37,8 @@ feat_imp <- mikropml::get_feature_importance(
   seed = seed,
 )
 
-wildcard_names <- snakemake@wildcards %>%
-  names() %>%
-  Filter(function(x) {
-    nchar(x) > 0
-  }, .)
-wildcards <- snakemake@wildcards[wildcard_names] %>%
-  as_tibble() %>%
-  mutate(seed = as.numeric(seed))
+wildcards <- schtools::get_wildcards_tbl()
+
 readr::write_csv(
   feat_imp %>%
     inner_join(wildcards, by = c("method", "seed")),

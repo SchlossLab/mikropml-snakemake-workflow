@@ -4,6 +4,7 @@ doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
 
 method <- snakemake@params[["method"]]
+seed <- as.numeric(snakemake@params[["seed"]])
 hyperparams <- snakemake@params[["hyperparams"]][[method]]
 data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 
@@ -13,18 +14,11 @@ ml_results <- mikropml::run_ml(
   outcome_colname = snakemake@params[["outcome_colname"]],
   find_feature_importance = FALSE,
   kfold = as.numeric(snakemake@params[["kfold"]]),
-  seed = as.numeric(snakemake@params[["seed"]]),
+  seed = seed,
   hyperparameters = hyperparams
 )
 
-wildcard_names <- snakemake@wildcards %>%
-  names() %>%
-  Filter(function(x) {
-    nchar(x) > 0
-  }, .)
-wildcards <- snakemake@wildcards[wildcard_names] %>%
-  as_tibble() %>%
-  mutate(seed = as.numeric(seed))
+wildcards <- schtools::get_wildcards_tbl()
 
 readr::write_csv(
   ml_results$performance %>%
