@@ -66,3 +66,28 @@ rule plot_benchmarks:
         "../envs/mikropml.yml"
     script:
         "../scripts/plot_benchmarks.R"
+
+rule write_graphviz:
+    output:
+        txt='figures/graphviz_{cmd}.dot'
+    conda: '../envs/smk.yml'
+    shell:
+        '''
+        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.txt}
+        '''    
+
+rule dot_to_png:
+    input:
+        txt='figures/graphviz_{cmd}.dot'
+    output:
+        png='figures/graphviz_{cmd}.png'
+    conda: '../envs/smk.yml'
+    shell:
+        '''
+        cat {input.txt} | dot -T png > {output.png}
+        '''
+
+rule make_graph_figures:
+    input:
+        'figures/graphviz_dag.png', 'figures/graphviz_rulegraph.png'
+
