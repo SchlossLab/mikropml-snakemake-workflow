@@ -70,6 +70,7 @@ rule plot_benchmarks:
 rule write_graphviz:
     output:
         txt='figures/graphviz_{cmd}.dot'
+    log: "log/graphviz/write_graphviz_{cmd}.txt",
     conda: '../envs/smk.yml'
     shell:
         '''
@@ -81,6 +82,7 @@ rule dot_to_png:
         txt='figures/graphviz_{cmd}.dot'
     output:
         png='figures/graphviz_{cmd}.png'
+    log: "log/graphviz/dot_to_png_{cmd}.txt",
     conda: '../envs/smk.yml'
     shell:
         '''
