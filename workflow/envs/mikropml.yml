@@ -6,8 +6,9 @@ dependencies:
   - r-base=4
   - r-doFuture
   - r-cowplot
-  - r-devtools
+  - r-devtools # TODO remove after post-deployment script no longer needed
   - r-foreach
+  - r-fs # TODO remove after post-deployment script no longer needed
   - r-future
   - r-future.apply
   - r-import
