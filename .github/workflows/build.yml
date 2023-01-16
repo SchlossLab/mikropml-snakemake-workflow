@@ -8,10 +8,7 @@ on:
 jobs:
   build:
     name: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11"]
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -46,12 +43,6 @@ jobs:
           git diff-index --quiet HEAD \
             || git commit \
             -m '🎨  Style Python & Snakemake code 🐍'
-      - name: Build graphs
-        uses: snakemake/snakemake-github-action@v1.24.0
-        with:
-          directory: .
-          snakefile: workflow/Snakefile
-          args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures"
       - name: Commit
         run: |
           git add figures/graphviz
