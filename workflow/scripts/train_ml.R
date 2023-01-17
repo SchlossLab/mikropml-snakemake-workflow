@@ -1,10 +1,10 @@
 schtools::log_snakemake()
-print(paste("doPar workers: ", foreach::getDoParWorkers()))
+library(dplyr)
 doFuture::registerDoFuture()
 future::plan(future::multicore, workers = snakemake@threads)
-print(paste("doPar workers: ", foreach::getDoParWorkers()))
 
 method <- snakemake@params[["method"]]
+seed <- as.numeric(snakemake@params[["seed"]])
 hyperparams <- snakemake@params[["hyperparams"]][[method]]
 data_processed <- readRDS(snakemake@input[["rds"]])$dat_transformed
 
@@ -14,10 +14,16 @@ ml_results <- mikropml::run_ml(
   outcome_colname = snakemake@params[["outcome_colname"]],
   find_feature_importance = FALSE,
   kfold = as.numeric(snakemake@params[["kfold"]]),
-  seed = as.numeric(snakemake@params[["seed"]]),
+  seed = seed,
   hyperparameters = hyperparams
 )
 
-saveRDS(ml_results$trained_model, file = snakemake@output[["model"]])
-readr::write_csv(ml_results$performance, snakemake@output[["perf"]])
+wildcards <- schtools::get_wildcards_tbl()
+
+readr::write_csv(
+  ml_results$performance %>%
+    inner_join(wildcards, by = c("method", "seed")),
+  snakemake@output[["perf"]]
+)
 readr::write_csv(ml_results$test_data, snakemake@output[["test"]])
+saveRDS(ml_results$trained_model, file = snakemake@output[["model"]])
