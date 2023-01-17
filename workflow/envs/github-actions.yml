@@ -5,9 +5,9 @@ channels:
   - defaults
   - r
 dependencies:
-  - black=22.10.0
-  - python=3.11.0
-  - r-base=4.2.2
-  - r-styler=1.8.1
-  - r-usethis=2.1.6
-  - snakefmt=0.8.0
+  - black
+  - python=3.11
+  - r-base=4
+  - r-styler
+  - r-usethis
+  - snakefmt
