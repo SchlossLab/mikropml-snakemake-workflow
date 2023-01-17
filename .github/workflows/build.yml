@@ -54,7 +54,7 @@ jobs:
           args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures"
       - name: Commit
         run: |
-          git add figures/graphviz
+          git add figures/graphviz*
           git diff-index --quiet HEAD \
             || git commit -m "📊 Update graph figures"
       - name: Push
