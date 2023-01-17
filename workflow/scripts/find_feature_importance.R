@@ -37,4 +37,10 @@ feat_imp <- mikropml::get_feature_importance(
   seed = seed,
 )
 
-readr::write_csv(feat_imp, snakemake@output[["feat"]])
+wildcards <- schtools::get_wildcards_tbl()
+
+readr::write_csv(
+  feat_imp %>%
+    inner_join(wildcards, by = c("method", "seed")),
+  snakemake@output[["feat"]]
+)
