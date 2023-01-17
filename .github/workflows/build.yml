@@ -33,7 +33,7 @@ jobs:
         shell: bash -el {0}
         run: |
           R -e 'usethis::use_tidy_style()'
-          git add .
+          git add workflow/scripts
           git diff-index --quiet HEAD \
             || git commit \
             -m '🎨  Style R code'
@@ -42,7 +42,7 @@ jobs:
         run: |
           black workflow/
           snakefmt workflow/
-          git add workflow/
+          git add workflow/scripts workflow/rules workflow/Snakefile
           git diff-index --quiet HEAD \
             || git commit \
             -m '🎨  Style Python & Snakemake code 🐍'
