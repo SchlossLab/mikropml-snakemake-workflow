@@ -1,24 +1,32 @@
 import os
-
+import pandas as pd
+from snakemake.utils import Paramspace
 
 configfile: "config/default.yml"
 
-
 MEM_PER_GB = 1024
 
-dataset = config["dataset_name"]
+dataset_filename = config['dataset-csv']
+dataset = config["dataset-name"]
 ncores = config["ncores"]
-ml_methods = config["ml_methods"]
+ml_methods = config["ml-methods"]
 kfold = config["kfold"]
-outcome_colname = config["outcome_colname"]
+outcome_colname = config["outcome-colname"]
 
 nseeds = config["nseeds"]
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find_feature_importance"]
+find_feature_importance = config["find-feature-importance"]
 
+ignore_keys = ['dataset-csv', 'outcome-colname', 'hyperparams', 'find-feature-importance', 'nseeds', 'ncores']
+for k in ignore_keys:
+    config.pop(k)
+
+paramspace = Paramspace(pd.DataFrame.from_dict(config), param_sep = "_")
+print('paramspace.wildcard_pattern:\t', paramspace.wildcard_pattern)
+print('paramspace.instance_patterns:\t', [i for i in paramspace.instance_patterns])
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"

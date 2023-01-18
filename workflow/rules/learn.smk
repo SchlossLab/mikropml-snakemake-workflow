@@ -1,7 +1,7 @@
 rule preprocess_data:
     input:
         R="workflow/scripts/preproc.R",
-        csv=config["dataset_csv"],
+        csv=dataset_filename,
     output:
         rds=f"data/processed/{dataset}_preproc.Rds",
     log:
