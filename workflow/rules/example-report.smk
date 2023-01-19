@@ -1,4 +1,3 @@
-
 rule copy_example_figures:
     input:
         figs=[

@@ -16,4 +16,3 @@ dependencies:
   - r-purrr
   - r-schtools>=0.4.0
   - r-tidyverse
-

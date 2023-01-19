@@ -1,4 +1,5 @@
 .snakemake/
+.cache/
 data/
 log/
 benchmarks/

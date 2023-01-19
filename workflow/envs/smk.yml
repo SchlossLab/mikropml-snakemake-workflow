@@ -3,6 +3,5 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - graphviz
   - snakemake=7
   - snakedeploy

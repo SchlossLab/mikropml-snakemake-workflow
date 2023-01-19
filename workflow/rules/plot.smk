@@ -2,7 +2,11 @@ rule plot_performance:
     input:
         csv="results/{dataset}/performance_results.csv",
     output:
-        plot="figures/{dataset}/performance.png",
+        plot=report(
+            "figures/{dataset}/performance.png",
+            category="Performance",
+            subcategory="Model Performance",
+        ),
     log:
         "log/{dataset}/plot_performance.txt",
     conda:
@@ -17,7 +21,10 @@ if find_feature_importance:
         input:
             csv="results/{dataset}/feature-importance_results.csv",
         output:
-            plot="figures/{dataset}/feature_importance.png",
+            plot=report(
+                "figures/{dataset}/feature_importance.png",
+                category="Feature Importance",
+            ),
         params:
             top_n=5,
         log:
@@ -31,7 +38,7 @@ else:
 
     rule make_blank_feature_plot:
         output:
-            plot="figures/{dataset}/feature_importance.png",
+            plot="figures/{dataset}/feature_importance.png"
         log:
             "log/{dataset}/make_blank_plot.txt",
         conda:
@@ -44,7 +51,11 @@ rule plot_hp_performance:
     input:
         rds="results/{dataset}/hp_performance_results_{method}.Rds",
     output:
-        plot="figures/{dataset}/hp_performance_{method}.png",
+        plot=report(
+            "figures/{dataset}/hp_performance_{method}.png",
+            category="Performance",
+            subcategory="Hyperparameter Tuning",
+        ),
     log:
         "log/{dataset}/plot_hp_perf_{method}.txt",
     conda:
@@ -57,7 +68,12 @@ rule plot_benchmarks:
     input:
         csv="results/{dataset}/benchmarks_results.csv",
     output:
-        plot="figures/{dataset}/benchmarks.png",
+        plot=report(
+            "figures/{dataset}/benchmarks.png",
+            category="Performance",
+            subcategory="Runtime & Memory Usage",
+            caption="../report/benchmarks.rst",
+        ),
     log:
         "log/{dataset}/plot_benchmarks.txt",
     conda:
@@ -105,7 +121,6 @@ rule dot_to_png:
         """
         cat {input.dot} | dot -T png > {output.png}
         """
-
 
 rule make_graph_figures:
     input:

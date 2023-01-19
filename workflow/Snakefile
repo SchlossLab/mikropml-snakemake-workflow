@@ -1,7 +1,13 @@
 import os
+from snakemake.utils import min_version
+
+min_version("6.12.3")
 
 
-configfile: "config/default.yml"
+containerized: "docker://kellysovacool/mikropml:latest"
+
+
+configfile: "config/config.yaml"
 
 
 MEM_PER_GB = 1024
@@ -24,6 +30,9 @@ include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
 include: "rules/example-report.smk"
+
+
+report: "report/workflow.rst"
 
 
 rule targets:
