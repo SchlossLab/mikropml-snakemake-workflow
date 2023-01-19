@@ -14,14 +14,15 @@
 # Load any required modules for your HPC.
 # At UMich, the GreatLakes HPC provides a singularity module which is required 
 #    if you wish to run snakemake with --use-singularity.
-# It is recommended to use your own local miniconda installation rather than the
+# It is recommended to use your own local conda/mamba installation rather than 
 #    the conda module provided by GreatLakes.
 module load singularity 
 
 # Run snakemake
 snakemake \
     --profile config/slurm \ # use the slurm profile to run jobs
-    --latency-wait 90 \ # wait for file system latency
-    --use-conda \ # use conda environments specified by rules
+    --latency-wait 90 \ # wait 90 seconds for file system latency
     --use-singularity \ # use singularity to build the container image
-    --configfile config/test.yml # specify a different configfile from default
+    --use-conda \ # use the conda environments specified by the rules
+    --conda-frontend mamba \ # specify mamba for faster environment solving
+    --configfile config/test.yml # set a different configfile from default

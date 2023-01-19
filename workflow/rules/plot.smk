@@ -25,6 +25,8 @@ if find_feature_importance:
                 "figures/{dataset}/feature_importance.png",
                 category="Feature Importance",
             ),
+        params:
+            top_n=5,
         log:
             "log/{dataset}/plot_feature_importance.txt",
         conda:
@@ -36,10 +38,7 @@ else:
 
     rule make_blank_feature_plot:
         output:
-            plot=report(
-                "figures/{dataset}/feature_importance.png",
-                category="Feature Importance",
-            ),
+            plot="figures/{dataset}/feature_importance.png"
         log:
             "log/{dataset}/make_blank_plot.txt",
         conda:
@@ -83,35 +82,49 @@ rule plot_benchmarks:
         "../scripts/plot_benchmarks.R"
 
 
+rule plot_roc_curves:
+    input:
+        csv="results/{dataset}/sensspec_results.csv"
+    output:
+        plot="figures/{dataset}/roc_curves.png",
+    log:
+        "log/{dataset}/plot_roc_curves.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/plot_roc_curves.R"
+
+
 rule write_graphviz:
     output:
-        txt="figures/graphviz_{cmd}.dot",
+        dot="figures/graphviz/{cmd}.dot",
     log:
         "log/graphviz/write_graphviz_{cmd}.txt",
     conda:
         "../envs/smk.yml"
+    params:
+        config_path=config_path
     shell:
         """
-        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.txt}
+        snakemake --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
         """
 
 
 rule dot_to_png:
     input:
-        txt="figures/graphviz_{cmd}.dot",
+        dot=rules.write_graphviz.output.dot,
     output:
-        png="figures/graphviz_{cmd}.png",
+        png="figures/graphviz/{cmd}.png",
     log:
         "log/graphviz/dot_to_png_{cmd}.txt",
     conda:
-        "../envs/smk.yml"
+        "../envs/graphviz.yml"
     shell:
         """
-        cat {input.txt} | dot -T png > {output.png}
+        cat {input.dot} | dot -T png 2> {log} > {output.png}
         """
-
 
 rule make_graph_figures:
     input:
-        "figures/graphviz_dag.png",
-        "figures/graphviz_rulegraph.png",
+        "figures/graphviz/dag.png",
+        "figures/graphviz/rulegraph.png",

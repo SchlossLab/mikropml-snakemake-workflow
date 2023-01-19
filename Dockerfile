@@ -1,12 +1,12 @@
 FROM condaforge/mambaforge:latest
 LABEL io.github.snakemake.containerized="true"
-LABEL io.github.snakemake.conda_env_hash="4ed1adea09ccd5e6e7e24f2aa8e97ea56f7e7bf1edc809fe0c36b8d8f78138b6"
+LABEL io.github.snakemake.conda_env_hash="13c135c49e238a3de34c11f438bd0efbaee84d5e84d05e1d3516d2392dabbea9"
 
 # Step 1: Retrieve conda environments
 
 # Conda environment:
 #   source: workflow/envs/mikropml.yml
-#   prefix: /conda-envs/87dc1a1422059bb3cacf5b910bc1a96e
+#   prefix: /conda-envs/67570867c99c9c3db185b41548ad6071
 #   name: mikropml
 #   channels:
 #     - conda-forge
@@ -19,15 +19,16 @@ LABEL io.github.snakemake.conda_env_hash="4ed1adea09ccd5e6e7e24f2aa8e97ea56f7e7b
 #     - r-future
 #     - r-future.apply
 #     - r-import
-#     - r-mikropml>=1.4.0
+#     - r-mikropml>=1.5.0
 #     - r-rmarkdown
 #     - r-rpart
-#     - r-schtools>=0.3.0
+#     - r-purrr
+#     - r-schtools>=0.4.0
 #     - r-tidyverse
-RUN mkdir -p /conda-envs/87dc1a1422059bb3cacf5b910bc1a96e
-COPY workflow/envs/mikropml.yml /conda-envs/87dc1a1422059bb3cacf5b910bc1a96e/environment.yaml
+RUN mkdir -p /conda-envs/67570867c99c9c3db185b41548ad6071
+COPY workflow/envs/mikropml.yml /conda-envs/67570867c99c9c3db185b41548ad6071/environment.yaml
 
 # Step 2: Generate conda environments
 
-RUN mamba env create --prefix /conda-envs/87dc1a1422059bb3cacf5b910bc1a96e --file /conda-envs/87dc1a1422059bb3cacf5b910bc1a96e/environment.yaml && \
+RUN mamba env create --prefix /conda-envs/67570867c99c9c3db185b41548ad6071 --file /conda-envs/67570867c99c9c3db185b41548ad6071/environment.yaml && \
     mamba clean --all -y
