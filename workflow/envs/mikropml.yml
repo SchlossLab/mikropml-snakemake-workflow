@@ -13,6 +13,6 @@ dependencies:
   - r-mikropml>=1.4.0
   - r-rmarkdown
   - r-rpart
-  - r-schtools>=0.3.0
+  - r-schtools>=0.4.0
   - r-tidyverse
 
