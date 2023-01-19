@@ -32,6 +32,9 @@ include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
 
+report: "report/workflow.rst"
+
+
 rule targets:
     input:
         f"report_{dataset}.md",
