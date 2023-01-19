@@ -1,6 +1,5 @@
 rule plot_performance:
     input:
-        R="workflow/scripts/plot_performance.R",
         csv="results/{dataset}/performance_results.csv",
     output:
         plot="figures/{dataset}/performance.png",
@@ -16,7 +15,6 @@ if find_feature_importance:
 
     rule plot_feature_importance:
         input:
-            R="workflow/scripts/plot_feature_importance.R",
             csv="results/{dataset}/feature-importance_results.csv",
         output:
             plot="figures/{dataset}/feature_importance.png",
@@ -42,7 +40,6 @@ else:
 
 rule plot_hp_performance:
     input:
-        R="workflow/scripts/plot_hp_perf.R",
         rds="results/{dataset}/hp_performance_results_{method}.Rds",
     output:
         plot="figures/{dataset}/hp_performance_{method}.png",
@@ -56,7 +53,6 @@ rule plot_hp_performance:
 
 rule plot_benchmarks:
     input:
-        R="workflow/scripts/plot_benchmarks.R",
         csv="results/{dataset}/benchmarks_results.csv",
     output:
         plot="figures/{dataset}/benchmarks.png",
