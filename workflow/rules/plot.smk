@@ -38,7 +38,7 @@ else:
 
     rule make_blank_feature_plot:
         output:
-            plot="figures/{dataset}/feature_importance.png"
+            plot="figures/{dataset}/feature_importance.png",
         log:
             "log/{dataset}/make_blank_plot.txt",
         conda:
@@ -84,7 +84,7 @@ rule plot_benchmarks:
 
 rule plot_roc_curves:
     input:
-        csv="results/{dataset}/sensspec_results.csv"
+        csv="results/{dataset}/sensspec_results.csv",
     output:
         plot="figures/{dataset}/roc_curves.png",
     log:
@@ -103,7 +103,7 @@ rule write_graphviz:
     conda:
         "../envs/smk.yml"
     params:
-        config_path=config_path
+        config_path=config_path,
     shell:
         """
         snakemake --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
@@ -123,6 +123,7 @@ rule dot_to_png:
         """
         cat {input.dot} | dot -T png 2> {log} > {output.png}
         """
+
 
 rule make_graph_figures:
     input:

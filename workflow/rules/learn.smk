@@ -70,7 +70,7 @@ rule calc_model_sensspec:
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test,
     output:
-        csv="results/{dataset}/runs/{method}_{seed}_sensspec.csv"
+        csv="results/{dataset}/runs/{method}_{seed}_sensspec.csv",
     params:
         outcome_colname=outcome_colname,
     log:
@@ -78,4 +78,4 @@ rule calc_model_sensspec:
     conda:
         "../envs/mikropml.yml"
     script:
-        '../scripts/calc_model_sensspec.R'
+        "../scripts/calc_model_sensspec.R"
