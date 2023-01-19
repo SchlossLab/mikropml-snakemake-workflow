@@ -52,6 +52,7 @@ rule make_example_report:
         ncores=ncores,
         kfold=kfold,
         find_feature_importance=find_feature_importance,
+        config_path=config_path
     conda:
         "../envs/mikropml.yml"
     script:
