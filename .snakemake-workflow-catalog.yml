@@ -5,3 +5,4 @@ usage:
     conda: true 
     singularity: true 
     singularity+conda: true
+  report: true
