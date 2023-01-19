@@ -10,6 +10,7 @@ rule copy_example_figures:
                 method=ml_methods,
                 dataset=dataset,
             ),
+            "figures/graphviz/rulegraph.png"
         ],
     output:
         perf_plot="figures/example/performance.png",
@@ -17,12 +18,13 @@ rule copy_example_figures:
         bench_plot="figures/example/benchmarks.png",
         hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
         roc_plot="figures/example/roc_curves.png",
+        rulegraph='figures/example/rulegraph.png'
     log:
         "log/copy_example_figures.txt",
     params:
         outdir=lambda wildcards, output: os.path.split(output[0])[0],
     conda:
-        "envs/smk.yml"
+        "../envs/smk.yml"
     shell:
         """
         for f in {input.figs}; do
@@ -38,6 +40,7 @@ rule make_example_report:
         hp_plot=rules.copy_example_figures.output.hp_plot,
         bench_plot=rules.copy_example_figures.output.bench_plot,
         roc_plot=rules.copy_example_figures.output.roc_plot,
+        rulegraph=rules.copy_example_figures.output.rulegraph
     output:
         doc="report-example.md",
     log:
@@ -50,6 +53,6 @@ rule make_example_report:
         kfold=kfold,
         find_feature_importance=find_feature_importance,
     conda:
-        "envs/mikropml.yml"
+        "../envs/mikropml.yml"
     script:
         "../scripts/report.Rmd"

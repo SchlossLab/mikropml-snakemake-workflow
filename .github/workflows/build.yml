@@ -51,7 +51,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures"
+          args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures --configfile config/test.yaml"
       - name: Update container file
         uses: snakemake/snakemake-github-action@v1
         with:

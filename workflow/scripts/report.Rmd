@@ -19,6 +19,12 @@ Models were trained with `r snakemake@params[['nseeds']]` different random
 partitions of the `r snakemake@params[['dataset']]` dataset into training and
 testing sets using `r snakemake@params[['kfold']]`-fold cross validation.
 
+## Workflow
+
+```{r rulegraph, out.width = '80%'}
+include_graphics(snakemake@input[['rulegraph']])
+```
+
 ## Model Performance
 
 ```{r perf_plot, out.width='80%'}

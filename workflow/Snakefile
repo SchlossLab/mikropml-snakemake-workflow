@@ -1,13 +1,18 @@
 import os
 from snakemake.utils import min_version
+import sys
+
 
 min_version("6.12.3")
 
 
 containerized: "docker://kellysovacool/mikropml:latest"
 
+default_configfile = 'config/config.yaml'
+configfile: default_configfile
 
-configfile: "config/config.yaml"
+args = sys.argv
+config_path = args[args.index("--configfile") + 1] if '--configfile' in args else default_configfile
 
 
 MEM_PER_GB = 1024
@@ -49,6 +54,7 @@ rule render_report:
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
+        rulegraph="figures/graphviz/rulegraph.png"
     output:
         doc="report_{dataset}.md",
     log:

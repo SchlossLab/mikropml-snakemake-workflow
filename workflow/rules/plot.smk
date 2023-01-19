@@ -102,9 +102,11 @@ rule write_graphviz:
         "log/graphviz/write_graphviz_{cmd}.txt",
     conda:
         "../envs/smk.yml"
+    params:
+        config_path=config_path
     shell:
         """
-        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.dot}
+        snakemake --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
         """
 
 
@@ -119,7 +121,7 @@ rule dot_to_png:
         "../envs/graphviz.yml"
     shell:
         """
-        cat {input.dot} | dot -T png > {output.png}
+        cat {input.dot} | dot -T png 2> {log} > {output.png}
         """
 
 rule make_graph_figures:
