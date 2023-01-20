@@ -15,27 +15,22 @@
     
 1. Install the dependencies.
 
-    1. If you don't have conda yet, we recommend installing
-       [miniconda](https://docs.conda.io/en/latest/miniconda.html).
-
-    1. Next, install [mamba](https://mamba.readthedocs.io/en/latest/),
-       a fast drop-in replacement for conda:
-
-       ``` sh
-       conda install mamba -n base -c conda-forge
-       ```
+    1. If you don't have conda/mamba yet, we recommend installing
+       [Mambaforge](https://mamba.readthedocs.io/en/latest/installation.html).
 
     1. Create a conda environment with snakemake installed:
 
        ``` sh
        mamba env create -f workflow/envs/smk.yml
-       conda activate smk
+       mamba activate smk
        ```
 
     - Alternatively, you can install the dependencies listed in
     [the conda environments](/workflow/envs/) however you like.
 
-1. Edit the configuration file [`config/config.yaml`](/config/config.yaml). See [config/README.md] for a description of the configuration options.
+1. Edit the configuration file: [`config/config.yaml`](/config/config.yaml). 
+ 
+   See [config/README.md](/config/README.md) for a description of the configuration options.
 
 1. Do a dry run to make sure the snakemake workflow is valid.
 
@@ -57,12 +52,12 @@
 
     You can use singularity with:
     ``` sh
-    snakemake --use-conda --use-singularity --cores 2
+    snakemake --use-singularity --use-conda --cores 2
     ```
 
     Or submit the jobs to a slurm cluster:
     ```sh
-    snakemake --profile config/slurm --use-conda --use-singularity
+    snakemake --profile config/slurm --use-singularity--use-conda 
     ```
     See the [slurm config instructions](config/README.md#slurm) for more details
     on slurm configuration.
