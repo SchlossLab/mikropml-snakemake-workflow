@@ -20,9 +20,9 @@ module load singularity
 
 # Run snakemake
 snakemake \
-    --profile config/slurm \ # use the slurm profile to run jobs
-    --latency-wait 90 \ # wait 90 seconds for file system latency
-    --use-singularity \ # use singularity to build the container image
-    --use-conda \ # use the conda environments specified by the rules
-    --conda-frontend mamba \ # specify mamba for faster environment solving
-    --configfile config/test.yml # set a different configfile from default
+    --profile config/slurm \ 
+    --latency-wait 90 \ 
+    --use-singularity \ 
+    --use-conda \ 
+    --conda-frontend mamba \ 
+    --configfile config/test.yml 
