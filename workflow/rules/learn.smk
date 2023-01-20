@@ -24,18 +24,15 @@ rule run_ml:
         R="workflow/scripts/train_ml.R",
         rds=rules.preprocess_data.output.rds,
     output:
-        model="results/{dataset}/runs/{method}_{seed}_model.Rds",
-        perf="results/{dataset}/runs/{method}_{seed}_performance.csv",
-        test="results/{dataset}/runs/{method}_{seed}_test-data.csv",
+        model=f"results/{paramspace.wildcard_pattern}/model.Rds",
+        perf=f"results/{paramspace.wildcard_pattern}/performance.csv",
+        test=f"results/{paramspace.wildcard_pattern}/test-data.csv",
     log:
-        "log/{dataset}/runs/run_ml.{method}_{seed}.txt",
+        f"log/{paramspace.wildcard_pattern}/run_ml.txt",
     benchmark:
-        "benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt"
+        f"benchmarks/{paramspace.wildcard_pattern}/run_ml.txt"
     params:
-        outcome_colname=outcome_colname,
-        method="{method}",
-        seed="{seed}",
-        kfold=kfold,
+        params=paramspace.instance,
         hyperparams=hyperparams,
     threads: ncores
     resources:
@@ -45,6 +42,20 @@ rule run_ml:
     script:
         "../scripts/train_ml.R"
 
+rule test_paramspace:
+    input:
+        csv=dataset_filename
+    output:
+        rds=f"tmp/{paramspace.wildcard_pattern}/test.Rds"
+    params:
+        params=paramspace.instance,
+    log: f"log/{paramspace.wildcard_pattern}/test_paramspace.txt"
+    script:
+        "../scripts/test_paramspace.R"
+
+rule agg_params:
+    input:
+        expand("tmp/{params}/test.Rds", params = paramspace.instance_patterns)
 
 rule find_feature_importance:
     input:

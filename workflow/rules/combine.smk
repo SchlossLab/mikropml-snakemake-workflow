@@ -3,16 +3,15 @@ rule combine_results:
     input:
         R="workflow/scripts/combine_results.R",
         csv=expand(
-            "results/{{dataset}}/runs/{method}_{seed}_{{type}}.csv",
-            method=ml_methods,
-            seed=seeds,
+            "results/{params}/{{type}}.csv",
+            params=paramspace.instance_patterns
         ),
     output:
-        csv="results/{dataset}/{type}_results.csv",
+        csv="results/{type}_results.csv",
     log:
-        "log/{dataset}/combine_results_{type}.txt",
+        "log/combine_results_{type}.txt",
     benchmark:
-        "benchmarks/{dataset}/combine_results_{type}.txt"
+        "benchmarks/combine_results_{type}.txt"
     conda:
         "../envs/mikropml.yml"
     script:
