@@ -27,7 +27,6 @@ if (!is.na(seed)) {
 }
 feat_imp <- mikropml::get_feature_importance(
   trained_model = model,
-  train_data = train_dat,
   test_data = test_dat,
   outcome_colname = outcome_colname,
   perf_metric_function = perf_metric_function,
