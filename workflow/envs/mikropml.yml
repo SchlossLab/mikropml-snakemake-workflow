@@ -10,9 +10,9 @@ dependencies:
   - r-future
   - r-future.apply
   - r-import
-  - r-mikropml>=1.4.0
+  - r-mikropml>=1.5.0
   - r-rmarkdown
   - r-rpart
+  - r-purrr
   - r-schtools>=0.4.0
   - r-tidyverse
-

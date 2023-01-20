@@ -32,7 +32,7 @@ combines the results files, plots performance results
 and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([see example here](report-example.md)).
 
 <!-- snakemake make_graph_figures -->
-![rulegraph](figures/graphviz_rulegraph.png)
+![rulegraph](figures/graphviz/rulegraph.png)
 
 The DAG shows how calls to `run_ml` can run in parallel if
 snakemake is allowed to run more than one job at a time.
@@ -40,7 +40,7 @@ If we use 100 seeds and 4 ML methods, snakemake would call `run_ml` 400 times.
 Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 
 <!-- snakemake make_graph_figures -->
-![dag](figures/graphviz_dag.png)
+![dag](figures/graphviz/dag.png)
 
 ## Usage
 

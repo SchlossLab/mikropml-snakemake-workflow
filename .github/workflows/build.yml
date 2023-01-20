@@ -51,12 +51,23 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures"
+          args: "--use-conda --conda-frontend mamba --cores 2 make_graph_figures --configfile config/test.yaml"
+      - name: Update container file
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: .
+          snakefile: 'workflow/Snakefile'
+          task: 'containerize'
       - name: Commit
         run: |
-          git add figures/graphviz*
-          git diff-index --quiet HEAD \
-            || git commit -m "📊 Update graph figures"
+          git add figures/graphviz
+          git commit -m "📊 Update graph figures" \
+            || echo "No changes in figures/graphviz to commit"
+
+          git add Dockerfile
+          git commit -m "🐳 Update Dockerfile" \
+            || echo "No changes in Dockerfile to commit"
+
       - name: Push
         uses: ad-m/github-push-action@master
         with:

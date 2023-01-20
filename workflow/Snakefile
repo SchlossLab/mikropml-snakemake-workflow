@@ -1,5 +1,7 @@
 import os
 from snakemake.utils import min_version
+import sys
+
 
 min_version("6.12.3")
 
@@ -7,7 +9,18 @@ min_version("6.12.3")
 containerized: "docker://kellysovacool/mikropml:latest"
 
 
-configfile: "config/config.yaml"
+default_configfile = "config/config.yaml"
+
+
+configfile: default_configfile
+
+
+args = sys.argv
+config_path = (
+    args[args.index("--configfile") + 1]
+    if "--configfile" in args
+    else default_configfile
+)
 
 
 MEM_PER_GB = 1024
@@ -48,6 +61,8 @@ rule render_report:
             "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
+        roc_plot=rules.plot_roc_curves.output.plot,
+        rulegraph="figures/graphviz/rulegraph.png",
     output:
         doc="report_{dataset}.md",
     log:
@@ -58,6 +73,8 @@ rule render_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
+        find_feature_importance=find_feature_importance,
+        config_path=config_path,
     conda:
         "envs/mikropml.yml"
     script:
