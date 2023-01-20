@@ -6,25 +6,26 @@ configfile: "config/default.yml"
 
 MEM_PER_GB = 1024
 
-dataset_filename = config['dataset-csv']
-dataset = config["dataset-name"]
+dataset_filename = config['dataset_csv']
+dataset = config["dataset_name"]
 ncores = config["ncores"]
-ml_methods = config["ml-methods"]
+ml_methods = config["ml_methods"]
 kfold = config["kfold"]
-outcome_colname = config["outcome-colname"]
+outcome_colname = config["outcome_colname"]
 
 nseeds = config["nseeds"]
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find-feature-importance"]
+find_feature_importance = config["find_feature_importance"]
 
-ignore_keys = ['dataset-csv', 'outcome-colname', 'hyperparams', 'find-feature-importance', 'nseeds', 'ncores']
+ignore_keys = ['dataset_csv', 'ncores', 'nseeds', 'find_feature_importance', 'hyperparams']
 for k in ignore_keys:
-    config.pop(k)
+    config.pop(k, None)
+config['seed'] = list(seeds)
 
-paramspace = Paramspace(pd.DataFrame.from_dict(config), param_sep = "_")
+paramspace = Paramspace(pd.DataFrame.from_dict(config), param_sep = "-")
 print('paramspace.wildcard_pattern:\t', paramspace.wildcard_pattern)
 print('paramspace.instance_patterns:\t', [i for i in paramspace.instance_patterns])
 

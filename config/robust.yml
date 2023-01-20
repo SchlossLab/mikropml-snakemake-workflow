@@ -1,7 +1,7 @@
-dataset-csv: data/processed/otu-large.csv
-dataset-name: otu-large
-outcome-colname: dx
-ml-methods:
+dataset_csv: data/processed/otu_large.csv
+dataset_name: otu_large
+outcome_colname: dx
+ml_methods:
  - glmnet
  - rf
  - rpart2
@@ -9,7 +9,7 @@ ml-methods:
 kfold: 5
 ncores: 36
 nseeds: 100
-find-feature-importance: false
+find_feature_importance: false
 hyperparams:
   - glmnet:
     - alpha: 
