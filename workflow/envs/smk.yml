@@ -3,8 +3,5 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - graphviz
-  - kubernetes
-  - python-kubernetes
   - snakemake=7
   - snakedeploy
