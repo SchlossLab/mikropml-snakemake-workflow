@@ -63,7 +63,8 @@ rule archive:
         f"workflow_{date_today}.zip",
     log:
         "log/archive.txt",
-    conda: "envs/smk.yml"
+    conda:
+        "envs/smk.yml"
     shell:
         """
         zip -r {output} {input} 2> {log}
