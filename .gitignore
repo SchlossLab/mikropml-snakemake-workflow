@@ -14,3 +14,4 @@ __pycache__/
 figures/otu*
 results/otu*
 report_otu*
+*.zip
