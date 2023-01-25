@@ -1,9 +1,13 @@
 name: run-snakemake
 
-on:
-  pull_request:
-    branches:
-      - main
+on: 
+  workflow_dispatch:
+    inputs:
+      configfile:
+        description: "Path to the config file"
+        required: true
+        default: 'config/test.yaml'
+        type: string
 
 jobs:
   run-snakemake:
@@ -20,12 +24,12 @@ jobs:
           miniforge-version: latest
           activate-environment: smk
           environment-file: workflow/envs/smk.yml
-      - name: Run the workflow
+      - name: Run the snakemake workflow
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
+          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache --show-failed-logs --all-temp --configfile ${{ inputs.configfile }}"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
