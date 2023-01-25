@@ -39,7 +39,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 2 --use-singularity --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
+          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
 #      - name: Test with pytest
 #        run: |
 #          pytest --workers 2 .tests/
