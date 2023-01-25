@@ -26,7 +26,7 @@ rule run_ml:
     output:
         model=f"results/{paramspace.wildcard_pattern}/model.Rds",
         perf=f"results/{paramspace.wildcard_pattern}/performance.csv",
-        test=f"results/{paramspace.wildcard_pattern}/test-data.csv",
+        test=f"results/{paramspace.wildcard_pattern}/test_data.csv",
     log:
         f"log/{paramspace.wildcard_pattern}/run_ml.txt",
     benchmark:
@@ -63,9 +63,9 @@ rule find_feature_importance:
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test,
     output:
-        feat="results/{dataset}/runs/{method}_{seed}_feature-importance.csv",
+        feat=f"results/{paramspace.wildcard_pattern}/feature_importance.csv",
     log:
-        "log/{dataset}/runs/find_feature-importance.{method}_{seed}.txt",
+        f"log/{paramspace.wildcard_pattern}/find_feature_importance.txt",
     params:
         outcome_colname=outcome_colname,
         method="{method}",

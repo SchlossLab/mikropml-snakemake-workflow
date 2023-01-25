@@ -1,4 +1,5 @@
 import os
+import itertools as it
 import pandas as pd
 from snakemake.utils import Paramspace
 
@@ -24,10 +25,19 @@ ignore_keys = ['dataset_csv', 'ncores', 'nseeds', 'find_feature_importance', 'hy
 for k in ignore_keys:
     config.pop(k, None)
 config['seed'] = list(seeds)
+conf_lists = {k:v for k,v in config.items() if type(v) == list}
+params_df = pd.DataFrame(list(it.product(*[v for v in conf_lists.values()])), columns = conf_lists.keys())
+for k in conf_lists.keys():
+    config.pop(k)
+for k, v in config.items():
+    params_df[k] = v
 
-paramspace = Paramspace(pd.DataFrame.from_dict(config), param_sep = "-")
+paramspace = Paramspace(params_df, param_sep = "-")
 print('paramspace.wildcard_pattern:\t', paramspace.wildcard_pattern)
 print('paramspace.instance_patterns:\t', [i for i in paramspace.instance_patterns])
+
+wildcard_constraints:
+    kfold = '[0-9]+'
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
@@ -45,7 +55,7 @@ rule render_report:
         R="workflow/scripts/render.R",
         Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
-        feat_plot="figures/{dataset}/feature_importance.png",
+        feat_plot=rules.plot_feature_importance.output.plot,
         hp_plot=expand(
             "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
         ),
