@@ -63,6 +63,7 @@ rule archive:
         f"workflow_{date_today}.zip",
     log:
         "log/archive.txt",
+    conda: "envs/smk.yml"
     shell:
         """
         zip -r {output} {input} 2> {log}
@@ -102,10 +103,10 @@ rule move_html:
         html=rules.render_report.output.html,
     output:
         html="docs/report_{dataset}.html",
-    conda:
-        "envs/graphviz.yml"
     log:
         "log/move_html.{dataset}.txt",
+    conda:
+        "envs/smk.yml"
     shell:
         """
         mv {input.html} {output.html} 2> {log}
