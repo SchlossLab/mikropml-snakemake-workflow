@@ -1,0 +1,39 @@
+name: run
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run:
+    name: run
+    runs-on: ubuntu-latest-16-cores
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: 3.11
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          activate-environment: smk
+          environment-file: workflow/envs/smk.yml
+      - name: Run the workflow
+        uses: snakemake/snakemake-github-action@v1.24.0
+        with:
+          directory: .
+          snakefile: workflow/Snakefile
+          args: "--use-conda --conda-frontend mamba --cores 16 --configfile config/test.yaml"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Upload archive
+        uses: actions/upload-artifact
+        with:
+          name: archive
+          path: workflow_${{ steps.date.outputs.date }}.zip
+  
