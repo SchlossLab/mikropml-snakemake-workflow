@@ -25,7 +25,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
+          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile config/test.yaml"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
