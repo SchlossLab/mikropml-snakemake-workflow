@@ -1,6 +1,6 @@
 FROM condaforge/mambaforge:latest
 LABEL io.github.snakemake.containerized="true"
-LABEL io.github.snakemake.conda_env_hash="a3713ec99770d7dcc2bbdbe9b79e1a9f0c798f396d49f533486fb3193730b7b3"
+LABEL io.github.snakemake.conda_env_hash="d02c5d20bddfecf88893c767f399252ed9726dc06819514e947bbe6813919421"
 
 # Step 1: Retrieve conda environments
 
