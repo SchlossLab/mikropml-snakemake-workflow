@@ -30,7 +30,7 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Upload archive
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@v3
         with:
           name: archive
           path: workflow_${{ steps.date.outputs.date }}.zip
