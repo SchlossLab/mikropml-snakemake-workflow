@@ -59,14 +59,16 @@ rule archive:
             dataset=dataset,
             rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
         ),
-        expand("figures/{dataset}/{ftype}.png", 
-               dataset=dataset,
-               ftype=['performance', 'feature_importance', 'benchmarks', 'roc_curves']),
         expand(
-            "figures/{dataset}/hp_performance_{method}.png", 
+            "figures/{dataset}/{ftype}.png",
             dataset=dataset,
-            method=ml_methods
-        )
+            ftype=["performance", "feature_importance", "benchmarks", "roc_curves"],
+        ),
+        expand(
+            "figures/{dataset}/hp_performance_{method}.png",
+            dataset=dataset,
+            method=ml_methods,
+        ),
     output:
         f"workflow_{date_today}.zip",
     log:
