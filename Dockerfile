@@ -1,6 +1,6 @@
 FROM condaforge/mambaforge:latest
 LABEL io.github.snakemake.containerized="true"
-LABEL io.github.snakemake.conda_env_hash="d02c5d20bddfecf88893c767f399252ed9726dc06819514e947bbe6813919421"
+LABEL io.github.snakemake.conda_env_hash="d6e12a7cc311122c424028af8b7df4211faef9b3f3bc94298fd01affb1243862"
 
 # Step 1: Retrieve conda environments
 
@@ -41,7 +41,7 @@ COPY workflow/envs/mikropml.yml /conda-envs/67570867c99c9c3db185b41548ad6071/env
 
 # Conda environment:
 #   source: workflow/envs/smk.yml
-#   prefix: /conda-envs/9af38ac9af9135264be16dd13f279cd7
+#   prefix: /conda-envs/457b7b75191d44b96e5086432876e333
 #   name: smk
 #   channels:
 #     - conda-forge
@@ -49,12 +49,13 @@ COPY workflow/envs/mikropml.yml /conda-envs/67570867c99c9c3db185b41548ad6071/env
 #   dependencies:
 #     - snakemake=7
 #     - snakedeploy
-RUN mkdir -p /conda-envs/9af38ac9af9135264be16dd13f279cd7
-COPY workflow/envs/smk.yml /conda-envs/9af38ac9af9135264be16dd13f279cd7/environment.yaml
+#     - zip
+RUN mkdir -p /conda-envs/457b7b75191d44b96e5086432876e333
+COPY workflow/envs/smk.yml /conda-envs/457b7b75191d44b96e5086432876e333/environment.yaml
 
 # Step 2: Generate conda environments
 
 RUN mamba env create --prefix /conda-envs/b42323b0ffd5d034544511c9db1bdead --file /conda-envs/b42323b0ffd5d034544511c9db1bdead/environment.yaml && \
     mamba env create --prefix /conda-envs/67570867c99c9c3db185b41548ad6071 --file /conda-envs/67570867c99c9c3db185b41548ad6071/environment.yaml && \
-    mamba env create --prefix /conda-envs/9af38ac9af9135264be16dd13f279cd7 --file /conda-envs/9af38ac9af9135264be16dd13f279cd7/environment.yaml && \
+    mamba env create --prefix /conda-envs/457b7b75191d44b96e5086432876e333 --file /conda-envs/457b7b75191d44b96e5086432876e333/environment.yaml && \
     mamba clean --all -y
