@@ -56,9 +56,10 @@ rule archive:
                rtype = ['performance', 'feature-importance', 'benchmarks', 'sensspec'])
     output:
         f'workflow_{date_today}.zip'
+    log: 'log/archive.txt'
     shell:
         """
-        zip -r {output} {input}
+        zip -r {output} {input} 2> {log}
         """
 
 
