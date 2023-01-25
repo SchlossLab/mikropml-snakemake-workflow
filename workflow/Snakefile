@@ -80,8 +80,7 @@ rule render_report:
         roc_plot=rules.plot_roc_curves.output.plot,
         rulegraph="figures/graphviz/rulegraph.png",
     output:
-        html="report_{dataset}.html",
-        md="report_{dataset}.md",
+        html="report_{dataset}.html"
     log:
         "log/{dataset}/render_report.txt",
     params:
@@ -105,7 +104,9 @@ rule move_html:
         html="docs/report_{dataset}.html",
     conda:
         "envs/graphviz.yml"
+    log:
+        'log/move_html.{dataset}.txt'
     shell:
         """
-        mv {input.html} {output.html}
+        mv {input.html} {output.html} 2> {log}
         """
