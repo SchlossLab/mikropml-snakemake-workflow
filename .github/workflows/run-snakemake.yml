@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-snakemake:
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest #-16-cores
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,12 +26,18 @@ jobs:
           directory: .
           snakefile: workflow/Snakefile
           args: "--use-conda --conda-frontend mamba --cores 16 --configfile config/test.yaml"
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: log
+          path: log/
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Upload archive
         uses: actions/upload-artifact@v3
         with:
-          name: archive
+          name: workflow-results
           path: workflow_${{ steps.date.outputs.date }}.zip
+          if-no-files-found: warn
   
