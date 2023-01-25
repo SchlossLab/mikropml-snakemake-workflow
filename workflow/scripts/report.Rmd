@@ -2,8 +2,10 @@
 title: "ML Results"
 date: "`r Sys.Date()`"
 output:
-  github_document:
-    html_preview: false
+  html_document:
+    keep_md: true
+    self_contained: true
+    theme: spacelab
 ---
 
 ```{r setup, include=FALSE}
@@ -14,13 +16,15 @@ schtools::set_knitr_opts()
 library(knitr)
 ```
 
-Machine learning algorithms used were `r snakemake@params[['ml_methods']]`.
+Machine learning algorithm(s) used: `r snakemake@params[['ml_methods']]`.
 Models were trained with `r snakemake@params[['nseeds']]` different random
 partitions of the `r snakemake@params[['dataset']]` dataset into training and
 testing sets using `r snakemake@params[['kfold']]`-fold cross validation.
 See ``r snakemake@params[['config_path']]`` for the full configuration.
 
 ## Workflow
+
+`r snakemake@input[['rulegraph']]`
 
 ```{r rulegraph, out.width = '80%'}
 include_graphics(snakemake@input[['rulegraph']])
@@ -48,12 +52,12 @@ include_graphics(snakemake@input[['feat_plot']])
 
 ## Memory Usage & Runtime
 
+Each model training run was given `r snakemake@params[['ncores']]` cores
+for parallelization.
+
 ```{r runtime_plot, out.width='80%'}
 include_graphics(snakemake@input[['bench_plot']])
 ```
-
-Each model training run was given `r snakemake@params[['ncores']]` cores
-for parallelization.
 
 ## Hyperparameter Performance
 
