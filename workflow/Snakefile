@@ -1,3 +1,4 @@
+import datetime
 import os
 from snakemake.utils import min_version
 import sys
@@ -38,6 +39,8 @@ seeds = range(start_seed, start_seed + nseeds)
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
 find_feature_importance = config["find_feature_importance"]
 
+date_today = datetime.datetime.today().strftime("%Y-%m-%d")
+
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
@@ -48,9 +51,22 @@ include: "rules/example-report.smk"
 report: "report/workflow.rst"
 
 
-rule targets:
+rule archive:
     input:
-        f"report_{dataset}.md",
+        f"docs/report_{dataset}.html",
+        expand(
+            "results/{dataset}/{rtype}_results.csv",
+            dataset=dataset,
+            rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
+        ),
+    output:
+        f'workflow_{date_today}.zip'
+    log: 'log/archive.txt'
+
+    shell:
+        """
+        zip -r {output} {input} 2> {log}
+        """
 
 
 rule render_report:
@@ -64,7 +80,8 @@ rule render_report:
         roc_plot=rules.plot_roc_curves.output.plot,
         rulegraph="figures/graphviz/rulegraph.png",
     output:
-        doc="report_{dataset}.md",
+        html="report_{dataset}.html",
+        md="report_{dataset}.md",
     log:
         "log/{dataset}/render_report.txt",
     params:
@@ -79,3 +96,16 @@ rule render_report:
         "envs/mikropml.yml"
     script:
         "scripts/report.Rmd"
+
+
+rule move_html:
+    input:
+        html=rules.render_report.output.html,
+    output:
+        html="docs/report_{dataset}.html",
+    conda:
+        "envs/graphviz.yml"
+    shell:
+        """
+        mv {input.html} {output.html}
+        """
