@@ -1,4 +1,4 @@
-name: run
+name: run-snakemake
 
 on:
   pull_request:
@@ -6,10 +6,8 @@ on:
       - main
 
 jobs:
-  run:
-    name: run
+  run-snakemake:
     runs-on: ubuntu-latest-16-cores
-
     steps:
       - uses: actions/checkout@v3
         with:
