@@ -53,7 +53,6 @@ rule targets:
     input:
         f"workflow_{dataset}.zip"
 
-
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
