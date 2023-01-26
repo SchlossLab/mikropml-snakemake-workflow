@@ -27,9 +27,9 @@ config_path = (
 
 MEM_PER_GB = 1024
 
-dataset = config["dataset_name"]
+dataset = config["dataset"]
 ncores = config["ncores"]
-ml_methods = config["ml_methods"]
+ml_methods = config["ml_method"]
 kfold = config["kfold"]
 outcome_colname = config["outcome_colname"]
 
@@ -40,7 +40,10 @@ seeds = range(start_seed, start_seed + nseeds)
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
 find_feature_importance = config["find_feature_importance"]
 
-ignore_keys = ['dataset_csv', 'ncores', 'nseeds', 'find_feature_importance', 'hyperparams']
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Prepare Parameter Space
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ignore_keys = ['dataset_csv', 'outcome_colname', 'ncores', 'nseeds', 'find_feature_importance', 'hyperparams']
 for k in ignore_keys:
     config.pop(k, None)
 config['seed'] = list(seeds)
@@ -51,10 +54,12 @@ for k in conf_lists.keys():
 for k, v in config.items():
     params_df[k] = v
 
+params_df = params_df[sorted(params_df.columns.tolist())]
 paramspace = Paramspace(params_df, param_sep = "-")
 paramspace_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
 paramspace_no_seed = re.sub("/seed-{seed}/", "/", paramspace.wildcard_pattern)
 print(paramspace.wildcard_pattern)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 wildcard_constraints:
     kfold = '[0-9]+'
@@ -62,7 +67,7 @@ wildcard_constraints:
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
-include: "rules/example-report.smk"
+#include: "rules/example-report.smk"
 
 
 report: "report/workflow.rst"
@@ -70,16 +75,16 @@ report: "report/workflow.rst"
 
 rule targets:
     input:
-        f"workflow_{dataset}.zip",
+        f"workflow-{dataset}.zip",
 
 
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
         feat_plot=rules.plot_feature_importance.output.plot,
-        hp_plot=expand(
-            rules.plot_hp_performance.output.plot, ml_method=ml_methods
-        ),
+        # hp_plot=expand(
+        #     rules.plot_hp_performance.output.plot, ml_method=ml_methods
+        # ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
         rulegraph="figures/graphviz/rulegraph.png",
@@ -106,12 +111,11 @@ rule archive:
         rules.render_report.input,
         rules.render_report.output,
         expand(
-            "results/{dataset}/{rtype}_results.csv",
-            dataset=dataset,
-            rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
+            "results/{rtype}-results.csv",
+            rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
         ),
     output:
-        "workflow_{dataset}.zip",
+        "workflow-{dataset}.zip",
     log:
         "log/archive_{dataset}.txt",
     conda:

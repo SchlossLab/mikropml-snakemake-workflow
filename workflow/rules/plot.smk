@@ -47,9 +47,9 @@ else:
             "../scripts/make_blank_plot.R"
 
 
-rule plot_hp_performance:
+rule plot_hp_performance: # TODO: modify this to take list of all hp results (without being precombined) and make a big facet_wrap or plot_grid
     input:
-        rds="results/ml_methods-{ml_method}/hp_performance_results.Rds",
+        rds=f"results/{paramspace_no_seed}/hp_performance_results.Rds",
     output:
         plot=report(
             "figures/hp_performance_{ml_method}.png",

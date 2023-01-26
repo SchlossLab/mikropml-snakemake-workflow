@@ -1,12 +1,12 @@
 rule preprocess_data:
     input:
-        csv="data/processed/{datasest}.csv",
+        csv=f"data/processed/{dataset}.csv",
     output:
-        rds="data/processed/{dataset}_preproc.Rds",
+        rds=f"data/processed/{dataset}_preproc.Rds",
     log:
-        "log/{dataset}/preprocess_data.txt",
+        f"log/{dataset}/preprocess_data.txt",
     benchmark:
-        "benchmarks/{dataset}/preprocess_data.txt"
+        f"benchmarks/{dataset}/preprocess_data.txt"
     params:
         outcome_colname=outcome_colname,
     threads: ncores
@@ -50,7 +50,7 @@ rule find_feature_importance:
         f"log/{paramspace.wildcard_pattern}/find_feature_importance.txt",
     params:
         outcome_colname=outcome_colname,
-        method="{method}",
+        method="{ml_method}",
         seed="{seed}",
     threads: ncores
     resources:

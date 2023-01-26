@@ -14,7 +14,7 @@ rule copy_example_figures:
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
         hp_plot=expand("figures/example/hp_performance_{ml_method}.png",       
-                        method=ml_methods),
+                        ml_method=ml_methods),
         roc_plot="figures/example/roc_curves.png",
         rulegraph="figures/example/rulegraph.png",
     log:
