@@ -1,5 +1,4 @@
-dataset_csv: data/processed/otu_mini_bin.csv
-dataset_name: otu_mini_bin
+dataset_name: otu_micro
 outcome_colname: dx
 ml_methods:
  - glmnet

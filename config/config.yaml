@@ -1,4 +1,3 @@
-dataset_csv: data/processed/otu_large.csv
 dataset_name: otu_large
 outcome_colname: dx
 ml_methods:

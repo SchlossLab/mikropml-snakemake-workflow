@@ -1,13 +1,32 @@
-import os
+import datetime
 import itertools as it
+import os
 import pandas as pd
-from snakemake.utils import Paramspace
+from snakemake.utils import Paramspace,  min_version
+import sys
 
-configfile: "config/default.yml"
+
+min_version("6.12.3")
+
+
+containerized: "docker://kellysovacool/mikropml:latest"
+
+
+default_configfile = "config/config.yaml"
+
+
+configfile: default_configfile
+
+
+args = sys.argv
+config_path = (
+    args[args.index("--configfile") + 1]
+    if "--configfile" in args
+    else default_configfile
+)
 
 MEM_PER_GB = 1024
 
-dataset_filename = config['dataset_csv']
 dataset = config["dataset_name"]
 ncores = config["ncores"]
 ml_methods = config["ml_methods"]
@@ -33,8 +52,9 @@ for k, v in config.items():
     params_df[k] = v
 
 paramspace = Paramspace(params_df, param_sep = "-")
-print('paramspace.wildcard_pattern:\t', paramspace.wildcard_pattern)
-print('paramspace.instance_patterns:\t', [i for i in paramspace.instance_patterns])
+paramspace_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
+paramspace_no_seed = re.sub("/seed-{seed}/", "/", paramspace.wildcard_pattern)
+print(paramspace.wildcard_pattern)
 
 wildcard_constraints:
     kfold = '[0-9]+'
@@ -45,23 +65,26 @@ include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
 
+report: "report/workflow.rst"
+
+
 rule targets:
     input:
-        f"report_{dataset}.md",
+        f"workflow_{dataset}.zip",
 
 
 rule render_report:
     input:
-        R="workflow/scripts/render.R",
-        Rmd="report.Rmd",
         perf_plot=rules.plot_performance.output.plot,
         feat_plot=rules.plot_feature_importance.output.plot,
         hp_plot=expand(
-            "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
+            rules.plot_hp_performance.output.plot, ml_method=ml_methods
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
+        roc_plot=rules.plot_roc_curves.output.plot,
+        rulegraph="figures/graphviz/rulegraph.png",
     output:
-        doc="report_{dataset}.md",
+        html="report_{dataset}.html",
     log:
         "log/{dataset}/render_report.txt",
     params:
@@ -70,7 +93,30 @@ rule render_report:
         ml_methods=ml_methods,
         ncores=ncores,
         kfold=kfold,
+        find_feature_importance=find_feature_importance,
+        config_path=config_path,
     conda:
         "envs/mikropml.yml"
     script:
-        "scripts/render.R"
+        "scripts/report.Rmd"
+
+
+rule archive:
+    input:
+        rules.render_report.input,
+        rules.render_report.output,
+        expand(
+            "results/{dataset}/{rtype}_results.csv",
+            dataset=dataset,
+            rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
+        ),
+    output:
+        "workflow_{dataset}.zip",
+    log:
+        "log/archive_{dataset}.txt",
+    conda:
+        "envs/smk.yml"
+    shell:
+        """
+        zip -r {output} {input} 2> {log}
+        """

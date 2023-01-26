@@ -1,13 +1,12 @@
 rule preprocess_data:
     input:
-        R="workflow/scripts/preproc.R",
-        csv=dataset_filename,
+        csv="data/processed/{datasest}.csv",
     output:
-        rds=f"data/processed/{dataset}_preproc.Rds",
+        rds="data/processed/{dataset}_preproc.Rds",
     log:
-        "log/preprocess_data.txt",
+        "log/{dataset}/preprocess_data.txt",
     benchmark:
-        "benchmarks/preprocess_data.txt"
+        "benchmarks/{dataset}/preprocess_data.txt"
     params:
         outcome_colname=outcome_colname,
     threads: ncores
@@ -21,7 +20,6 @@ rule preprocess_data:
 
 rule run_ml:
     input:
-        R="workflow/scripts/train_ml.R",
         rds=rules.preprocess_data.output.rds,
     output:
         model=f"results/{paramspace.wildcard_pattern}/model.Rds",
@@ -42,24 +40,8 @@ rule run_ml:
     script:
         "../scripts/train_ml.R"
 
-rule test_paramspace:
-    input:
-        csv=dataset_filename
-    output:
-        rds=f"tmp/{paramspace.wildcard_pattern}/test.Rds"
-    params:
-        params=paramspace.instance,
-    log: f"log/{paramspace.wildcard_pattern}/test_paramspace.txt"
-    script:
-        "../scripts/test_paramspace.R"
-
-rule agg_params:
-    input:
-        expand("tmp/{params}/test.Rds", params = paramspace.instance_patterns)
-
 rule find_feature_importance:
     input:
-        R="workflow/scripts/find_feature_importance.R",
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test,
     output:
@@ -77,3 +59,19 @@ rule find_feature_importance:
         "../envs/mikropml.yml"
     script:
         "../scripts/find_feature_importance.R"
+
+
+rule calc_model_sensspec:
+    input:
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test,
+    output:
+        csv=f"results/{paramspace.wildcard_pattern}/sensspec.csv",
+    params:
+        outcome_colname=outcome_colname,
+    log:
+        f"log/{paramspace.wildcard_pattern}/calc_model_sensspec.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/calc_model_sensspec.R"

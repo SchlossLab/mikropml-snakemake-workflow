@@ -1,9 +1,12 @@
 rule plot_performance:
     input:
-        R="workflow/scripts/plot_performance.R",
         csv="results/performance-results.csv",
     output:
-        plot="figures/performance.png",
+        plot=report(
+            "figures/performance.png",
+            category="Performance",
+            subcategory="Model Performance",
+        ),
     log:
         "log/plot_performance.txt",
     conda:
@@ -16,17 +19,20 @@ if find_feature_importance:
 
     rule plot_feature_importance:
         input:
-            R="workflow/scripts/plot_feature_importance.R",
             csv="results/feature_importance-results.csv",
         output:
-            plot="figures/feature_importance.png",
+            plot=report(
+                "figures/feature_importance.png",
+                category="Feature Importance",
+            ),
+        params:
+            top_n=5,
         log:
             "log/plot_feature_importance.txt",
         conda:
             "../envs/mikropml.yml"
         script:
             "../scripts/plot_feature_importance.R"
-
 
 else:
 
@@ -43,12 +49,15 @@ else:
 
 rule plot_hp_performance:
     input:
-        R="workflow/scripts/plot_hp_perf.R",
-        rds="results/hp_performance_results_{method}.Rds",
+        rds="results/ml_methods-{ml_method}/hp_performance_results.Rds",
     output:
-        plot="figures/hp_performance_{method}.png",
+        plot=report(
+            "figures/hp_performance_{ml_method}.png",
+            category="Performance",
+            subcategory="Hyperparameter Tuning",
+        ),
     log:
-        "log/plot_hp_perf_{method}.txt",
+        "log/plot_hp_perf_{ml_method}.txt",
     conda:
         "../envs/mikropml.yml"
     script:
@@ -57,10 +66,14 @@ rule plot_hp_performance:
 
 rule plot_benchmarks:
     input:
-        R="workflow/scripts/plot_benchmarks.R",
         csv="results/benchmarks-results.csv",
     output:
-        plot="figures/benchmarks.png",
+        plot=report(
+            "figures/benchmarks.png",
+            category="Performance",
+            subcategory="Runtime & Memory Usage",
+            caption="../report/benchmarks.rst",
+        ),
     log:
         "log/plot_benchmarks.txt",
     conda:
@@ -68,27 +81,51 @@ rule plot_benchmarks:
     script:
         "../scripts/plot_benchmarks.R"
 
+
+rule plot_roc_curves:
+    input:
+        csv="results/sensspec-results.csv",
+    output:
+        plot="figures/roc_curves.png",
+    log:
+        "log/plot_roc_curves.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/plot_roc_curves.R"
+
+
 rule write_graphviz:
     output:
-        txt='figures/graphviz_{cmd}.dot'
-    conda: '../envs/smk.yml'
+        dot="figures/graphviz/{cmd}.dot",
+    log:
+        "log/graphviz/write_graphviz_{cmd}.txt",
+    conda:
+        "../envs/smk.yml"
+    params:
+        config_path=config_path,
     shell:
-        '''
-        snakemake --{wildcards.cmd} --configfile config/test.yml > {output.txt}
-        '''    
+        """
+        snakemake --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
+        """
+
 
 rule dot_to_png:
     input:
-        txt='figures/graphviz_{cmd}.dot'
+        dot=rules.write_graphviz.output.dot,
     output:
-        png='figures/graphviz_{cmd}.png'
-    conda: '../envs/smk.yml'
+        png="figures/graphviz/{cmd}.png",
+    log:
+        "log/graphviz/dot_to_png_{cmd}.txt",
+    conda:
+        "../envs/graphviz.yml"
     shell:
-        '''
-        cat {input.txt} | dot -T png > {output.png}
-        '''
+        """
+        cat {input.dot} | dot -T png 2> {log} > {output.png}
+        """
+
 
 rule make_graph_figures:
     input:
-        'figures/graphviz_dag.png', 'figures/graphviz_rulegraph.png'
-
+        "figures/graphviz/dag.png",
+        "figures/graphviz/rulegraph.png",

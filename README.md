@@ -29,10 +29,10 @@ This workflow preprocesses the example dataset, calls `mikropml::run_ml()`
 for each seed and ML method set in the config file,
 combines the results files, plots performance results
 (cross-validation and test AUROCs, hyperparameter AUROCs from cross-validation, and benchmark performance),
-and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([example](report-example.md)).
+and renders a simple [R Markdown report](report.Rmd) as a GitHub-flavored markdown file ([see example here](report-example.md)).
 
 <!-- snakemake make_graph_figures -->
-![rulegraph](figures/graphviz_rulegraph.png)
+![rulegraph](figures/graphviz/rulegraph.png)
 
 The DAG shows how calls to `run_ml` can run in parallel if
 snakemake is allowed to run more than one job at a time.
@@ -40,12 +40,17 @@ If we use 100 seeds and 4 ML methods, snakemake would call `run_ml` 400 times.
 Here's a small example DAG if we were to use only 2 seeds and 1 ML method:
 
 <!-- snakemake make_graph_figures -->
-![dag](figures/graphviz_dag.png)
+![dag](figures/graphviz/dag.png)
 
+## Usage
 
-## Quick Start
+Full usage instructions recommended by snakemake are available in the 
+[snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=SchlossLab/mikropml-snakemake-workflow).
+Snakemake recommends using `snakedeploy` to use this workflow as a module in 
+your own project.
 
-See [config/README.md](config/README.md) for instructions on getting started with this template.
+Alternatively, you can download this repo and modify the code 
+directly to suit your needs. See instructions [here](/quick-start.md).
 
 ## More resources
 

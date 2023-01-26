@@ -1,7 +1,6 @@
 
 rule combine_results:
     input:
-        R="workflow/scripts/combine_results.R",
         csv=expand(
             "results/{params}/{{type}}.csv",
             params=paramspace.instance_patterns
@@ -20,14 +19,13 @@ rule combine_results:
 
 rule combine_hp_performance:
     input:
-        R="workflow/scripts/combine_hp_perf.R",
-        rds=expand("results/{{dataset}}/runs/{{method}}_{seed}_model.Rds", seed=seeds),
+        rds=expand(f"results/{paramspace_tame_seed}/model.Rds", seed=seeds),
     output:
-        rds="results/hp_performance_results_{method}.Rds",
+        rds="results/ml_methods-{ml_methods}/hp_performance_results.Rds",
     log:
-        "log/combine_hp_perf_{method}.txt",
+        "log/ml_methods-{ml_methods}/combine_hp_perf.txt",
     benchmark:
-        "benchmarks/combine_hp_perf_{method}.txt"
+        "benchmarks/ml_methods-{ml_methods}/combine_hp_perf.txt"
     resources:
         mem_mb=MEM_PER_GB * 16,
     conda:
@@ -36,18 +34,14 @@ rule combine_hp_performance:
         "../scripts/combine_hp_perf.R"
 
 
-rule combine_benchmarks:
+rule mutate_benchmark:
     input:
-        R="workflow/scripts/combine_benchmarks.R",
-        tsv=expand(
-            "benchmarks/{params}/run_ml.txt",
-            params=paramspace.instance_patterns
-        ),
+        tsv=f"benchmarks/{paramspace.wildcard_pattern}/run_ml.txt",
     output:
-        csv="results/benchmarks_results.csv",
+        csv=f"results/{paramspace.wildcard_pattern}/benchmarks.csv",
     log:
-        "log/combine_benchmarks.txt",
+        f"log/{paramspace.wildcard_pattern}/mutate_benchmark.txt",
     conda:
         "../envs/mikropml.yml"
     script:
-        "../scripts/combine_benchmarks.R"
+        "../scripts/mutate_benchmark.R"
