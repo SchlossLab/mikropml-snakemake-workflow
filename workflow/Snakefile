@@ -54,6 +54,7 @@ report: "report/workflow.rst"
 rule archive:
     input:
         f"report_{dataset}.html",
+        "figures/graphviz/rulegraph.png",
         expand(
             "results/{dataset}/{rtype}_results.csv",
             dataset=dataset,
