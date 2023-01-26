@@ -38,6 +38,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: workflow-results
-          path: workflow_${{ steps.date.outputs.date }}.zip
+          path: workflow_*.zip
           if-no-files-found: warn
   
