@@ -11,7 +11,7 @@ on:
 
 jobs:
   run-snakemake:
-    runs-on: ubuntu-latest #-16-cores
+    runs-on: ubuntu-latest-16-cores
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,7 +29,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
+          args: "--cores 16 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
