@@ -51,7 +51,7 @@ report: "report/workflow.rst"
 
 rule targets:
     input:
-        f"workflow_{dataset}.zip",
+        f"report_{dataset}.html",
 
 
 rule render_report:
@@ -92,9 +92,9 @@ rule archive:
             rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
         ),
     output:
-        "workflow_{dataset}.zip",
+        f"workflow_{dataset}.zip",
     log:
-        "log/archive_{dataset}.txt",
+        f"log/archive_{dataset}.txt",
     conda:
         "envs/smk.yml"
     shell:
