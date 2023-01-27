@@ -84,8 +84,8 @@ rule render_report:
 
 rule archive:
     input:
-        rules.render_report.input,
-        rules.render_report.output,
+        expand(rules.render_report.input, dataset = dataset),
+        expand(rules.render_report.output, dataset = dataset),
         expand(
             "results/{dataset}/{rtype}_results.csv",
             dataset=dataset,
