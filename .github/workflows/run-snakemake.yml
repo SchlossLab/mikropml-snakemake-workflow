@@ -29,7 +29,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 16 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
+          args: "archive --cores 16 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
