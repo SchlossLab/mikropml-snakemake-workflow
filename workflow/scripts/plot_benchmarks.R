@@ -23,6 +23,7 @@ dat <- read_csv(snakemake@input[["csv"]],
   ) %>%
   select(method, runtime_mins, memory_gb) %>%
   pivot_longer(-method, names_to = "metric") %>%
+  mutate(value = round(value, 2)) %>%
   group_by(method)
 
 bench_plot <- dat %>%
