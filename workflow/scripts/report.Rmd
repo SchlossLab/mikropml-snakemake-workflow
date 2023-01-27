@@ -24,8 +24,6 @@ See ``r snakemake@params[['config_path']]`` for the full configuration.
 
 ## Workflow
 
-`r snakemake@input[['rulegraph']]`
-
 ```{r rulegraph, out.width = '80%'}
 include_graphics(snakemake@input[['rulegraph']])
 ```
