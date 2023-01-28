@@ -7,7 +7,6 @@ config_path = (
     else default_configfile
 )
 
-
 dataset = config["dataset"]
 ncores = config["ncores"]
 ml_methods = config["ml_method"] if 'ml_method' in config else 'glmnet'

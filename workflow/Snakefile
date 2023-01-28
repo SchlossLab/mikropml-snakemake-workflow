@@ -2,8 +2,9 @@ import datetime
 import itertools as it
 import os
 import pandas as pd
-from snakemake.utils import min_version
+from snakemake.utils import min_version, Paramspace
 import sys
+from scripts.functions import *
 
 
 min_version("6.12.3")
@@ -21,7 +22,6 @@ configfile: default_configfile
 wildcard_constraints:
     kfold = '[0-9]+'
 
-include: 'rules/common.smk'
 include: 'rules/config.smk'
 include: 'rules/paramspace.smk'
 

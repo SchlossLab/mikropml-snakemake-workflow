@@ -1,8 +1,4 @@
-from collections.abc import Iterable
 import re
-from snakemake.utils import Paramspace
-
-test_wildcard_pattern = 'dataset-{dataset}/seed-{seed}/ml_method-{ml_method}'
 
 def pattern_tame_wildcard(paramspace, wildcard):
     ''' Tame a wildcard in a pattern by doubling up curly braces on all other wildcards. This is useful for filling in values with expand().
@@ -28,7 +24,7 @@ def pattern_drop_wildcard(paramspace, wildcard):
     :return: wildcard pattern from paramspace without the wildcard
     :rtype: str
     """
-    return re.sub(f"{wildcard}{paramspace.param_sep}{{{wildcard}}}", "", paramspace.wildcard_pattern)
+    return re.sub(f"/{{0,1}}{wildcard}{paramspace.param_sep}{{{wildcard}}}", "", paramspace.wildcard_pattern).strip('/')
 
 def instances_drop_wildcard(paramspace, wildcard):
     ''' Remove a wildcard from instance patterns
@@ -41,4 +37,4 @@ def instances_drop_wildcard(paramspace, wildcard):
     :return: list of instance patterns from paramspace without the wildcard
     :rtype: list
     '''
-    return [re.sub(f"{wildcard}{paramspace.param_sep}[a-zA-Z_0-9]*", "", i) for i in paramspace.instance_patterns]
+    return [re.sub(f"/{{0,1}}{wildcard}{paramspace.param_sep}[a-zA-Z_0-9]*", "", i).strip("/") for i in paramspace.instance_patterns]
