@@ -1,8 +1,6 @@
 import datetime
-import itertools as it
 import os
-import pandas as pd
-from snakemake.utils import min_version, Paramspace
+from snakemake.utils import min_version
 import sys
 from scripts.functions import *
 
@@ -23,13 +21,10 @@ wildcard_constraints:
     kfold = '[0-9]+'
 
 include: 'rules/config.smk'
-include: 'rules/paramspace.smk'
-
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
 #include: "rules/example-report.smk"
-
 
 report: "report/workflow.rst"
 
