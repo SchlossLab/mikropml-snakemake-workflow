@@ -47,17 +47,17 @@ else:
             "../scripts/make_blank_plot.R"
 
 
-rule plot_hp_performance: # TODO: modify this to take list of all hp results (without being precombined) and make a big facet_wrap or plot_grid
+rule plot_hp_performance:
     input:
-        rds=f"results/{paramspace_no_seed}/hp_performance_results.Rds",
+        rds=f"results/{wildcard_no_seed}/hp_performance_results.Rds",
     output:
         plot=report(
-            "figures/hp_performance_{ml_method}.png",
+            f"figures/{wildcard_no_seed}/hp_performance.png",
             category="Performance",
             subcategory="Hyperparameter Tuning",
         ),
     log:
-        "log/plot_hp_perf_{ml_method}.txt",
+        f"log/{wildcard_no_seed}/plot_hp_perf.txt",
     conda:
         "../envs/mikropml.yml"
     script:

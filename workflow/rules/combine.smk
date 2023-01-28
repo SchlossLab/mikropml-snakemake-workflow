@@ -19,13 +19,13 @@ rule combine_results:
 
 rule combine_hp_performance:
     input:
-        rds=expand(f"results/{paramspace_tame_seed}/model.Rds", seed=seeds),
+        rds=expand(f"results/{wildcard_tame_seed}/model.Rds", seed=seeds),
     output:
-        rds=f"results/{paramspace_no_seed}/hp_performance_results.Rds",
+        rds=f"results/{wildcard_no_seed}/hp_performance_results.Rds",
     log:
-        f"log/{paramspace_no_seed}/combine_hp_perf.txt",
+        f"log/{wildcard_no_seed}/combine_hp_perf.txt",
     benchmark:
-        f"benchmarks/{paramspace_no_seed}/combine_hp_perf.txt"
+        f"benchmarks/{wildcard_no_seed}/combine_hp_perf.txt"
     resources:
         mem_mb=MEM_PER_GB * 16,
     conda:

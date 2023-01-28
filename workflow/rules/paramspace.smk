@@ -18,6 +18,11 @@ paramspace = Paramspace(params_df, param_sep = "-")
 
 print("Wildcard pattern:", paramspace.wildcard_pattern)
 
-paramspace_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
-paramspace_no_seed = re.sub("/seed-{seed}/", "/", paramspace.wildcard_pattern)
+wildcard_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
+wildcard_no_seed = re.sub("/seed-{seed}", "", paramspace.wildcard_pattern)
+instances_no_seed = [re.sub("/seed-[a-zA-Z_0-9]*", "", i) for i in paramspace.instance_patterns]
+
+print('tame seed', wildcard_tame_seed)
+print('no seed', wildcard_no_seed)
+print('instances no seed', instances_no_seed)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

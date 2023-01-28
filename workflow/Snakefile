@@ -42,9 +42,10 @@ rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
         feat_plot=rules.plot_feature_importance.output.plot,
-        # hp_plot=expand(
-        #     rules.plot_hp_performance.output.plot, ml_method=ml_methods
-        # ),
+        hp_plot=expand(
+            "figures/{params}/hp_performance.png", 
+            params = instances_no_seed
+        ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
         rulegraph="figures/graphviz/rulegraph.png",
