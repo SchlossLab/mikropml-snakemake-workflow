@@ -1,6 +1,6 @@
 rule preprocess_data:
     input:
-        csv=f"data/processed/{dataset}.csv",
+        csv=f"data/{dataset}.csv",
     output:
         rds=f"data/processed/{dataset}_preproc.Rds",
     log:
