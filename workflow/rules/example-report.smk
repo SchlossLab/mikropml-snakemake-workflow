@@ -1,3 +1,6 @@
+''' Create an example report
+'''
+
 rule copy_example_figures:
     input:
         figs=[

@@ -2,7 +2,7 @@ import datetime
 import itertools as it
 import os
 import pandas as pd
-from snakemake.utils import Paramspace,  min_version
+from snakemake.utils import min_version
 import sys
 
 
@@ -21,6 +21,7 @@ configfile: default_configfile
 wildcard_constraints:
     kfold = '[0-9]+'
 
+include: 'rules/common.smk'
 include: 'rules/config.smk'
 include: 'rules/paramspace.smk'
 
@@ -44,7 +45,7 @@ rule render_report:
         feat_plot=rules.plot_feature_importance.output.plot,
         hp_plot=expand(
             "figures/{params}/hp_performance.png", 
-            params = instances_no_seed
+            params = instances_drop_wildcard(paramspace, 'seed')
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,

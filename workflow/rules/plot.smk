@@ -1,3 +1,6 @@
+''' Plot ML results
+'''
+
 rule plot_performance:
     input:
         csv="results/performance-results.csv",

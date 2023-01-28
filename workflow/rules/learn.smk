@@ -1,3 +1,6 @@
+''' Preprocess data, train ML models, calculate performance, and find feature importance
+'''
+
 rule preprocess_data:
     input:
         csv=f"data/{dataset}.csv",
@@ -40,6 +43,23 @@ rule run_ml:
     script:
         "../scripts/train_ml.R"
 
+
+rule calc_model_sensspec:
+    input:
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test,
+    output:
+        csv=f"results/{paramspace.wildcard_pattern}/sensspec.csv",
+    params:
+        outcome_colname=outcome_colname,
+    log:
+        f"log/{paramspace.wildcard_pattern}/calc_model_sensspec.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/calc_model_sensspec.R"
+
+
 rule find_feature_importance:
     input:
         model=rules.run_ml.output.model,
@@ -59,19 +79,3 @@ rule find_feature_importance:
         "../envs/mikropml.yml"
     script:
         "../scripts/find_feature_importance.R"
-
-
-rule calc_model_sensspec:
-    input:
-        model=rules.run_ml.output.model,
-        test=rules.run_ml.output.test,
-    output:
-        csv=f"results/{paramspace.wildcard_pattern}/sensspec.csv",
-    params:
-        outcome_colname=outcome_colname,
-    log:
-        f"log/{paramspace.wildcard_pattern}/calc_model_sensspec.txt",
-    conda:
-        "../envs/mikropml.yml"
-    script:
-        "../scripts/calc_model_sensspec.R"

@@ -1,7 +1,5 @@
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Prepare Parameter Space
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+''' Prepare the parameter space based on the config dictionary
+'''
 exclude_param_keys = config['exclude_param_keys']
 for k in exclude_param_keys:
     config.pop(k, None)
@@ -16,13 +14,5 @@ for k, v in config.items():
 params_df = params_df[sorted(params_df.columns.tolist())]
 paramspace = Paramspace(params_df, param_sep = "-")
 
-print("Wildcard pattern:", paramspace.wildcard_pattern)
-
-wildcard_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
-wildcard_no_seed = re.sub("/seed-{seed}", "", paramspace.wildcard_pattern)
-instances_no_seed = [re.sub("/seed-[a-zA-Z_0-9]*", "", i) for i in paramspace.instance_patterns]
-
-print('tame seed', wildcard_tame_seed)
-print('no seed', wildcard_no_seed)
-print('instances no seed', instances_no_seed)
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+wildcard_no_seed = pattern_drop_wildcard(paramspace, 'seed')
+wildcard_tame_seed = pattern_tame_wildcard(paramspace, 'seed')

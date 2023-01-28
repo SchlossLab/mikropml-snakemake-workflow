@@ -1,4 +1,5 @@
-
+''' Extract variables from the configfile and set default values
+'''
 args = sys.argv
 config_path = (
     args[args.index("--configfile") + 1]

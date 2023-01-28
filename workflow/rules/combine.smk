@@ -1,4 +1,5 @@
-
+''' Combine results from individual `run_ml` jobs to prepare for plotting
+'''
 rule combine_results:
     input:
         csv=expand(
