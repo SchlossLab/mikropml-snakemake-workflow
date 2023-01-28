@@ -25,3 +25,10 @@ hyperparams:
       - 42
       - 83
       - 166
+exclude_param_keys:
+ - exclude_param_keys
+ - outcome_colname
+ - ncores
+ - nseeds
+ - find_feature_importance
+ - hyperparams

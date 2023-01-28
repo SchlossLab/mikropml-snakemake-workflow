@@ -29,22 +29,22 @@ MEM_PER_GB = 1024
 
 dataset = config["dataset"]
 ncores = config["ncores"]
-ml_methods = config["ml_method"]
-kfold = config["kfold"]
-outcome_colname = config["outcome_colname"]
+ml_methods = config["ml_method"] if 'ml_method' in config else 'glmnet'
+kfold = config["kfold"] if "kfold" in config else 5
+outcome_colname = config["outcome_colname"] if "outcome_colname" in config else None
 
-nseeds = config["nseeds"]
+nseeds = config["nseeds"] if 'nseeds' in config else 1
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find_feature_importance"]
+find_feature_importance = config["find_feature_importance"] if "find_feature_importance" in config else None
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Prepare Parameter Space
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-ignore_keys = ['dataset_csv', 'outcome_colname', 'ncores', 'nseeds', 'find_feature_importance', 'hyperparams']
-for k in ignore_keys:
+exclude_param_keys = config['exclude_param_keys']
+for k in exclude_param_keys:
     config.pop(k, None)
 config['seed'] = list(seeds)
 conf_lists = {k:v for k,v in config.items() if type(v) == list}
@@ -56,9 +56,11 @@ for k, v in config.items():
 
 params_df = params_df[sorted(params_df.columns.tolist())]
 paramspace = Paramspace(params_df, param_sep = "-")
+
+print("Wildcard pattern:", paramspace.wildcard_pattern)
+
 paramspace_tame_seed = re.sub("{((?!seed)[a-zA-Z_0-9]*)}", "{{\\1}}", paramspace.wildcard_pattern)
 paramspace_no_seed = re.sub("/seed-{seed}/", "/", paramspace.wildcard_pattern)
-print(paramspace.wildcard_pattern)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 wildcard_constraints:
