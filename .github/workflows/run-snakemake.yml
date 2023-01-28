@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - name: Print config file
         run: |
-          Using config file: ${{ inputs.configfile }}
+          echo "Using config file: ${{ inputs.configfile }}"
           cat ${{ inputs.configfile }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
