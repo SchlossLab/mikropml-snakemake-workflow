@@ -39,4 +39,5 @@ def test_get_paramspace_from_config():
     assert list(p.instance_patterns) == ['dataset-otu_large/ml_method-glmnet/seed-0', 'dataset-otu_large/ml_method-rf/seed-0', 'dataset-otu_large/ml_method-glmnet/seed-1', 'dataset-otu_large/ml_method-rf/seed-1', 'dataset-otu_large/ml_method-glmnet/seed-2', 'dataset-otu_large/ml_method-rf/seed-2', 'dataset-otu_large/ml_method-glmnet/seed-3', 'dataset-otu_large/ml_method-rf/seed-3']
     
 def test_set_default():
-    pass # TODO
+    assert set_default(config, 'dataset', None) == 'otu_large'
+    assert set_default(config, 'not_in_dict', 'value') == 'value'

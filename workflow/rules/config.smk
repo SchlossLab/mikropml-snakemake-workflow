@@ -9,17 +9,16 @@ config_path = (
 
 dataset = config["dataset"]
 ncores = config["ncores"]
-ml_methods = config["ml_method"] if 'ml_method' in config else 'glmnet'
-kfold = config["kfold"] if "kfold" in config else 5
-outcome_colname = config["outcome_colname"] if "outcome_colname" in config else None
+ml_methods = set_default(config, 'ml_method', 'glmnet')
+kfold = set_default(config, 'kfold', 5)
+outcome_colname = set_default(config, 'outcome_colname', None)
+hyperparams = set_default(config, 'hyperparams', None)
+find_feature_importance = set_default(config, 'hyperparams', False)
 
-nseeds = config["nseeds"] if 'nseeds' in config else 1
+nseeds = set_default(config, 'nseeds', 1)
 start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 config['seed'] = list(seeds)
-
-hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find_feature_importance"] if "find_feature_importance" in config else None
 
 # parameter space based on configfile
 paramspace = get_paramspace_from_config(config)
