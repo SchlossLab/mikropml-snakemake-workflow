@@ -1,6 +1,6 @@
 dataset: otu_micro
 outcome_colname: dx
-ml_method:
+method:
  - glmnet
 kfold: 2
 ncores: 4

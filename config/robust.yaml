@@ -1,6 +1,6 @@
 dataset: otu_large
 outcome_colname: dx
-ml_method:
+method:
  - glmnet
  - rf
  - rpart2
