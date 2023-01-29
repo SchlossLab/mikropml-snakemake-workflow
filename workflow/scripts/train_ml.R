@@ -22,7 +22,7 @@ wildcards <- schtools::get_wildcards_tbl()
 
 readr::write_csv(
   ml_results$performance %>%
-    inner_join(wildcards, by = c("method", "seed")),
+    inner_join(wildcards),
   snakemake@output[["perf"]]
 )
 readr::write_csv(ml_results$test_data, snakemake@output[["test"]])
