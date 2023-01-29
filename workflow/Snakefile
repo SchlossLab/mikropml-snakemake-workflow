@@ -67,6 +67,18 @@ rule render_report:
         "scripts/report.Rmd"
 
 
+rule write_paramspace:
+    output:
+        csv='config/paramspace.csv'
+    log:
+        'log/write_paramspace.txt'
+    params:
+        paramspace=paramspace
+    run:
+        print(params.paramspace.wildcard_pattern)
+        params.paramspace.dataframe.to_csv(output.csv, index=False)
+
+
 rule archive:
     input:
         expand(rules.render_report.input, dataset=dataset),
@@ -76,6 +88,7 @@ rule archive:
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
             dataset=dataset,
         ),
+        rules.write_paramspace.output
     output:
         f"workflow_{dataset}.zip",
     log:
