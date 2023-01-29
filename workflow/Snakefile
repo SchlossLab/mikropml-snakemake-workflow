@@ -12,39 +12,19 @@ containerized: "docker://kellysovacool/mikropml:latest"
 
 default_configfile = "config/config.yaml"
 
+MEM_PER_GB = 1024
 
 configfile: default_configfile
 
+wildcard_constraints:
+    kfold = '[0-9]+'
 
-args = sys.argv
-config_path = (
-    args[args.index("--configfile") + 1]
-    if "--configfile" in args
-    else default_configfile
-)
-
-
-MEM_PER_GB = 1024
-
-dataset = config["dataset_name"]
-ncores = config["ncores"]
-ml_methods = config["ml_methods"]
-kfold = config["kfold"]
-outcome_colname = config["outcome_colname"]
-
-nseeds = config["nseeds"]
-start_seed = 100
-seeds = range(start_seed, start_seed + nseeds)
-
-hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find_feature_importance"]
-
-
+include: 'scripts/functions.py'
+include: 'rules/config.smk'
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
-include: "rules/example-report.smk"
-
+#include: "rules/example-report.smk"
 
 report: "report/workflow.rst"
 
@@ -57,9 +37,10 @@ rule targets:
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
-        feat_plot="figures/{dataset}/feature_importance.png",
+        feat_plot="figures/feature_importance.png",
         hp_plot=expand(
-            "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
+            "figures/{params}/hp_performance.png", 
+            params = instances_drop_wildcard(paramspace, 'seed')
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
@@ -87,9 +68,8 @@ rule archive:
         expand(rules.render_report.input, dataset = dataset),
         expand(rules.render_report.output, dataset = dataset),
         expand(
-            "results/{dataset}/{rtype}_results.csv",
-            dataset=dataset,
-            rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
+            "results/{rtype}-results.csv",
+            rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
         ),
     output:
         f"workflow_{dataset}.zip",

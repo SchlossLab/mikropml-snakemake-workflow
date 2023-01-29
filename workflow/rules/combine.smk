@@ -1,17 +1,17 @@
-
+''' Combine results from individual `run_ml` jobs to prepare for plotting
+'''
 rule combine_results:
     input:
         csv=expand(
-            "results/{{dataset}}/runs/{method}_{seed}_{{type}}.csv",
-            method=ml_methods,
-            seed=seeds,
+            "results/{params}/{{type}}.csv",
+            params=paramspace.instance_patterns
         ),
     output:
-        csv="results/{dataset}/{type}_results.csv",
+        csv="results/{type}-results.csv",
     log:
-        "log/{dataset}/combine_results_{type}.txt",
+        "log/combine_results_{type}.txt",
     benchmark:
-        "benchmarks/{dataset}/combine_results_{type}.txt"
+        "benchmarks/combine_results_{type}.txt"
     conda:
         "../envs/mikropml.yml"
     script:
@@ -20,13 +20,13 @@ rule combine_results:
 
 rule combine_hp_performance:
     input:
-        rds=expand("results/{{dataset}}/runs/{{method}}_{seed}_model.Rds", seed=seeds),
+        rds=expand(f"results/{wildcard_tame_seed}/model.Rds", seed=seeds),
     output:
-        rds="results/{dataset}/hp_performance_results_{method}.Rds",
+        rds=f"results/{wildcard_no_seed}/hp_performance_results.Rds",
     log:
-        "log/{dataset}/combine_hp_perf_{method}.txt",
+        f"log/{wildcard_no_seed}/combine_hp_perf.txt",
     benchmark:
-        "benchmarks/{dataset}/combine_hp_perf_{method}.txt"
+        f"benchmarks/{wildcard_no_seed}/combine_hp_perf.txt"
     resources:
         mem_mb=MEM_PER_GB * 16,
     conda:
@@ -37,11 +37,11 @@ rule combine_hp_performance:
 
 rule mutate_benchmark:
     input:
-        tsv="benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt",
+        tsv=f"benchmarks/{paramspace.wildcard_pattern}/run_ml.txt",
     output:
-        csv="results/{dataset}/runs/{method}_{seed}_benchmarks.csv",
+        csv=f"results/{paramspace.wildcard_pattern}/benchmarks.csv",
     log:
-        "log/{dataset}/mutate_benchmark.{method}_{seed}.txt",
+        f"log/{paramspace.wildcard_pattern}/mutate_benchmark.txt",
     conda:
         "../envs/mikropml.yml"
     script:

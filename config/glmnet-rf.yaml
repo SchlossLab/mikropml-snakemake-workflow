@@ -8,3 +8,10 @@ kfold: 5
 ncores: 16
 nseeds: 50
 find_feature_importance: false
+exclude_param_keys:
+ - exclude_param_keys
+ - outcome_colname
+ - ncores
+ - nseeds
+ - find_feature_importance
+ - hyperparams

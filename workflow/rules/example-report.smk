@@ -1,22 +1,23 @@
+''' Create an example report
+'''
+
 rule copy_example_figures:
     input:
         figs=[
-            f"figures/{dataset}/performance.png",
-            f"figures/{dataset}/feature_importance.png",
-            f"figures/{dataset}/benchmarks.png",
-            f"figures/{dataset}/roc_curves.png",
-            expand(
-                "figures/{dataset}/hp_performance_{method}.png",
-                method=ml_methods,
-                dataset=dataset,
-            ),
+            rules.plot_performance.output.plot,
+            rules.plot_feature_importance.output.plot,
+            expand(rules.plot_hp_performance.output.plot, 
+                   ml_method=ml_methods),
+            rules.plot_benchmarks.output.plot,
+            rules.plot_roc_curves.output.plot,
             "figures/graphviz/rulegraph.png",
         ],
     output:
         perf_plot="figures/example/performance.png",
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
-        hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
+        hp_plot=expand("figures/example/hp_performance_{ml_method}.png",       
+                        ml_method=ml_methods),
         roc_plot="figures/example/roc_curves.png",
         rulegraph="figures/example/rulegraph.png",
     log:
