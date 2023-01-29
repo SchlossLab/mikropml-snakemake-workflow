@@ -37,7 +37,7 @@ rule targets:
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
-        feat_plot=rules.plot_feature_importance.output.plot,
+        feat_plot="figures/feature_importance.png",
         hp_plot=expand(
             "figures/{params}/hp_performance.png", 
             params = instances_drop_wildcard(paramspace, 'seed')
