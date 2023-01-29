@@ -33,7 +33,7 @@ def pattern_drop_wildcard(paramspace, wildcard):
     :rtype: str
     """
     return re.sub(
-        f"/{{0,1}}{wildcard}{paramspace.param_sep}{{{wildcard}}}",
+        f"{wildcard}{paramspace.param_sep}{{{wildcard}}}/{{0,1}}",
         "",
         paramspace.wildcard_pattern,
     ).strip("/")
@@ -51,7 +51,7 @@ def instances_drop_wildcard(paramspace, wildcard):
     :rtype: set
     """
     return {
-        re.sub(f"/{{0,1}}{wildcard}{paramspace.param_sep}[a-zA-Z_0-9]*", "", i).strip(
+        re.sub(f"{wildcard}{paramspace.param_sep}[a-zA-Z_0-9]*/{{0,1}}", "", i).strip(
             "/"
         )
         for i in paramspace.instance_patterns
