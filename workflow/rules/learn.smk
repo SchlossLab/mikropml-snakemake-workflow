@@ -74,8 +74,6 @@ rule find_feature_importance:
         f"log/{paramspace.wildcard_pattern}/find_feature_importance.txt",
     params:
         outcome_colname=outcome_colname,
-        method="{method}",
-        seed="{seed}",
     threads: ncores
     resources:
         mem_mb=MEM_PER_GB * 1,
