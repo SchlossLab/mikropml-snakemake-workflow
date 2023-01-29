@@ -1,12 +1,16 @@
+""" Preprocess data, train ML models, calculate performance, and find feature importance
+"""
+
+
 rule preprocess_data:
     input:
-        csv=config["dataset_csv"],
+        csv=f"data/{dataset}.csv",
     output:
         rds=f"data/processed/{dataset}_preproc.Rds",
     log:
-        "log/preprocess_data.txt",
+        f"log/{dataset}/preprocess_data.txt",
     benchmark:
-        "benchmarks/preprocess_data.txt"
+        f"benchmarks/{dataset}/preprocess_data.txt"
     params:
         outcome_colname=outcome_colname,
     threads: ncores
@@ -22,18 +26,15 @@ rule run_ml:
     input:
         rds=rules.preprocess_data.output.rds,
     output:
-        model="results/{dataset}/runs/{method}_{seed}_model.Rds",
-        perf="results/{dataset}/runs/{method}_{seed}_performance.csv",
-        test="results/{dataset}/runs/{method}_{seed}_test-data.csv",
+        model=f"results/{paramspace.wildcard_pattern}/model.Rds",
+        perf=f"results/{paramspace.wildcard_pattern}/performance.csv",
+        test=f"results/{paramspace.wildcard_pattern}/test_data.csv",
     log:
-        "log/{dataset}/runs/run_ml.{method}_{seed}.txt",
+        f"log/{paramspace.wildcard_pattern}/run_ml.txt",
     benchmark:
-        "benchmarks/{dataset}/runs/run_ml.{method}_{seed}.txt"
+        f"benchmarks/{paramspace.wildcard_pattern}/run_ml.txt"
     params:
         outcome_colname=outcome_colname,
-        method="{method}",
-        seed="{seed}",
-        kfold=kfold,
         hyperparams=hyperparams,
     threads: ncores
     resources:
@@ -44,18 +45,32 @@ rule run_ml:
         "../scripts/train_ml.R"
 
 
+rule calc_model_sensspec:
+    input:
+        model=rules.run_ml.output.model,
+        test=rules.run_ml.output.test,
+    output:
+        csv=f"results/{paramspace.wildcard_pattern}/sensspec.csv",
+    params:
+        outcome_colname=outcome_colname,
+    log:
+        f"log/{paramspace.wildcard_pattern}/calc_model_sensspec.txt",
+    conda:
+        "../envs/mikropml.yml"
+    script:
+        "../scripts/calc_model_sensspec.R"
+
+
 rule find_feature_importance:
     input:
         model=rules.run_ml.output.model,
         test=rules.run_ml.output.test,
     output:
-        feat="results/{dataset}/runs/{method}_{seed}_feature-importance.csv",
+        feat=f"results/{paramspace.wildcard_pattern}/feature_importance.csv",
     log:
-        "log/{dataset}/runs/find_feature-importance.{method}_{seed}.txt",
+        f"log/{paramspace.wildcard_pattern}/find_feature_importance.txt",
     params:
         outcome_colname=outcome_colname,
-        method="{method}",
-        seed="{seed}",
     threads: ncores
     resources:
         mem_mb=MEM_PER_GB * 1,
@@ -63,19 +78,3 @@ rule find_feature_importance:
         "../envs/mikropml.yml"
     script:
         "../scripts/find_feature_importance.R"
-
-
-rule calc_model_sensspec:
-    input:
-        model=rules.run_ml.output.model,
-        test=rules.run_ml.output.test,
-    output:
-        csv="results/{dataset}/runs/{method}_{seed}_sensspec.csv",
-    params:
-        outcome_colname=outcome_colname,
-    log:
-        "log/{dataset}/runs/calc_model_sensspec.{method}_{seed}.txt",
-    conda:
-        "../envs/mikropml.yml"
-    script:
-        "../scripts/calc_model_sensspec.R"
