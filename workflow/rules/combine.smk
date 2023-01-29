@@ -1,11 +1,10 @@
-''' Combine results from individual `run_ml` jobs to prepare for plotting
-'''
+""" Combine results from individual `run_ml` jobs to prepare for plotting
+"""
+
+
 rule combine_results:
     input:
-        csv=expand(
-            "results/{params}/{{type}}.csv",
-            params=paramspace.instance_patterns
-        ),
+        csv=expand("results/{params}/{{type}}.csv", params=paramspace.instance_patterns),
     output:
         csv="results/{type}-results.csv",
     log:

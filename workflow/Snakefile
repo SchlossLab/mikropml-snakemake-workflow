@@ -14,17 +14,23 @@ default_configfile = "config/config.yaml"
 
 MEM_PER_GB = 1024
 
+
 configfile: default_configfile
 
-wildcard_constraints:
-    kfold = '[0-9]+'
 
-include: 'scripts/functions.py'
-include: 'rules/config.smk'
+wildcard_constraints:
+    kfold="[0-9]+",
+
+
+include: "scripts/functions.py"
+include: "rules/config.smk"
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
-#include: "rules/example-report.smk"
+
+
+# include: "rules/example-report.smk"
+
 
 report: "report/workflow.rst"
 
@@ -39,8 +45,8 @@ rule render_report:
         perf_plot=rules.plot_performance.output.plot,
         feat_plot="figures/feature_importance.png",
         hp_plot=expand(
-            "figures/{params}/hp_performance.png", 
-            params = instances_drop_wildcard(paramspace, 'seed')
+            "figures/{params}/hp_performance.png",
+            params=instances_drop_wildcard(paramspace, "seed"),
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
@@ -65,8 +71,8 @@ rule render_report:
 
 rule archive:
     input:
-        expand(rules.render_report.input, dataset = dataset),
-        expand(rules.render_report.output, dataset = dataset),
+        expand(rules.render_report.input, dataset=dataset),
+        expand(rules.render_report.output, dataset=dataset),
         expand(
             "results/{rtype}-results.csv",
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],

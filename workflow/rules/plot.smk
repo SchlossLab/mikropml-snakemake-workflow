@@ -1,5 +1,6 @@
-''' Plot ML results
-'''
+""" Plot ML results
+"""
+
 
 rule plot_performance:
     input:
