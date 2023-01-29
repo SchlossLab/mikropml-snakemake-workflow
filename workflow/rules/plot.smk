@@ -3,15 +3,15 @@
 
 rule plot_performance:
     input:
-        csv="results/performance-results.csv",
+        csv="results/dataset-{dataset}/performance-results.csv",
     output:
         plot=report(
-            "figures/performance.png",
+            "figures/dataset-{dataset}/performance.png",
             category="Performance",
             subcategory="Model Performance",
         ),
     log:
-        "log/plot_performance.txt",
+        "log/dataset-{dataset}/plot_performance.txt",
     conda:
         "../envs/mikropml.yml"
     script:
@@ -22,16 +22,16 @@ if find_feature_importance:
 
     rule plot_feature_importance:
         input:
-            csv="results/feature_importance-results.csv",
+            csv="results/dataset-{dataset}/feature_importance-results.csv",
         output:
             plot=report(
-                "figures/feature_importance.png",
+                "figures/dataset-{dataset}/feature_importance.png",
                 category="Feature Importance",
             ),
         params:
             top_n=5,
         log:
-            "log/plot_feature_importance.txt",
+            "log/dataset-{dataset}/plot_feature_importance.txt",
         conda:
             "../envs/mikropml.yml"
         script:
@@ -41,9 +41,9 @@ else:
 
     rule make_blank_feature_plot:
         output:
-            plot="figures/feature_importance.png",
+            plot="figures/dataset-{dataset}/feature_importance.png",
         log:
-            "log/make_blank_plot.txt",
+            "log/dataset-{dataset}/make_blank_plot.txt",
         conda:
             "../envs/mikropml.yml"
         script:
@@ -69,16 +69,16 @@ rule plot_hp_performance:
 
 rule plot_benchmarks:
     input:
-        csv="results/benchmarks-results.csv",
+        csv="results/dataset-{dataset}/benchmarks-results.csv",
     output:
         plot=report(
-            "figures/benchmarks.png",
+            "figures/dataset-{dataset}/benchmarks.png",
             category="Performance",
             subcategory="Runtime & Memory Usage",
             caption="../report/benchmarks.rst",
         ),
     log:
-        "log/plot_benchmarks.txt",
+        "log/dataset-{dataset}/plot_benchmarks.txt",
     conda:
         "../envs/mikropml.yml"
     script:
@@ -87,11 +87,11 @@ rule plot_benchmarks:
 
 rule plot_roc_curves:
     input:
-        csv="results/sensspec-results.csv",
+        csv="results/dataset-{dataset}/sensspec-results.csv",
     output:
-        plot="figures/roc_curves.png",
+        plot="figures/dataset-{dataset}/roc_curves.png",
     log:
-        "log/plot_roc_curves.txt",
+        "log/dataset-{dataset}/plot_roc_curves.txt",
     conda:
         "../envs/mikropml.yml"
     script:

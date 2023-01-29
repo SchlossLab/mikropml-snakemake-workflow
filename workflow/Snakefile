@@ -37,7 +37,7 @@ rule targets:
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
-        feat_plot="figures/feature_importance.png",
+        feat_plot="figures/dataset-{dataset}/feature_importance.png",
         hp_plot=expand(
             "figures/{params}/hp_performance.png", 
             params = instances_drop_wildcard(paramspace, 'seed')
@@ -68,8 +68,9 @@ rule archive:
         expand(rules.render_report.input, dataset = dataset),
         expand(rules.render_report.output, dataset = dataset),
         expand(
-            "results/{rtype}-results.csv",
+            "results/dataset-{dataset}/{rtype}-results.csv",
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
+            dataset = dataset
         ),
     output:
         f"workflow_{dataset}.zip",

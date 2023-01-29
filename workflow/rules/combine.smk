@@ -7,11 +7,11 @@ rule combine_results:
             params=paramspace.instance_patterns
         ),
     output:
-        csv="results/{type}-results.csv",
+        csv="results/dataset-{dataset}/{type}-results.csv",
     log:
-        "log/combine_results_{type}.txt",
+        "log/dataset-{dataset}/combine_results_{type}.txt",
     benchmark:
-        "benchmarks/combine_results_{type}.txt"
+        "benchmarks/dataset-{dataset}/combine_results_{type}.txt"
     conda:
         "../envs/mikropml.yml"
     script:
