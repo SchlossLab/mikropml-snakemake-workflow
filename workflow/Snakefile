@@ -27,9 +27,7 @@ include: "rules/config.smk"
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
-
-
-# include: "rules/example-report.smk"
+include: "rules/example-report.smk"
 
 
 report: "report/workflow.rst"

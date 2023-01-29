@@ -4,11 +4,14 @@
 
 rule copy_example_figures:
     input:
-        figs=[
+        figs=[    
             rules.plot_performance.output.plot,
-            rules.plot_feature_importance.output.plot,
-            expand(rules.plot_hp_performance.output.plot, ml_method=ml_methods),
+            "figures/dataset-{dataset}/feature_importance.png",
             rules.plot_benchmarks.output.plot,
+            expand(
+                "figures/{params}/hp_performance.png",
+                params=instances_drop_wildcard(paramspace, "seed"),
+            ),
             rules.plot_roc_curves.output.plot,
             "figures/graphviz/rulegraph.png",
         ],
