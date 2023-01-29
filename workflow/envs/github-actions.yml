@@ -6,6 +6,8 @@ channels:
   - r
 dependencies:
   - black
+  - pytest
+  - pytest-parallel
   - python=3.11
   - r-base=4
   - r-styler
