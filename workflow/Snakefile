@@ -74,11 +74,12 @@ rule write_paramspace:
     log:
         "log/write_paramspace.txt",
     params:
-        df=paramspace.dataframe
-    conda: 'envs/smk.yml'
+        df=paramspace.dataframe,
+    conda:
+        "envs/smk.yml"
     script:
-        'scripts/write_paramspace.py'
-        
+        "scripts/write_paramspace.py"
+
 
 rule archive:
     input:
