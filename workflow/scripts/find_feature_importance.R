@@ -40,6 +40,6 @@ wildcards <- schtools::get_wildcards_tbl()
 
 readr::write_csv(
   feat_imp %>%
-    inner_join(wildcards, by = c("method", "seed")),
+    inner_join(wildcards),
   snakemake@output[["feat"]]
 )
