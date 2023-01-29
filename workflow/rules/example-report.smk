@@ -4,7 +4,7 @@
 
 rule copy_example_figures:
     input:
-        figs=[    
+        figs=[
             rules.plot_performance.output.plot,
             "figures/dataset-{dataset}/feature_importance.png",
             rules.plot_benchmarks.output.plot,
