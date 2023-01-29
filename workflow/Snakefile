@@ -74,7 +74,7 @@ rule archive:
         expand(
             "results/dataset-{dataset}/{rtype}-results.csv",
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
-            dataset = dataset
+            dataset=dataset,
         ),
     output:
         f"workflow_{dataset}.zip",
