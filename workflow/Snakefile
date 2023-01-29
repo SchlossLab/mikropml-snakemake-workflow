@@ -70,9 +70,9 @@ rule render_report:
 # TODO: switch this back to a `run` directive when snakemake fixes https://github.com/snakemake/snakemake/issues/2035
 rule write_paramspace:
     output:
-        csv='config/paramspace.csv'
+        csv="config/paramspace.csv",
     log:
-        'log/write_paramspace.txt'
+        "log/write_paramspace.txt",
     params:
         df=paramspace.dataframe
     conda: 'envs/smk.yml'
@@ -89,7 +89,7 @@ rule archive:
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
             dataset=dataset,
         ),
-        rules.write_paramspace.output
+        rules.write_paramspace.output,
     output:
         f"workflow_{dataset}.zip",
     log:
