@@ -67,17 +67,18 @@ rule render_report:
         "scripts/report.Rmd"
 
 
+# TODO: switch this back to a `run` directive when snakemake fixes https://github.com/snakemake/snakemake/issues/2035
 rule write_paramspace:
     output:
         csv='config/paramspace.csv'
     log:
         'log/write_paramspace.txt'
     params:
-        paramspace=paramspace
-    run:
-        print(params.paramspace.wildcard_pattern)
-        params.paramspace.dataframe.to_csv(output.csv, index=False)
-
+        df=paramspace.dataframe
+    conda: 'envs/smk.yml'
+    script:
+        'scripts/write_paramspace.py'
+        
 
 rule archive:
     input:
