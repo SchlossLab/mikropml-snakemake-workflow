@@ -36,9 +36,6 @@ rule run_ml:
     params:
         outcome_colname=outcome_colname,
         hyperparams=hyperparams,
-        method="{method}",
-        seed="{seed}",
-        kfold="{kfold}",
     threads: ncores
     resources:
         mem_mb=MEM_PER_GB * 4,
