@@ -44,5 +44,6 @@ jobs:
 #        run: |
 #          pytest --workers 2 .tests/
       - name: Test with pytest
+        shell: bash -el {0}
         run: |
           pytest --workers 2 workflow/scripts/
