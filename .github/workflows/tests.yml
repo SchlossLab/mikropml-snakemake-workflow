@@ -43,6 +43,6 @@ jobs:
 #      - name: Test with pytest
 #        run: |
 #          pytest --workers 2 .tests/
-     - name: Test with pytest
-       run: |
-         pytest --workers 2 workflow/scripts/
+      - name: Test with pytest
+        run: |
+          pytest --workers 2 workflow/scripts/
