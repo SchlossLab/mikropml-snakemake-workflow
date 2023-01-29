@@ -11,8 +11,8 @@ outcome_colname <- snakemake@params[["outcome_colname"]]
 train_dat <- model$trainingData
 names(train_dat)[names(train_dat) == ".outcome"] <- outcome_colname
 test_dat <- read_csv(snakemake@input[["test"]])
-method <- snakemake@params[["method"]]
-seed <- as.numeric(snakemake@params[["seed"]])
+method <- snakemake@wildcards[["method"]]
+seed <- as.numeric(snakemake@wildcards[["seed"]])
 
 outcome_type <- get_outcome_type(c(
   train_dat %>% pull(outcome_colname),
@@ -40,6 +40,6 @@ wildcards <- schtools::get_wildcards_tbl()
 
 readr::write_csv(
   feat_imp %>%
-    inner_join(wildcards, by = c("method", "seed")),
+    inner_join(wildcards),
   snakemake@output[["feat"]]
 )
