@@ -17,6 +17,10 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      - name: Print config file
+        run: |
+          echo "Using config file: ${{ inputs.configfile }}"
+          cat ${{ inputs.configfile }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: 3.11
@@ -29,15 +33,12 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--cores 16 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
+          args: "archive --cores 16 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --configfile ${{ inputs.configfile }}"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: log
           path: log/
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Upload archive
         uses: actions/upload-artifact@v3
         with:

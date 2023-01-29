@@ -31,7 +31,7 @@ report: "report/workflow.rst"
 
 rule targets:
     input:
-        f"workflow-{dataset}.zip",
+        f"report_{dataset}.html",
 
 
 rule render_report:
@@ -65,16 +65,16 @@ rule render_report:
 
 rule archive:
     input:
-        rules.render_report.input,
-        rules.render_report.output,
+        expand(rules.render_report.input, dataset = dataset),
+        expand(rules.render_report.output, dataset = dataset),
         expand(
             "results/{rtype}-results.csv",
             rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
         ),
     output:
-        "workflow-{dataset}.zip",
+        f"workflow_{dataset}.zip",
     log:
-        "log/archive_{dataset}.txt",
+        f"log/archive_{dataset}.txt",
     conda:
         "envs/smk.yml"
     shell:
