@@ -33,8 +33,11 @@ rule run_ml:
     benchmark:
         f"benchmarks/{paramspace.wildcard_pattern}/run_ml.txt"
     params:
-        params=paramspace.instance,
+        outcome_colname=outcome_colname,
         hyperparams=hyperparams,
+        method="{method}",
+        seed="{seed}",
+        kfold="{kfold}",
     threads: ncores
     resources:
         mem_mb=MEM_PER_GB * 4,
@@ -70,7 +73,7 @@ rule find_feature_importance:
         f"log/{paramspace.wildcard_pattern}/find_feature_importance.txt",
     params:
         outcome_colname=outcome_colname,
-        method="{ml_method}",
+        method="{method}",
         seed="{seed}",
     threads: ncores
     resources:
