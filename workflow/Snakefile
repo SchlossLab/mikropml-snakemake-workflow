@@ -2,7 +2,6 @@ import datetime
 import os
 from snakemake.utils import min_version
 import sys
-from scripts.functions import *
 
 
 min_version("6.12.3")
@@ -20,6 +19,7 @@ configfile: default_configfile
 wildcard_constraints:
     kfold = '[0-9]+'
 
+include: 'scripts/functions.py'
 include: 'rules/config.smk'
 include: "rules/learn.smk"
 include: "rules/combine.smk"
