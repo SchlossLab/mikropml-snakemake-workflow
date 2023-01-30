@@ -1,13 +1,14 @@
-dataset_csv: data/processed/otu-large.csv
-dataset_name: otu-large
+dataset: otu_large
 outcome_colname: dx
-methods:
+method:
  - glmnet
  - rf
 kfold: 5
-ncores: 16
-nseeds: 50
-find_feature_importance: false
+ncores: 8
+nseeds: 10
+find_feature_importance: true
+hyperparams:
+paramspace_csv: 'config/custom-paramspace.csv'
 exclude_param_keys:
  - exclude_param_keys
  - outcome_colname

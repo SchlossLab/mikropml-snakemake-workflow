@@ -1,7 +1,6 @@
-dataset_csv: data/processed/otu-micro.csv
-dataset_name: otu-micro
+dataset: otu_micro
 outcome_colname: dx
-ml_methods:
+method:
  - glmnet
 kfold: 2
 ncores: 4
@@ -18,3 +17,11 @@ hyperparams:
       - 0.1
       - 1
       - 10
+exclude_param_keys:
+ - exclude_param_keys
+ - outcome_colname
+ - ncores
+ - nseeds
+ - find_feature_importance
+ - hyperparams
+ - paramspace_csv
