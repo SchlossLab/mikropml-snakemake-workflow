@@ -21,13 +21,13 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: actions/setup-python@v4
+      - uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest pytest-parallel
+          python-version: 3.11
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          activate-environment: github-actions
+          environment-file: workflow/envs/github-actions.yml
       - name: Lint workflow
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
@@ -42,4 +42,8 @@ jobs:
           args: "archive --forceall --cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
 #      - name: Test with pytest
 #        run: |
-#          pytest --workers 2 .tests/
+#          pytest -n 2 .tests/
+      - name: Test with pytest
+        shell: bash -el {0}
+        run: |
+          pytest -n 2 workflow/scripts/
