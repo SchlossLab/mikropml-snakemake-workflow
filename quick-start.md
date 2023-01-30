@@ -18,7 +18,7 @@
     1. If you don't have conda/mamba yet, we recommend installing
        [Mambaforge](https://mamba.readthedocs.io/en/latest/installation.html).
 
-    1. Create a conda environment with snakemake installed:
+    1. Create a conda environment with snakemake and pandas installed:
 
        ``` sh
        mamba env create -f workflow/envs/smk.yml
