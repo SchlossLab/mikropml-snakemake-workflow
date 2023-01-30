@@ -42,8 +42,8 @@ jobs:
           args: "archive --forceall --cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile config/test.yaml"
 #      - name: Test with pytest
 #        run: |
-#          pytest --workers 2 .tests/
+#          pytest -n 2 .tests/
       - name: Test with pytest
         shell: bash -el {0}
         run: |
-          pytest --workers 2 workflow/scripts/
+          pytest -n 2 workflow/scripts/
