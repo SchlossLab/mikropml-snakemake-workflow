@@ -26,8 +26,8 @@ jobs:
           python-version: 3.11
           miniforge-variant: Mambaforge
           miniforge-version: latest
-          activate-environment: github-actions
-          environment-file: workflow/envs/github-actions.yml
+          activate-environment: smk
+          environment-file: workflow/envs/smk.yml
       - name: Lint workflow
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
