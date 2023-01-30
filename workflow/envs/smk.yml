@@ -3,6 +3,9 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
+  - pandas
+  - pytest
+  - pytest-xdist
   - snakemake=7
   - snakedeploy
   - zip
