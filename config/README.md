@@ -34,7 +34,7 @@ according to your needs.
     defaults. You will have to set these if you wish to use an ML method from 
     caret that we don't officially support. 
   - `paramspace_csv`: if you'd like to use a custom csv file to build the 
-    paramspace, specify the path to the csv file here. If `None`, then the
+    [paramspace](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#parameter-space-exploration) for `run_ml`, specify the path to the csv file here. If `None`, then the
     paramspace will be built based on the parameters in the configfile.
   - `exclude_param_keys`: keys in the configfile to exclude from the parameter 
     space. All keys in the configfile not listed in `exclude_param_keys` will be
