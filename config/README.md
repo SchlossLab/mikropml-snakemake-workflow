@@ -1,4 +1,10 @@
-# General configuration
+# Additional Dependencies
+
+Besides snakemake, you will also need `pandas` to run this workflow:
+
+`mamba install pandas`
+
+# General Configuration
 
 To configure this workflow, modify [`config/config.yaml`](/config/config.yaml) 
 according to your needs.
