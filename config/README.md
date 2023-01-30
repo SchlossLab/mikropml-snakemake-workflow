@@ -33,9 +33,13 @@ according to your needs.
     for each ML method (optional). Leave this blank if you'd like to use the 
     defaults. You will have to set these if you wish to use an ML method from 
     caret that we don't officially support. 
+  - `paramspace_csv`: if you'd like to use a custom csv file to build the 
+    paramspace, specify the path to the csv file here. If `None`, then the
+    paramspace will be built based on the parameters in the configfile.
   - `exclude_param_keys`: keys in the configfile to exclude from the parameter 
     space. All keys in the configfile not listed in `exclude_param_keys` will be
-    included as wildcards for `run_ml` and other rules. 
+    included as wildcards for `run_ml` and other rules. This option is ignored
+    if `paramspace_csv` is not `None`.
 
 We also provide [`config/test.yaml`](/config/test.yaml), which uses a smaller 
 dataset so you can first make sure the workflow runs without error on your

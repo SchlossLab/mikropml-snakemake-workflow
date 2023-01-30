@@ -20,8 +20,8 @@ start_seed = 100
 seeds = range(start_seed, start_seed + nseeds)
 config["seed"] = list(seeds)
 
-# parameter space based on configfile
-paramspace = get_paramspace_from_config(config)
+# create parameter space based on custom csv or configfile
+paramspace = Paramspace(pd.read_csv(config['paramspace_csv']), param_sep="-") if 'paramspace_csv' in config and config['paramspace_csv'] else get_paramspace_from_config(config)
 # wildcard pattern without seed. needed for rule `combine_hp_performance`
 wildcard_no_seed = pattern_drop_wildcard(paramspace, "seed")
 # wildcard pattern with all wildcards _except_ seed having double curly braces for use by `expand()` in rule `combine_hp_performance`
