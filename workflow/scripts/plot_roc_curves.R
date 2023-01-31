@@ -96,7 +96,7 @@ plot_mean_prc <- function(dat, baseline_precision = NULL) {
             x = recall, y = mean_precision,
             ymin = lower, ymax = upper
         )) +
-        shared_ggprotos(aes(colorvar = method)) +
+        shared_ggprotos(colorvar = method) +
         ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(-0.01, 1.01)) +
         ggplot2::labs(x = "Recall", y = "Mean Precision")
     if (!is.null(baseline_precision)) {
@@ -109,8 +109,14 @@ plot_mean_prc <- function(dat, baseline_precision = NULL) {
     return(prc_plot)
 }
 p <- plot_grid(
-  dat %>% calc_mean_roc(custom_group_vars = 'method') %>% plot_mean_roc(),
-  dat %>% calc_mean_prc(custom_group_vars = 'method') %>% plot_mean_prc()
+  dat %>%
+      calc_mean_roc(custom_group_vars = 'method') %>%
+      plot_mean_roc(),
+  dat %>%
+      calc_mean_prc(custom_group_vars = 'method') %>%
+      plot_mean_prc() +
+      theme(legend.position = 'none'),
+  align = 'hv', axis = 'lr'
 )
 
 ggsave(
