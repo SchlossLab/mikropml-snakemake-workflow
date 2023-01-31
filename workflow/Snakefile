@@ -93,6 +93,7 @@ rule archive:
             dataset=dataset,
             rtype=results_types,
         ),
+        config_path,
     output:
         f"workflow_{dataset}.zip",
     log:
