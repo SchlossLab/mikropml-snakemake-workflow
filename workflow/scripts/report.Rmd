@@ -20,7 +20,8 @@ Machine learning algorithm(s) used: `r snakemake@params[['ml_methods']]`.
 Models were trained with `r snakemake@params[['nseeds']]` different random
 partitions of the `r snakemake@params[['dataset']]` dataset into training and
 testing sets using `r snakemake@params[['kfold']]`-fold cross validation.
-See ``r snakemake@params[['config_path']]`` for the full configuration.
+See [`r snakemake@params[['config_path']]`](`r snakemake@params[['config_path']]`) 
+for the full configuration.
 
 ## Workflow
 
