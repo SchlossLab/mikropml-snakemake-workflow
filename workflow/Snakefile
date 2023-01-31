@@ -38,7 +38,9 @@ seeds = range(start_seed, start_seed + nseeds)
 
 hyperparams = config["hyperparams"] if "hyperparams" in config else None
 find_feature_importance = config["find_feature_importance"]
-
+results_types = ["performance", "benchmarks", "sensspec"]
+if find_feature_importance:
+    results_types.append("feature-importance")
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
@@ -89,7 +91,7 @@ rule archive:
         expand(
             "results/{dataset}/{rtype}_results.csv",
             dataset=dataset,
-            rtype=["performance", "feature-importance", "benchmarks", "sensspec"],
+            rtype=results_types,
         ),
     output:
         f"workflow_{dataset}.zip",
