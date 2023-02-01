@@ -8,6 +8,7 @@ ncores: 8
 nseeds: 10
 find_feature_importance: true
 hyperparams:
+paramspace_csv:
 exclude_param_keys:
  - exclude_param_keys
  - outcome_colname
@@ -15,3 +16,4 @@ exclude_param_keys:
  - nseeds
  - find_feature_importance
  - hyperparams
+ - paramspace_csv
