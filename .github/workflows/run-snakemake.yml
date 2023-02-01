@@ -26,7 +26,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "archive --cores 16 --use-singularity --use-conda --conda-frontend mamba --show-failed-logs --configfile ${{ inputs.configfile }}"
+          args: "archive --cores 16 --use-conda --conda-frontend mamba --show-failed-logs --configfile ${{ inputs.configfile }}"
       - name: Upload logs on failure
         uses: actions/upload-artifact@v3
         if: failure()

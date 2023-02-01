@@ -22,6 +22,9 @@ wildcard_constraints:
     kfold="[0-9]+",
 
 
+report: "report/workflow.rst"
+
+
 include: "scripts/functions.py"
 include: "rules/config.smk"
 include: "rules/learn.smk"
@@ -30,7 +33,9 @@ include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
 
-report: "report/workflow.rst"
+results_types = ["performance", "benchmarks", "sensspec"]
+if find_feature_importance:
+    results_types.append("feature-importance")
 
 
 rule targets:
@@ -87,10 +92,11 @@ rule archive:
         expand(rules.render_report.output, dataset=dataset),
         expand(
             "results/dataset-{dataset}/{rtype}-results.csv",
-            rtype=["performance", "feature_importance", "benchmarks", "sensspec"],
+            rtype=results_types,
             dataset=dataset,
         ),
         rules.write_paramspace.output,
+        config_path,
     output:
         f"workflow_{dataset}.zip",
     log:
