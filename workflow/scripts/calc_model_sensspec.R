@@ -9,4 +9,5 @@ mikropml::calc_model_sensspec(
   test_dat,
   outcome_colname
 ) %>%
+  bind_cols(schtools::get_wildcards_tbl()) %>%
   write_csv(snakemake@output[["csv"]])
