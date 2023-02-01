@@ -1,4 +1,5 @@
 schtools::log_snakemake()
+library(patchwork)
 library(tidyverse)
 
 
@@ -107,20 +108,18 @@ plot_mean_prc <- function(dat, baseline_precision = NULL) {
     }
     return(prc_plot)
 }
-p <- cowplot::plot_grid(
-    dat %>%
+p <- (dat %>%
         calc_mean_roc(custom_group_vars = 'method') %>%
-        plot_mean_roc(),
-    dat %>%
+        plot_mean_roc()) +
+    (dat %>%
         calc_mean_prc(custom_group_vars = 'method') %>%
         plot_mean_prc() +
-        theme(legend.position = 'none'),
-    align = 'hv',
-    axis = 'lr'
-)
+        theme(legend.position = 'none'))
 
 ggsave(
   filename = snakemake@output[["plot"]],
   plot = p,
-  device = "png"
+  device = "png",
+  height = 4,
+  width = 6
 )
