@@ -42,6 +42,7 @@ results_types = ["performance", "benchmarks", "sensspec"]
 if find_feature_importance:
     results_types.append("feature-importance")
 
+
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
@@ -86,8 +87,8 @@ rule render_report:
 
 rule archive:
     input:
-        expand(rules.render_report.input, dataset = dataset),
-        expand(rules.render_report.output, dataset = dataset),
+        expand(rules.render_report.input, dataset=dataset),
+        expand(rules.render_report.output, dataset=dataset),
         expand(
             "results/{dataset}/{rtype}_results.csv",
             dataset=dataset,
