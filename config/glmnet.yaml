@@ -1,9 +1,17 @@
 dataset_csv: data/processed/otu-large.csv
 dataset_name: otu-large
 outcome_colname: dx
-ml_methods:
+methods:
  - glmnet
 kfold: 5
 ncores: 4
 nseeds: 50
 find_feature_importance: false
+exclude_param_keys:
+ - exclude_param_keys
+ - outcome_colname
+ - ncores
+ - nseeds
+ - find_feature_importance
+ - hyperparams
+ - paramspace_csv
