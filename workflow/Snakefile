@@ -35,7 +35,7 @@ include: "rules/example-report.smk"
 
 results_types = ["performance", "benchmarks", "sensspec"]
 if find_feature_importance:
-    results_types.append("feature-importance")
+    results_types.append("feature_importance")
 
 
 rule targets:
