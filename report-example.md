@@ -1,6 +1,6 @@
 ---
 title: "ML Results"
-date: "2023-01-31"
+date: "2023-02-02"
 output:
   html_document:
     keep_md: true
@@ -16,7 +16,7 @@ output:
 
 Machine learning algorithm(s) used: glmnet and rf.
 Models were trained with 10 different random
-partitions of the otu-large dataset into training and
+partitions of the otu_large dataset into training and
 testing sets using 5-fold cross validation.
 See [config/config.yaml](config/config.yaml) 
 for the full configuration.
@@ -33,7 +33,7 @@ for the full configuration.
 
 ## Hyperparameter Performance
 
-<img src="figures/example/hp_performance_glmnet.png" width="80%" /><img src="figures/example/hp_performance_rf.png" width="80%" />
+<img src="figures/example/dataset-otu_large/kfold-5/method-glmnet/hp_performance.png" width="80%" /><img src="figures/example/dataset-otu_large/kfold-5/method-rf/hp_performance.png" width="80%" />
 
 ## Feature Importance
 
