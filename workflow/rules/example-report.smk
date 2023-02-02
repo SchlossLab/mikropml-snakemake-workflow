@@ -1,11 +1,12 @@
 """ Create an example report
 """
 
+
 rule copy_hp_plot:
     input:
-        plot=f"figures/{wildcard_no_seed}/hp_performance.png"
+        plot=f"figures/{wildcard_no_seed}/hp_performance.png",
     output:
-        plot=f"figures/example/{wildcard_no_seed}/hp_performance.png"
+        plot=f"figures/example/{wildcard_no_seed}/hp_performance.png",
     log:
         f"log/{wildcard_no_seed}/copy_hp_plot.txt",
     conda:
@@ -14,6 +15,7 @@ rule copy_hp_plot:
         """
         cp {input.plot} {output.plot} &> {log}
         """
+
 
 rule copy_example_figures:
     input:
@@ -51,8 +53,10 @@ rule make_example_report:
         bench_plot=rules.copy_example_figures.output.bench_plot,
         roc_plot=rules.copy_example_figures.output.roc_plot,
         rulegraph=rules.copy_example_figures.output.rulegraph,
-        hp_plot=expand("figures/example/{params}/hp_performance.png",
-                        params = instances_drop_wildcard(paramspace, "seed"))
+        hp_plot=expand(
+            "figures/example/{params}/hp_performance.png",
+            params=instances_drop_wildcard(paramspace, "seed"),
+        ),
     output:
         doc="report-example.md",
     log:
