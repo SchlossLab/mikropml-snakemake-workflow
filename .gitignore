@@ -11,7 +11,7 @@ results/*/runs
 !.tests/
 __pycache__/
 .DS_Store
-figures/otu*
-results/otu*
+figures/dataset*
+results/dataset*
 report_otu*
 *.zip

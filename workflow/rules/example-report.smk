@@ -1,22 +1,33 @@
+""" Create an example report
+"""
+
+rule copy_hp_plot:
+    input:
+        plot=f"figures/{wildcard_no_seed}/hp_performance.png"
+    output:
+        plot=f"figures/example/{wildcard_no_seed}/hp_performance.png"
+    log:
+        f"log/{wildcard_no_seed}/copy_hp_plot.txt",
+    conda:
+        "../envs/smk.yml"
+    shell:
+        """
+        cp {input.plot} {output.plot} &> {log}
+        """
+
 rule copy_example_figures:
     input:
         figs=[
-            f"figures/{dataset}/performance.png",
-            f"figures/{dataset}/feature_importance.png",
-            f"figures/{dataset}/benchmarks.png",
-            f"figures/{dataset}/roc_curves.png",
-            expand(
-                "figures/{dataset}/hp_performance_{method}.png",
-                method=ml_methods,
-                dataset=dataset,
-            ),
+            f"figures/dataset-{dataset}/performance.png",
+            f"figures/dataset-{dataset}/feature_importance.png",
+            f"figures/dataset-{dataset}/benchmarks.png",
+            f"figures/dataset-{dataset}/roc_curves.png",
             "figures/graphviz/rulegraph.png",
         ],
     output:
         perf_plot="figures/example/performance.png",
         feat_plot="figures/example/feature_importance.png",
         bench_plot="figures/example/benchmarks.png",
-        hp_plot=expand("figures/example/hp_performance_{method}.png", method=ml_methods),
         roc_plot="figures/example/roc_curves.png",
         rulegraph="figures/example/rulegraph.png",
     log:
@@ -29,7 +40,7 @@ rule copy_example_figures:
         """
         for f in {input.figs}; do
             cp $f {params.outdir}
-        done
+        done &> {log}
         """
 
 
@@ -37,10 +48,11 @@ rule make_example_report:
     input:
         perf_plot=rules.copy_example_figures.output.perf_plot,
         feat_plot=rules.copy_example_figures.output.feat_plot,
-        hp_plot=rules.copy_example_figures.output.hp_plot,
         bench_plot=rules.copy_example_figures.output.bench_plot,
         roc_plot=rules.copy_example_figures.output.roc_plot,
         rulegraph=rules.copy_example_figures.output.rulegraph,
+        hp_plot=expand("figures/example/{params}/hp_performance.png",
+                        params = instances_drop_wildcard(paramspace, "seed"))
     output:
         doc="report-example.md",
     log:
