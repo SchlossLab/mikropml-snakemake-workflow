@@ -9,7 +9,7 @@ config_path = (
 
 dataset = config["dataset"]
 ncores = config["ncores"]
-ml_methods = set_default(config, "ml_method", "glmnet")
+ml_methods = set_default(config, "method", "glmnet")
 kfold = set_default(config, "kfold", 5)
 outcome_colname = set_default(config, "outcome_colname", None)
 hyperparams = set_default(config, "hyperparams", None)
