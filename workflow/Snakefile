@@ -12,44 +12,30 @@ containerized: "docker://kellysovacool/mikropml:latest"
 
 default_configfile = "config/config.yaml"
 
+MEM_PER_GB = 1024
+
 
 configfile: default_configfile
 
 
-args = sys.argv
-config_path = (
-    args[args.index("--configfile") + 1]
-    if "--configfile" in args
-    else default_configfile
-)
+wildcard_constraints:
+    kfold="[0-9]+",
 
 
-MEM_PER_GB = 1024
-
-dataset = config["dataset_name"]
-ncores = config["ncores"]
-ml_methods = config["ml_methods"]
-kfold = config["kfold"]
-outcome_colname = config["outcome_colname"]
-
-nseeds = config["nseeds"]
-start_seed = 100
-seeds = range(start_seed, start_seed + nseeds)
-
-hyperparams = config["hyperparams"] if "hyperparams" in config else None
-find_feature_importance = config["find_feature_importance"]
-results_types = ["performance", "benchmarks", "sensspec"]
-if find_feature_importance:
-    results_types.append("feature-importance")
+report: "report/workflow.rst"
 
 
+include: "scripts/functions.py"
+include: "rules/config.smk"
 include: "rules/learn.smk"
 include: "rules/combine.smk"
 include: "rules/plot.smk"
 include: "rules/example-report.smk"
 
 
-report: "report/workflow.rst"
+results_types = ["performance", "benchmarks", "sensspec"]
+if find_feature_importance:
+    results_types.append("feature_importance")
 
 
 rule targets:
@@ -60,9 +46,10 @@ rule targets:
 rule render_report:
     input:
         perf_plot=rules.plot_performance.output.plot,
-        feat_plot="figures/{dataset}/feature_importance.png",
+        feat_plot="figures/dataset-{dataset}/feature_importance.png",
         hp_plot=expand(
-            "figures/{{dataset}}/hp_performance_{method}.png", method=ml_methods
+            "figures/{params}/hp_performance.png",
+            params=instances_drop_wildcard(paramspace, "seed"),
         ),
         bench_plot=rules.plot_benchmarks.output.plot,
         roc_plot=rules.plot_roc_curves.output.plot,
@@ -85,15 +72,30 @@ rule render_report:
         "scripts/report.Rmd"
 
 
+# TODO: switch this back to a `run` directive when snakemake fixes https://github.com/snakemake/snakemake/issues/2035
+rule write_paramspace:
+    output:
+        csv="config/paramspace.csv",
+    log:
+        "log/write_paramspace.txt",
+    params:
+        df=paramspace.dataframe,
+    conda:
+        "envs/smk.yml"
+    script:
+        "scripts/write_paramspace.py"
+
+
 rule archive:
     input:
         expand(rules.render_report.input, dataset=dataset),
         expand(rules.render_report.output, dataset=dataset),
         expand(
-            "results/{dataset}/{rtype}_results.csv",
-            dataset=dataset,
+            "results/dataset-{dataset}/{rtype}-results.csv",
             rtype=results_types,
+            dataset=dataset,
         ),
+        rules.write_paramspace.output,
         config_path,
     output:
         f"workflow_{dataset}.zip",
