@@ -2,9 +2,10 @@ dataset: otu_large
 outcome_colname: dx
 method:
  - glmnet
+ - rf
 kfold: 5
 ncores: 4
-nseeds: 50
+nseeds: 100
 find_feature_importance: false
 exclude_param_keys:
  - exclude_param_keys
