@@ -1,0 +1,11 @@
+dataset,kfold,method,seed
+otu_large,5,glmnet,100
+otu_large,5,glmnet,101
+otu_large,5,glmnet,102
+otu_large,5,glmnet,103
+otu_large,5,glmnet,104
+otu_large,5,rf,105
+otu_large,5,rf,106
+otu_large,5,rf,107
+otu_large,5,rf,108
+otu_large,5,rf,109
