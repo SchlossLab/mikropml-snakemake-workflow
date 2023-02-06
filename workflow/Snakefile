@@ -38,6 +38,10 @@ if find_feature_importance:
     results_types.append("feature_importance")
 
 
+onstart:
+    print("wildcard pattern: ", paramspace.wildcard_pattern)
+
+
 rule targets:
     input:
         f"report_{dataset}.html",
