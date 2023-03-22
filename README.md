@@ -52,6 +52,24 @@ your own project.
 Alternatively, you can download this repo and modify the code 
 directly to suit your needs. See instructions [here](/quick-start.md).
 
+## Help & Contributing
+
+If you come across a bug, [open an
+issue](https://github.com/SchlossLab/mikropml-snakemake-workflow/issues)
+and include a minimal reproducible example.
+
+If you have questions, create a new post in
+[Discussions](https://github.com/SchlossLab/mikropml-snakemake-workflow/discussions).
+
+If you’d like to contribute, see our guidelines
+[here](.github/CONTRIBUTING.md).
+
+## Code of Conduct
+
+Please note that the mikropml-snakemake-workflow is released with a
+[Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
+
 ## More resources
 
 - [mikropml docs](http://www.schlosslab.org/mikropml/)
