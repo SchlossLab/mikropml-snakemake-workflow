@@ -19,4 +19,4 @@
 module load singularity 
 
 # Run snakemake
-snakemake --profile config/slurm --latency-wait 90 --use-singularity --use-conda --conda-frontend mamba --configfile config/test.yml 
+snakemake --profile config/slurm --latency-wait 90 --use-singularity --use-conda --conda-frontend mamba --configfile config/test.yaml 
