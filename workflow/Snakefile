@@ -42,7 +42,8 @@ results_types = ["performance", "benchmarks", "sensspec"]
 if find_feature_importance:
     results_types.append("feature-importance")
 # for rule write_graphviz
-smk_path = f"-s {config['smk_path']}" if 'smk_path' in config else ""
+smk_path = f"-s {config['smk_path']}" if "smk_path" in config else ""
+
 
 include: "rules/learn.smk"
 include: "rules/combine.smk"
