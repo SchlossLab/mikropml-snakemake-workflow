@@ -1,0 +1,5 @@
+cancer,normal,actual,tp,fp,sensitivity,fpr,specificity,precision,dataset,method,seed
+0.5016984653035406,0.49830153469645944,cancer,1,0,0.5,0,1,1,otu-micro,glmnet,100
+0.4931904396776823,0.5068095603223177,normal,1,1,0.5,0.5,0.5,0.5,otu-micro,glmnet,100
+0.48850729844505747,0.5114927015549425,normal,1,2,0.5,1,0,0.3333333333333333,otu-micro,glmnet,100
+0.44744728217268837,0.5525527178273116,cancer,2,2,1,1,0,0.5,otu-micro,glmnet,100
