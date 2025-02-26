@@ -18,10 +18,9 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: 3.11
-          miniforge-variant: Mambaforge
           miniforge-version: latest
           activate-environment: github-actions
           environment-file: workflow/envs/github-actions.yml
