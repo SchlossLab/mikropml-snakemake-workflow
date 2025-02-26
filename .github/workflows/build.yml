@@ -5,26 +5,26 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          persist-credentials: false
           fetch-depth: 0
-      - uses: conda-incubator/setup-miniconda@v3
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: mamba-org/setup-micromamba@v2
         with:
-          python-version: 3.11
-          miniforge-version: latest
-          activate-environment: github-actions
           environment-file: workflow/envs/github-actions.yml
+          cache-environment: true
       - name: git config
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
       - name: Style R code
         shell: bash -el {0}
         run: |
@@ -54,6 +54,7 @@ jobs:
           directory: .
           snakefile: 'workflow/Snakefile'
           task: 'containerize'
+
       - name: Commit
         run: |
           git add figures/graphviz
@@ -64,8 +65,7 @@ jobs:
           git commit -m "🐳 Update Dockerfile" \
             || echo "No changes in Dockerfile to commit"
 
-      - name: Push
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
+          git push
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

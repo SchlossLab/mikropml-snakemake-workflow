@@ -6,8 +6,10 @@ channels:
   - r
 dependencies:
   - black
+  - pytest
   - python=3.11
   - r-base=4
   - r-styler
   - r-usethis
   - snakefmt
+

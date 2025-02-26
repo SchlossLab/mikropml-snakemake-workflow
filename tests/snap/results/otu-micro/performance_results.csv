@@ -1,0 +1,3 @@
+cv_metric_AUC,logLoss,AUC,prAUC,Accuracy,Kappa,F1,Sensitivity,Specificity,Pos_Pred_Value,Neg_Pred_Value,Precision,Recall,Detection_Rate,Balanced_Accuracy,method,seed,dataset
+0.55375,0.710998622229651,0.5,0.3125,0.75,0.5,0.666666666666667,0.5,1,1,0.666666666666667,1,0.5,0.25,0.75,glmnet,100,otu-micro
+0.4496875,0.692913626899535,0.5,0.3125,0.5,0,NA,0,1,NA,0.5,NA,0,0,0.5,glmnet,101,otu-micro
