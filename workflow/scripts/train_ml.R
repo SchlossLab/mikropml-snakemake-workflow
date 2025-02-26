@@ -18,7 +18,8 @@ ml_results <- mikropml::run_ml(
   hyperparameters = hyperparams
 )
 
-wildcards <- schtools::get_wildcards_tbl()
+wildcards <- schtools::get_wildcards_tbl() %>%
+  dplyr::mutate(seed = as.numeric(seed))
 
 readr::write_csv(
   ml_results$performance %>%

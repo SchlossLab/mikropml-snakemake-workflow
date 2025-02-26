@@ -10,7 +10,7 @@ dependencies:
   - r-future
   - r-future.apply
   - r-import
-  - r-mikropml>=1.5.0
+  - r-mikropml>=1.6.0
   - r-patchwork
   - r-rmarkdown
   - r-rpart

@@ -36,7 +36,8 @@ feat_imp <- mikropml::get_feature_importance(
   seed = seed,
 )
 
-wildcards <- schtools::get_wildcards_tbl()
+wildcards <- schtools::get_wildcards_tbl() %>%
+  dplyr::mutate(seed = as.numeric(seed))
 
 readr::write_csv(
   feat_imp %>%
