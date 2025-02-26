@@ -13,12 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: mamba-org/setup-micromamba@v2
         with:
-          python-version: 3.11
-          miniforge-version: latest
-          activate-environment: github-actions
           environment-file: workflow/envs/github-actions.yml
+          cache-environment: true
       - name: Lint workflow
         uses: snakemake/snakemake-github-action@v1.24.0
         with:
