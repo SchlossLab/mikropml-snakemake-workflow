@@ -23,6 +23,12 @@ jobs:
           directory: .
           snakefile: workflow/Snakefile
           args: "--lint"
+      - name: Run test workflow
+        uses: snakemake/snakemake-github-action@v1.24.0
+        with:
+            directory: tests/tmp
+            snakefile: ../../workflow/Snakefile
+            args: "--forceall --cores 2 --use-conda --conda-frontend mamba --conda-cleanup-pkgs cache  --show-failed-logs --all-temp --configfile ../config/test.yaml"
       - name: Test with pytest
         shell: bash -el {0}
         run: |
