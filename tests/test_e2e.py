@@ -19,6 +19,7 @@ def compare_files(filename1, filename2):
 def test_snakemake():
     curr_wd = os.getcwd()
     tmp_dir = pathlib.Path('tests/tmp')
+    os.mkdir(tmp_dir)
     os.chdir(tmp_dir)
     out = subprocess.run(smk_cmd, shell=True, text=True, check=True, capture_output=True)
     os.chdir(curr_wd)
