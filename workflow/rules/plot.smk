@@ -106,7 +106,7 @@ rule write_graphviz:
         config_path=config_path,
     shell:
         """
-        snakemake --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
+        snakemake {smk_path} --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
         """
 
 
