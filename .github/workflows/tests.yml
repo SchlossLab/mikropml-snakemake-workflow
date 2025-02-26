@@ -28,4 +28,4 @@ jobs:
       - name: Test with pytest
         shell: bash -el {0}
         run: |
-          pytest --workers 2 tests/
+          pytest tests/
