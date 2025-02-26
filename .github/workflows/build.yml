@@ -5,13 +5,18 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: 3.11
@@ -61,8 +66,7 @@ jobs:
           git commit -m "🐳 Update Dockerfile" \
             || echo "No changes in Dockerfile to commit"
 
-      - name: Push
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
+          git push
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
