@@ -104,9 +104,10 @@ rule write_graphviz:
         "../envs/smk.yml"
     params:
         config_path=config_path,
+        smk_path=smk_path
     shell:
         """
-        snakemake {smk_path} --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
+        snakemake {params.smk_path} --{wildcards.cmd} --configfile {params.config_path} 2> {log} > {output.dot}
         """
 
 
